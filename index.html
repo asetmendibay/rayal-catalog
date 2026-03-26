@@ -163,7 +163,7 @@
 
         .hero-main-logo {
             width: 260px;
-            margin-bottom: 0.5rem;
+            margin-bottom: 2rem;
             filter: invert(1) drop-shadow(0 0 10px rgba(255,255,255,0.2));
             z-index: 10;
             animation: logo-shimmer 4s ease-in-out infinite alternate;
@@ -172,16 +172,6 @@
         @keyframes logo-shimmer {
             0% { filter: invert(1) drop-shadow(0 0 5px rgba(255,255,255,0.1)); transform: scale(0.98); }
             100% { filter: invert(1) drop-shadow(0 0 25px rgba(255,255,255,0.6)); transform: scale(1.02); }
-        }
-
-        .hero-tagline {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.3em;
-            color: var(--text-muted);
-            z-index: 10;
-            margin-bottom: 2rem;
-            animation: fade-up 1.5s ease-out;
         }
 
         .hero-carousel {
@@ -244,7 +234,7 @@
             font-family: var(--font-serif);
             font-size: 1.6rem;
             margin-top: 1rem;
-            background: linear-gradient(135deg, #ffffff 0%, #aaaaaa 100%);
+            background: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 100%);
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -463,9 +453,9 @@
         }
 
         .volume-btn.active {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--text-main);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            background: var(--accent-gold);
+            color: var(--bg-dark);
+            box-shadow: 0 2px 5px rgba(212, 175, 55, 0.3);
         }
 
         .btn-add {
@@ -494,9 +484,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            background: #0A0A0A;
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
@@ -682,9 +670,9 @@
         }
 
         .dv-btn.active {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.3);
-            color: var(--text-main);
+            background: var(--accent-gold);
+            border-color: var(--accent-gold);
+            color: var(--bg-dark);
         }
 
         .detail-action {
@@ -693,13 +681,15 @@
             left: 0;
             width: 100%;
             padding: 20px;
-            background: rgba(5, 5, 5, 0.9);
+            background: rgba(10, 10, 10, 0.95);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border-top: 1px solid var(--border-glass);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 12px;
+            flex-wrap: nowrap;
             z-index: 10;
         }
 
@@ -707,6 +697,14 @@
             font-size: 1.5rem;
             font-family: var(--font-serif);
             font-weight: 600;
+            white-space: nowrap;
+            color: var(--accent-gold);
+        }
+        
+        .detail-action .btn {
+            flex-shrink: 0;
+            white-space: nowrap;
+            padding: 14px 24px;
         }
 
         /* Cart Overlay */
@@ -883,9 +881,9 @@
             transition: all 0.3s ease;
         }
         .filter-btn.active {
-            background: rgba(255, 255, 255, 0.15);
-            color: var(--text-main);
-            border-color: rgba(255,255,255,0.4);
+            background: var(--accent-gold);
+            color: var(--bg-dark);
+            border-color: var(--accent-gold);
         }
 
         .info-section {
@@ -1036,8 +1034,6 @@
         <img src="картинки и лого/images 1 (Traced).svg" alt="RAYAL" class="hero-main-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
         <h1 class="hero-logo-text" style="display:none; font-family:var(--font-serif); font-size:4rem; font-weight:600; letter-spacing:0.2em; z-index:10; margin-bottom:1rem;">RAYAL</h1>
         
-        <p class="hero-tagline">Exclusive Niche Fragrances • Kazakhstan</p>
-        
         <div class="hero-carousel" id="hero-carousel">
             <div class="hero-glow" id="hero-glow"></div>
             <!-- Carousel items rendered via JS -->
@@ -1056,9 +1052,13 @@
         <div class="section-header">
             <h2 class="section-title">Коллекция</h2>
             <p class="section-subtitle">Избранные нишевые ароматы</p>
+            <button class="btn btn-outline" id="btn-toggle-filters" style="margin-top: 20px; font-size: 0.8rem; padding: 10px 20px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px; vertical-align: middle;"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg>
+                Фильтры
+            </button>
         </div>
         
-        <div class="filter-bar">
+        <div class="filter-bar" id="filter-bar" style="display:none;">
             <div>
                 <div class="filter-label">Бренд</div>
                 <div class="filter-group" id="filter-brand">
@@ -1457,8 +1457,8 @@
                                 `<button class="volume-btn ${v === selectedVol ? 'active' : ''}" data-vol="${v}">${v}</button>`
                             ).join('')}
                         </div>
-                        <div class="product-price" id="price-${p.id}">${formatMoney(p.volumes[selectedVol])}</div>
-                        <button class="btn-add" id="add-${p.id}">В корзину</button>
+                        <div class="product-price" id="price-${p.id}" style="color: var(--accent-gold);">${formatMoney(p.volumes[selectedVol])}</div>
+                        <button class="btn-add" id="add-${p.id}" style="background: ${p.accent_color}; color: #fff; border: none;">В корзину</button>
                     </div>
                 `;
                 
@@ -1500,6 +1500,11 @@
         function bindGlobalEvents() {
             document.getElementById('btn-explore').addEventListener('click', () => {
                 document.getElementById('catalog').scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            document.getElementById('btn-toggle-filters').addEventListener('click', () => {
+                const fb = document.getElementById('filter-bar');
+                fb.style.display = fb.style.display === 'none' ? 'flex' : 'none';
             });
             
             // Filter Events
@@ -1583,6 +1588,10 @@
             
             document.getElementById('detail-image').src = p.image;
             document.getElementById('detail-glow').style.background = p.accent_color;
+            
+            document.getElementById('btn-add-detail').style.background = p.accent_color;
+            document.getElementById('btn-add-detail').style.color = '#ffffff';
+            document.getElementById('btn-add-detail').style.border = 'none';
             
             renderDetailVolumes(p);
             updateDetailPrice();

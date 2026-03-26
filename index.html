@@ -133,90 +133,121 @@
             height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end;
+            justify-content: center;
             align-items: center;
             position: relative;
-            padding-bottom: 80px;
+            padding-bottom: 40px;
             text-align: center;
             overflow: hidden;
+            background: radial-gradient(circle at 50% 100%, #151520 0%, #050505 60%);
         }
         
-        .hero::before {
-            content: '';
+        .hero-fog {
             position: absolute;
-            top: 40%;
+            bottom: 0;
+            left: 0;
+            width: 200%;
+            height: 40%;
+            background: linear-gradient(to top, rgba(255,255,255,0.05), transparent);
+            opacity: 0.5;
+            animation: fog 20s linear infinite alternate;
+            z-index: 0;
+            pointer-events: none;
+            filter: blur(20px);
+        }
+
+        @keyframes fog {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-20%); }
+        }
+
+        .hero-main-logo {
+            width: 260px;
+            margin-bottom: 0.5rem;
+            filter: invert(1) drop-shadow(0 0 10px rgba(255,255,255,0.2));
+            z-index: 10;
+            animation: logo-shimmer 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes logo-shimmer {
+            0% { filter: invert(1) drop-shadow(0 0 5px rgba(255,255,255,0.1)); transform: scale(0.98); }
+            100% { filter: invert(1) drop-shadow(0 0 25px rgba(255,255,255,0.6)); transform: scale(1.02); }
+        }
+
+        .hero-tagline {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: var(--text-muted);
+            z-index: 10;
+            margin-bottom: 2rem;
+            animation: fade-up 1.5s ease-out;
+        }
+
+        .hero-carousel {
+            position: relative;
+            width: 100%;
+            height: 40vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 5;
+            margin-bottom: 2rem;
+        }
+
+        .carousel-item {
+            position: absolute;
+            opacity: 0;
+            transform: scale(0.9) translateY(20px);
+            transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            pointer-events: none;
+        }
+
+        .carousel-item.active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+        }
+
+        .hero-glow {
+            position: absolute;
+            top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(192, 57, 43, 0.4) 0%, rgba(5, 5, 5, 0) 70%);
-            filter: blur(40px);
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            filter: blur(60px);
             z-index: -1;
+            opacity: 0.5;
+            transition: background-color 1.5s ease;
             animation: pulse-glow 6s infinite alternate;
         }
 
         @keyframes pulse-glow {
-            0% { opacity: 0.5; transform: translate(-50%, -50%) scale(0.9); }
-            100% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); }
+            0% { opacity: 0.4; transform: translate(-50%, -50%) scale(0.9); }
+            100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1.1); }
         }
 
-        .hero-image {
-            max-width: 60%;
-            max-height: 45vh;
+        .carousel-item img {
+            max-width: 80%;
+            max-height: 32vh;
             object-fit: contain;
             filter: drop-shadow(0 20px 30px rgba(0,0,0,0.8));
             animation: float 6s ease-in-out infinite;
-            margin-bottom: 2rem;
-            position: absolute;
-            top: 45%;
-            left: 50%;
-            transform: translate(-50%, -50%);
         }
 
-        @keyframes float {
-            0% { transform: translate(-50%, -50%) translateY(0px); }
-            50% { transform: translate(-50%, -50%) translateY(-15px); }
-            100% { transform: translate(-50%, -50%) translateY(0px); }
-        }
-
-        .hero-content {
-            z-index: 10;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fade-up 1s forwards cubic-bezier(0.2, 0.8, 0.2, 1);
-            animation-delay: 0.5s;
-        }
-
-        @keyframes fade-up {
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .hero-title {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #fff 0%, #aaa 100%);
+        .carousel-title {
+            font-family: var(--font-serif);
+            font-size: 1.6rem;
+            margin-top: 1rem;
+            background: linear-gradient(135deg, #ffffff 0%, #aaaaaa 100%);
             background-clip: text;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-        }
-
-        .hero-logo {
-            position: absolute;
-            top: 20%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            height: 48px;
-            filter: invert(1);
-            z-index: 10;
-        }
-
-        .hero-subtitle {
-            font-size: 1rem;
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-            font-weight: 300;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
         }
 
         .btn {
@@ -834,15 +865,20 @@
 
     <!-- Hero -->
     <header class="hero">
-        <img src="картинки и лого/images 1 (Traced).svg" alt="RAYAL" class="hero-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-        <h1 class="hero-logo-text" style="display:none; position:absolute; top:20%; left:50%; transform:translate(-50%,-50%); font-family:var(--font-serif); font-size:4rem; font-weight:600; letter-spacing:0.2em; z-index:10;">RAYAL</h1>
+        <div class="hero-fog"></div>
         
-        <img src="картинки и лого/hf_20260325_174431_f5d1173d-bbbc-46d0-9363-28b5b44ab4e9.png" alt="Versace Eros Flame" class="hero-image" id="hero-img">
-        <div class="hero-content">
-            <h2 class="hero-title" id="hero-title">Versace Eros Flame</h2>
-            <p class="hero-subtitle">Уверенность в каждом вдохе</p>
-            <button class="btn btn-outline" id="btn-explore">В каталог</button>
+        <img src="картинки и лого/images 1 (Traced).svg" alt="RAYAL" class="hero-main-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+        <h1 class="hero-logo-text" style="display:none; font-family:var(--font-serif); font-size:4rem; font-weight:600; letter-spacing:0.2em; z-index:10; margin-bottom:1rem;">RAYAL</h1>
+        
+        <p class="hero-tagline">Exclusive Niche Fragrances • Kazakhstan</p>
+        
+        <div class="hero-carousel" id="hero-carousel">
+            <div class="hero-glow" id="hero-glow"></div>
+            <!-- Carousel items rendered via JS -->
         </div>
+
+        <button class="btn btn-outline" id="btn-explore" style="z-index: 10;">В каталог</button>
+        
         <div class="scroll-indicator">
             <span>Scroll</span>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
@@ -942,7 +978,7 @@
                 image: "картинки и лого/hf_20260325_184451_0d32ced4-0831-4649-991f-1dedf72d1e91.png",
                 notes: "Цитрус, Перец, Древесный",
                 gender: "Мужской",
-                accent_color: "#C0392B",
+                accent_color: "#E74C3C",
                 volumes: { "10": 5000, "20": 9000, "30": 12000, "50": 18000 }
             },
             {
@@ -952,18 +988,18 @@
                 image: "картинки и лого/hf_20260325_183305_3a2917b3-bd9b-4e46-bd4a-082e30b79abf.png",
                 notes: "Цитрус, Зеленое яблоко, Чабрец",
                 gender: "Мужской",
-                accent_color: "#1E3A5F",
+                accent_color: "#3498DB",
                 volumes: { "10": 8000, "20": 15000, "30": 20000, "50": 30000 }
             },
             {
                 id: "lv-ombre-nomade",
-                brand: "Louis Vuitton",
-                name: "Ombre Nomade",
+                brand: "Tom Ford",
+                name: "Oud Wood",
                 image: "картинки и лого/hf_20260325_181301_f6f65769-f895-43d5-a3ed-1064bee0856d.png",
-                notes: "Уд, Малина, Роза",
+                notes: "Уд, Сандал, Ветивер",
                 gender: "Унисекс",
-                accent_color: "#7A3B2E",
-                volumes: { "10": 12000, "20": 22000, "30": 32000, "50": 50000 }
+                accent_color: "#5D6D7E",
+                volumes: { "10": 7000, "20": 13000, "30": 18000, "50": 28000 }
             },
             {
                 id: "creed-absolu-aventus",
@@ -972,7 +1008,7 @@
                 image: "картинки и лого/hf_20260325_182409_4c85086c-58d6-4ecf-ad30-3cec99e58e38.jpeg",
                 notes: "Ананас, Бергамот, Дубовый мох",
                 gender: "Мужской",
-                accent_color: "#1A1A2E",
+                accent_color: "#1C1C1C",
                 volumes: { "10": 10000, "20": 18000, "30": 25000, "50": 38000 }
             },
             {
@@ -982,17 +1018,17 @@
                 image: "картинки и лого/hf_20260325_181942_0d25b5b5-0c9e-4ec5-9c72-a58f1132010c.jpeg",
                 notes: "Кожа, Уд, Амбра",
                 gender: "Мужской",
-                accent_color: "#1B4F3A",
+                accent_color: "#1E8449",
                 volumes: { "10": 7000, "20": 13000, "30": 18000, "50": 27000 }
             },
             {
-                id: "pdm-habdan",
+                id: "pdm-althair",
                 brand: "Parfums de Marly",
-                name: "Habdan",
+                name: "Althaïr",
                 image: "картинки и лого/image (26).webp",
-                notes: "Корица, Шафран, Ваниль",
+                notes: "Бурбонская ваниль, Пралине, Мускус",
                 gender: "Мужской",
-                accent_color: "#8B4513",
+                accent_color: "#D35400",
                 volumes: { "10": 7000, "20": 13000, "30": 18000, "50": 27000 }
             },
             {
@@ -1002,7 +1038,7 @@
                 image: "картинки и лого/hf_20260325_175215_01936d51-de90-41ea-b051-e9393a2ba20c.png",
                 notes: "Цитрус, Имбирь, Амброксан",
                 gender: "Мужской",
-                accent_color: "#1B4F8A",
+                accent_color: "#1ABC9C",
                 volumes: { "10": 10000, "20": 18000, "30": 25500, "50": 40000 }
             },
             {
@@ -1022,7 +1058,7 @@
                 image: "картинки и лого/hf_20260325_174431_f5d1173d-bbbc-46d0-9363-28b5b44ab4e9.png",
                 notes: "Грейпфрут, Имбирь, Амбра",
                 gender: "Мужской",
-                accent_color: "#4A6FA5",
+                accent_color: "#F39C12",
                 volumes: { "10": 10000, "20": 18000, "30": 25000, "50": 40000 }
             }
         ];
@@ -1043,14 +1079,44 @@
         const cartModal = document.getElementById('cart-modal');
         
         // Initialize
+        let activeCarouselId = 0;
+        let carouselTimer = null;
+
         function init() {
             renderCatalog();
+            initCarousel();
             bindGlobalEvents();
+        }
+
+        function initCarousel() {
+            const container = document.getElementById('hero-carousel');
+            const glow = document.getElementById('hero-glow');
             
-            // Randomly select hero image on load
-            const h = products[Math.floor(Math.random() * products.length)];
-            document.getElementById('hero-img').src = h.image;
-            document.getElementById('hero-title').textContent = h.name;
+            // Randomly select 4 featured perfumes for the carousel
+            const shuffled = [...products].sort(() => 0.5 - Math.random());
+            const featured = shuffled.slice(0, 4);
+            
+            featured.forEach((p, idx) => {
+                const item = document.createElement('div');
+                item.className = `carousel-item ${idx === 0 ? 'active' : ''}`;
+                item.id = `hero-item-${idx}`;
+                
+                item.innerHTML = `
+                    <img src="${p.image}" alt="${p.name}">
+                    <div class="carousel-title">${p.name}</div>
+                `;
+                
+                container.appendChild(item);
+            });
+            
+            glow.style.background = featured[0].accent_color;
+            
+            carouselTimer = setInterval(() => {
+                document.getElementById(`hero-item-${activeCarouselId}`).classList.remove('active');
+                activeCarouselId = (activeCarouselId + 1) % featured.length;
+                document.getElementById(`hero-item-${activeCarouselId}`).classList.add('active');
+                glow.style.background = featured[activeCarouselId].accent_color;
+            }, 4500);
         }
 
         // Render Catalog

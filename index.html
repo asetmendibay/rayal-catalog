@@ -1015,6 +1015,24 @@
             color: var(--text-main);
         }
 
+        /* Badge */
+        .card-badge { position: absolute; top: 10px; right: 10px; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 9px; border-radius: 100px; z-index: 3; pointer-events: none; }
+        .card-badge.hit { background: var(--accent-gold); color: #000; }
+        .card-badge.new { background: #3B82F6; color: #fff; }
+        .mood-tag { display: inline-block; font-size: 0.68rem; color: var(--text-muted); background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; padding: 2px 8px; margin-bottom: 8px; }
+        .stock-low { font-size: 0.72rem; color: #F59E0B; font-weight: 500; margin-top: -4px; margin-bottom: 8px; }
+        .reviews-section { padding: 0 20px 40px; max-width: 1200px; margin: 0 auto; }
+        .reviews-title { font-family: var(--font-serif); font-size: 1.8rem; margin-bottom: 20px; }
+        .reviews-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+        @media (min-width: 640px) { .reviews-grid { grid-template-columns: repeat(2, 1fr); } }
+        .review-card { background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: 14px; padding: 20px; }
+        .review-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+        .review-author { font-weight: 600; font-size: 0.95rem; }
+        .review-date { font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; }
+        .review-stars { color: var(--accent-gold); font-size: 0.9rem; letter-spacing: 2px; }
+        .review-product { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px; }
+        .review-text { font-size: 0.88rem; color: #d1d1d6; line-height: 1.6; }
+
     </style>
 </head>
 <body>
@@ -1125,6 +1143,16 @@
             <div class="location-address">📍 ТЦ Сатти, улица Яссауи, 68</div>
             <div class="location-address">📍 ТЦ Ялян, шоссе Северное Кольцо 9, G22 бутик, 2 этаж</div>
             <div class="location-address">📍 Проспект Абылай хана, 66</div>
+        </div>
+    </section>
+
+    <section class="reviews-section">
+        <h3 class="reviews-title">Отзывы покупателей</h3>
+        <div class="reviews-grid">
+            <div class="review-card"><div class="review-header"><div><div class="review-author">Айдар М.</div><div class="review-date">14 марта 2026</div></div><div class="review-stars">★★★★★</div></div><div class="review-product">Creed — Absolu Aventus</div><div class="review-text">Заказал на распив, стойкость на весь день. Получил несколько комплиментов на работе. За такую цену — просто огонь.</div></div>
+            <div class="review-card"><div class="review-header"><div><div class="review-author">Дина С.</div><div class="review-date">2 марта 2026</div></div><div class="review-stars">★★★★★</div></div><div class="review-product">Louis Vuitton — LV Lovers</div><div class="review-text">Очень нежный и женственный. Шлейф держится долго. Уже смотрю на Imagination для мужа.</div></div>
+            <div class="review-card"><div class="review-header"><div><div class="review-author">Нурлан К.</div><div class="review-date">19 февраля 2026</div></div><div class="review-stars">★★★★★</div></div><div class="review-product">Tom Ford — Oud Wood</div><div class="review-text">Очень близко к оригиналу. Стойкость отличная, особенно на одежде. Буду брать снова.</div></div>
+            <div class="review-card"><div class="review-header"><div><div class="review-author">Алия Б.</div><div class="review-date">8 февраля 2026</div></div><div class="review-stars">★★★★★</div></div><div class="review-product">Parfums de Marly — Althaïr</div><div class="review-text">Подарила мужу на день рождения, он в восторге. Качество за эту цену удивляет.</div></div>
         </div>
     </section>
 
@@ -1240,6 +1268,7 @@
                 notes: "Цитрус, Перец, Древесный",
                 gender: "Мужской",
                 accent_color: "#8B1A1A",
+                mood: "Вечерний", badge: "Хит", inStock: "ok",
                 full_desc: "Страстный мужской аромат, вдохновлённый огненной сущностью любви. Открывается ярким цитрусовым стартом — мандарин и чёрный перец создают энергичную, жгучую композицию. В сердце раскрывается роза и герань с перечными акцентами. База оставляет тёплый пряно-ванильный шлейф с нотами сандала и бобов тонка. Идеален для осени и зимы, особенно в вечернее время.",
                 notes_top: "Мандарин, Чёрный перец, Лимон, Розмарин",
                 notes_heart: "Роза, Герань, Перечное дерево",
@@ -1254,6 +1283,7 @@
                 notes: "Цитрус, Зеленое яблоко, Чабрец",
                 gender: "Мужской",
                 accent_color: "#1B6FA5",
+                mood: "Летний", badge: "", inStock: "low",
                 full_desc: "Роскошный средиземноморский аромат, вдохновлённый бескрайней синевой моря и неба итальянских островов. Свежая цитрусовая композиция с глубоким амбровым основанием. Сочетание бергамота и морских нот создаёт ощущение солёного бриза, а мускус и амбра придают благородную стойкость. Универсальный аромат для уверенного мужчины.",
                 notes_top: "Бергамот, Лимон, Морские ноты",
                 notes_heart: "Лаванда, Герань, Кориандр",
@@ -1268,6 +1298,7 @@
                 notes: "Уд, Сандал, Ветивер",
                 gender: "Унисекс",
                 accent_color: "#5C3A1E",
+                mood: "Вечерний", badge: "Хит", inStock: "ok",
                 full_desc: "Культовый унисекс-аромат из коллекции Private Blend. Редкий уд в сочетании с экзотическими специями и тонкой древесностью. Сандал и ветивер придают шелковистую мягкость, а бобы тонка и амбра — тёплую чувственность. Изысканный, ненавязчивый и невероятно элегантный. Один из самых узнаваемых ароматов в мире нишевой парфюмерии.",
                 notes_top: "Уд, Розовое дерево, Кардамон",
                 notes_heart: "Сандал, Ветивер, Сычуаньский перец",
@@ -1282,6 +1313,7 @@
                 notes: "Ананас, Бергамот, Дубовый мох",
                 gender: "Мужской",
                 accent_color: "#1A2F1A",
+                mood: "Деловой", badge: "", inStock: "ok",
                 full_desc: "Усиленная версия легендарного Aventus. Смелый и мощный аромат с фруктовым стартом — ананас и чёрная смородина создают яркое первое впечатление. Берёзовый дым и пачули добавляют дерзости. База из дубового мха и мускуса обеспечивает стойкий, властный шлейф. Аромат успеха и лидерства.",
                 notes_top: "Ананас, Бергамот, Чёрная смородина, Яблоко",
                 notes_heart: "Берёзовый дым, Пачули, Жасмин",
@@ -1296,6 +1328,7 @@
                 notes: "Кожа, Уд, Амбра",
                 gender: "Мужской",
                 accent_color: "#1B5E3A",
+                mood: "Вечерний", badge: "", inStock: "low",
                 full_desc: "Благородный мужской аромат, вдохновлённый силой и элегантностью арабских скакунов. Свежее начало с бергамотом переходит в пряное сердце с корицей и шафраном. Кожа и уд в базе создают глубокий, властный шлейф. Аромат для мужчины, который знает себе цену.",
                 notes_top: "Бергамот, Кардамон, Розовый перец",
                 notes_heart: "Ирис, Корица, Шафран",
@@ -1310,6 +1343,7 @@
                 notes: "Бурбонская ваниль, Пралине, Мускус",
                 gender: "Мужской",
                 accent_color: "#8B5A2B",
+                mood: "Зимний", badge: "Новинка", inStock: "ok",
                 full_desc: "Гурманский мужской аромат с восточным характером. Бурбонская ваниль и пралине создают богатую сладость, которая сбалансирована свежими нотами бергамота и мяты. Мускус и амбра в базе придают глубину и стойкость. Уютный, обволакивающий аромат, идеальный для холодного времени года.",
                 notes_top: "Бергамот, Мята, Лаванда",
                 notes_heart: "Бурбонская ваниль, Пралине, Корица",
@@ -1324,6 +1358,7 @@
                 notes: "Цитрус, Имбирь, Амброксан",
                 gender: "Мужской",
                 accent_color: "#2A7B9B",
+                mood: "Повседневный", badge: "", inStock: "ok",
                 full_desc: "Современный мужской аромат, вдохновлённый идеей свободы и творчества. Энергичное цитрусовое начало с калабрийским бергамотом и сицилийским апельсином. Сердце объединяет пряные нюансы нероли, имбиря и корицы. В базе — глубокие древесные оттенки чёрного чая и амброксана. Свежий, но не поверхностный, лёгкий, но оставляющий запоминающийся след.",
                 notes_top: "Бергамот, Апельсин, Цитрон",
                 notes_heart: "Нероли, Имбирь, Корица",
@@ -1338,6 +1373,7 @@
                 notes: "Роза, Жасмин, Мускус",
                 gender: "Унисекс",
                 accent_color: "#C9A0DC",
+                mood: "Романтичный", badge: "", inStock: "ok",
                 full_desc: "Романтичный унисекс-аромат с цветочно-мускусным характером. Нежная роза и жасмин окутаны тёплым мускусом и амбровыми нотами. Современная интерпретация классической цветочной темы — чувственная, лёгкая и обволакивающая. Аромат для тех, кто не боится выражать свои чувства.",
                 notes_top: "Роза, Цитрусы",
                 notes_heart: "Жасмин, Ирис, Магнолия",
@@ -1352,6 +1388,7 @@
                 notes: "Грейпфрут, Имбирь, Амбра",
                 gender: "Мужской",
                 accent_color: "#9B7B3A",
+                mood: "Деловой", badge: "Новинка", inStock: "ok",
                 full_desc: "Бескрайний как горизонт мужской аромат. Энергичный грейпфрут и имбирь в старте создают ощущение свежести раннего утра. Амбровое сердце добавляет глубину, а лабданум и мускус в базе обеспечивают стойкий, чувственный шлейф. Аромат безграничных возможностей и открытого неба.",
                 notes_top: "Грейпфрут, Имбирь, Цитрон",
                 notes_heart: "Амбра, Лабданум",
@@ -1453,18 +1490,21 @@
                 let selectedVol = "10";
                 
                 card.innerHTML = `
+                    ${p.badge ? `<span class="card-badge ${p.badge === 'Хит' ? 'hit' : 'new'}">${p.badge}</span>` : ''}
                     <div class="product-image-container" onclick="openProductDetail('${p.id}')">
                         <img src="${p.image}" alt="${p.name}" class="product-image" loading="lazy">
                     </div>
                     <div class="product-info">
                         <div class="product-brand">${p.brand}</div>
                         <h3 class="product-name">${p.name}</h3>
+                        ${p.mood ? `<span class="mood-tag">${p.mood}</span>` : ''}
                         <div class="volume-selector" id="vs-${p.id}">
-                            ${['10', '20', '30', '50'].map(v => 
+                            ${['10', '20', '30', '50'].map(v =>
                                 `<button class="volume-btn ${v === selectedVol ? 'active' : ''}" data-vol="${v}">${v}</button>`
                             ).join('')}
                         </div>
                         <div class="product-price" id="price-${p.id}" style="color: var(--accent-gold);">${formatMoney(p.volumes[selectedVol])}</div>
+                        ${p.inStock === 'low' ? `<div class="stock-low">⚠ Осталось мало</div>` : ''}
                         <button class="btn-add" id="add-${p.id}">В корзину</button>
                     </div>
                 `;

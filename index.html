@@ -2,15 +2,24 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RAYAL | Премиальная Нишевая Парфюмерия</title>
-    <meta name="description" content="Нишевая парфюмерия в Казахстане. Люксовые ароматы на распив и полные флаконы.">
-    
+    <meta name="description" content="Нишевая парфюмерия в Казахстане. Люксовые ароматы на распив и полные флаконы. Extrait de Parfum.">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="RAYAL — Нишевая Парфюмерия">
+    <meta property="og:description" content="Люксовые ароматы на распив и полные флаконы. Казахстан. Extrait de Parfum.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ru_KZ">
+
+    <!-- Favicon -->
+    <link rel="icon" href="картинки и лого/images 1 (Traced).svg" type="image/svg+xml">
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
+
     <style>
         :root {
             --bg-dark: #050505;
@@ -20,21 +29,12 @@
             --border-glass: rgba(255, 255, 255, 0.08);
             --bg-glass: rgba(255, 255, 255, 0.03);
             --bg-glass-hover: rgba(255, 255, 255, 0.06);
-            
             --font-serif: 'Cormorant Garamond', serif;
             --font-sans: 'Inter', sans-serif;
-            
             --accent-gold: #D4AF37;
-            
-            --vh: 100vh;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
         body {
             background-color: var(--bg-dark);
@@ -47,984 +47,363 @@
             min-height: 100vh;
         }
 
-        /* Typography */
-        h1, h2, h3, h4 {
-            font-family: var(--font-serif);
-            font-weight: 500;
-            letter-spacing: 0.02em;
-        }
+        h1, h2, h3, h4 { font-family: var(--font-serif); font-weight: 500; letter-spacing: 0.02em; }
 
-        /* Navbar */
+        /* ── Navbar ── */
         .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 70px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            position: fixed; top: 0; left: 0; width: 100%; height: 70px;
+            display: flex; justify-content: space-between; align-items: center;
             padding: 0 20px;
             background: var(--bg-nav);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-glass);
-            z-index: 100;
-            transition: all 0.3s ease;
+            z-index: 100; transition: background 0.3s ease;
         }
 
-        .nav-logo {
-            height: 24px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .nav-logo img {
-            height: 100%;
-            filter: invert(1);
-        }
+        .nav-logo { height: 24px; display: flex; align-items: center; }
+        .nav-logo img { height: 100%; filter: invert(1); }
 
         .cart-icon-wrapper {
-            position: relative;
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: relative; cursor: pointer;
+            width: 40px; height: 40px;
+            display: flex; align-items: center; justify-content: center;
         }
 
-        .cart-icon {
-            width: 24px;
-            height: 24px;
-            fill: none;
-            stroke: var(--text-main);
-            stroke-width: 1.5;
-            stroke-linecap: round;
-            stroke-linejoin: round;
+        @keyframes cart-bounce {
+            0%, 100% { transform: scale(1); }
+            30%  { transform: scale(1.35); }
+            60%  { transform: scale(0.92); }
         }
+        .cart-icon-wrapper.bounce { animation: cart-bounce 0.4s ease; }
+
+        .cart-icon { width: 24px; height: 24px; fill: none; stroke: var(--text-main); stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 
         .cart-counter {
-            position: absolute;
-            top: 4px;
-            right: 2px;
-            background: var(--text-main);
-            color: var(--bg-dark);
-            font-size: 10px;
-            font-weight: 600;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transform: scale(0.8);
-            transition: all 0.3s ease;
+            position: absolute; top: 4px; right: 2px;
+            background: var(--text-main); color: var(--bg-dark);
+            font-size: 10px; font-weight: 600;
+            width: 16px; height: 16px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; transform: scale(0.8); transition: all 0.3s ease;
         }
+        .cart-counter.has-items { opacity: 1; transform: scale(1); }
 
-        .cart-counter.has-items {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        /* Hero */
+        /* ── Hero ── */
         .hero {
             height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            padding-bottom: 40px;
-            text-align: center;
-            overflow: hidden;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            position: relative; padding-bottom: 40px;
+            text-align: center; overflow: hidden;
             background: radial-gradient(circle at 50% 100%, #151520 0%, #050505 60%);
         }
-        
-        .hero-fog {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 200%;
-            height: 40%;
-            background: linear-gradient(to top, rgba(255,255,255,0.05), transparent);
-            opacity: 0.5;
-            animation: fog 20s linear infinite alternate;
-            z-index: 0;
-            pointer-events: none;
-            filter: blur(20px);
-        }
 
-        @keyframes fog {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-20%); }
+        .hero-fog {
+            position: absolute; bottom: 0; left: 0;
+            width: 200%; height: 40%;
+            background: linear-gradient(to top, rgba(255,255,255,0.05), transparent);
+            opacity: 0.5; animation: fog 20s linear infinite alternate;
+            z-index: 0; pointer-events: none; filter: blur(20px);
         }
+        @keyframes fog { 0% { transform: translateX(0); } 100% { transform: translateX(-20%); } }
 
         .hero-main-logo {
-            width: 260px;
-            margin-bottom: 2rem;
+            width: 260px; margin-bottom: 2rem;
             filter: invert(1) drop-shadow(0 0 10px rgba(255,255,255,0.2));
-            z-index: 10;
-            animation: logo-shimmer 4s ease-in-out infinite alternate;
+            z-index: 10; animation: logo-shimmer 4s ease-in-out infinite alternate;
         }
-
         @keyframes logo-shimmer {
-            0% { filter: invert(1) drop-shadow(0 0 5px rgba(255,255,255,0.1)); transform: scale(0.98); }
+            0%   { filter: invert(1) drop-shadow(0 0 5px rgba(255,255,255,0.1));  transform: scale(0.98); }
             100% { filter: invert(1) drop-shadow(0 0 25px rgba(255,255,255,0.6)); transform: scale(1.02); }
         }
 
         .hero-carousel {
-            position: relative;
-            width: 100%;
-            height: 40vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 5;
-            margin-bottom: 2rem;
+            position: relative; width: 100%; height: 40vh;
+            display: flex; justify-content: center; align-items: center;
+            z-index: 5; margin-bottom: 2rem;
         }
 
         .carousel-item {
-            position: absolute;
-            opacity: 0;
+            position: absolute; opacity: 0;
             transform: scale(0.9) translateY(20px);
             transition: all 1.2s cubic-bezier(0.25, 1, 0.5, 1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            display: flex; flex-direction: column; align-items: center;
             pointer-events: none;
         }
-
-        .carousel-item.active {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-            pointer-events: auto;
-        }
+        .carousel-item.active { opacity: 1; transform: scale(1) translateY(0); pointer-events: auto; }
 
         .hero-glow {
-            position: absolute;
-            top: 50%;
-            left: 50%;
+            position: absolute; top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 280px;
-            height: 280px;
-            border-radius: 50%;
-            filter: blur(60px);
-            z-index: -1;
-            opacity: 0.5;
+            width: 280px; height: 280px; border-radius: 50%;
+            filter: blur(60px); z-index: -1; opacity: 0.5;
             transition: background-color 1.5s ease;
             animation: pulse-glow 6s infinite alternate;
         }
-
         @keyframes pulse-glow {
-            0% { opacity: 0.4; transform: translate(-50%, -50%) scale(0.9); }
+            0%   { opacity: 0.4; transform: translate(-50%, -50%) scale(0.9); }
             100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1.1); }
         }
 
         .carousel-item img {
-            max-width: 80%;
-            max-height: 32vh;
-            object-fit: contain;
+            max-width: 80%; max-height: 32vh; object-fit: contain;
             filter: drop-shadow(0 20px 30px rgba(0,0,0,0.8));
             animation: float 6s ease-in-out infinite;
         }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50%       { transform: translateY(-12px); }
+        }
 
         .carousel-title {
-            font-family: var(--font-serif);
-            font-size: 1.6rem;
-            margin-top: 1rem;
+            font-family: var(--font-serif); font-size: 1.6rem; margin-top: 1rem;
             background: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 100%);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
         .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
+            display: inline-flex; align-items: center; justify-content: center;
             padding: 14px 28px;
-            background: var(--text-main);
-            color: var(--bg-dark);
-            border: none;
-            border-radius: 4px;
-            font-family: var(--font-sans);
-            font-size: 0.9rem;
-            font-weight: 500;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
+            background: var(--text-main); color: var(--bg-dark);
+            border: none; border-radius: 4px;
+            font-family: var(--font-sans); font-size: 0.9rem; font-weight: 500;
+            letter-spacing: 0.05em; text-transform: uppercase;
+            cursor: pointer; transition: all 0.3s ease; text-decoration: none;
         }
-
         .btn-outline {
-            background: transparent;
-            color: var(--text-main);
-            border: 1px solid var(--border-glass);
-            backdrop-filter: blur(10px);
+            background: transparent; color: var(--text-main);
+            border: 1px solid var(--border-glass); backdrop-filter: blur(10px);
         }
+        .btn-outline:active { background: rgba(255,255,255,0.1); }
 
-        .btn-outline:active {
-            background: rgba(255,255,255,0.1);
-        }
-        
         .scroll-indicator {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
+            position: absolute; bottom: 30px; left: 50%;
             transform: translateX(-50%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 8px;
-            opacity: 0.6;
-            animation: bounce 2s infinite;
+            display: flex; flex-direction: column; align-items: center;
+            gap: 8px; opacity: 0.6; animation: bounce 2s infinite;
         }
-        
-        .scroll-indicator span {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-        
+        .scroll-indicator span { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; }
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
             40% { transform: translateX(-50%) translateY(-10px); }
             60% { transform: translateX(-50%) translateY(-5px); }
         }
 
-        /* Catalog Section */
-        .catalog {
-            padding: 20px 20px 80px;
-            max-width: 1200px;
-            margin: 0 auto;
+        /* ── Catalog ── */
+        .catalog { padding: 20px 20px 80px; max-width: 1200px; margin: 0 auto; }
+
+        .section-header { text-align: center; margin-bottom: 32px; }
+        .section-title { font-size: 2rem; margin-bottom: 8px; }
+        .section-subtitle { font-size: 0.9rem; color: var(--text-muted); font-weight: 300; }
+
+        /* Search */
+        .search-wrapper { position: relative; margin-bottom: 20px; }
+        .search-input {
+            width: 100%;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 8px;
+            padding: 12px 16px 12px 44px;
+            color: var(--text-main);
+            font-family: var(--font-sans); font-size: 0.9rem;
+            outline: none; transition: border-color 0.3s;
+        }
+        .search-input::placeholder { color: var(--text-muted); }
+        .search-input:focus { border-color: rgba(255,255,255,0.2); }
+        .search-icon {
+            position: absolute; left: 14px; top: 50%;
+            transform: translateY(-50%);
+            width: 18px; height: 18px;
+            stroke: var(--text-muted); fill: none; pointer-events: none;
         }
 
-        .section-header {
-            text-align: center;
-            margin-bottom: 40px;
+        /* Filters */
+        .filter-bar {
+            display: none; flex-direction: column; gap: 16px; margin-bottom: 24px;
         }
+        .filter-bar.visible { display: flex; }
+        .filter-group { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: none; -ms-overflow-style: none; }
+        .filter-group::-webkit-scrollbar { display: none; }
+        .filter-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; padding-left: 4px; }
+        .filter-btn { white-space: nowrap; padding: 8px 16px; background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: 100px; color: var(--text-muted); font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease; font-family: var(--font-sans); }
+        .filter-btn.active { background: var(--accent-gold); color: var(--bg-dark); border-color: var(--accent-gold); }
 
-        .section-title {
-            font-size: 2rem;
-            margin-bottom: 8px;
-        }
+        /* Product Grid */
+        .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+        @media (min-width: 768px)  { .product-grid { grid-template-columns: repeat(3, 1fr); gap: 24px; } }
+        @media (min-width: 1024px) { .product-grid { grid-template-columns: repeat(4, 1fr); gap: 32px; } }
 
-        .section-subtitle {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            font-weight: 300;
-        }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 16px;
-        }
-        
-        @media (min-width: 768px) {
-            .product-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 24px;
-            }
-        }
-        
-        @media (min-width: 1024px) {
-            .product-grid {
-                grid-template-columns: repeat(4, 1fr);
-                gap: 32px;
-            }
-        }
+        .no-results { grid-column: 1/-1; text-align: center; padding: 40px; color: var(--text-muted); font-size: 0.9rem; }
 
         /* Product Card */
         .product-card {
-            background: var(--bg-glass);
-            border: 1px solid var(--border-glass);
-            border-radius: 12px;
-            padding: 16px 12px;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: var(--bg-glass); border: 1px solid var(--border-glass);
+            border-radius: 12px; padding: 16px 12px;
+            display: flex; flex-direction: column;
+            position: relative; overflow: hidden;
+            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
             transition: transform 0.3s ease, background 0.3s ease;
             height: 100%;
         }
-        
         .product-card::before {
-            content: '';
-            position: absolute;
-            top: 30%;
-            left: 50%;
+            content: ''; position: absolute; top: 30%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            filter: blur(35px);
-            z-index: 0;
-            opacity: 0.3;
-            transition: opacity 0.4s ease;
-            pointer-events: none;
+            width: 120px; height: 120px; border-radius: 50%;
+            filter: blur(35px); z-index: 0; opacity: 0.3;
+            transition: opacity 0.4s ease; pointer-events: none;
             background: var(--card-glow);
         }
+        .product-card:active { transform: scale(0.98); }
 
-        .product-card:active {
-            transform: scale(0.98);
-        }
+        .product-image-container { width: 100%; padding-top: 100%; position: relative; z-index: 1; margin-bottom: 16px; cursor: pointer; }
+        .product-image { position: absolute; top: 5%; left: 5%; width: 90%; height: 90%; object-fit: contain; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5)); transition: transform 0.5s ease; }
+        .product-card:hover .product-image { transform: scale(1.05); }
 
-        .product-image-container {
-            width: 100%;
-            padding-top: 100%;
-            position: relative;
-            z-index: 1;
-            margin-bottom: 16px;
-            cursor: pointer;
-        }
+        .product-info { z-index: 1; display: flex; flex-direction: column; flex-grow: 1; }
+        .product-brand { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; }
+        .product-name { font-family: var(--font-serif); font-size: 1.1rem; font-weight: 500; margin-bottom: 12px; line-height: 1.2; }
+        .product-price { font-size: 1rem; font-weight: 500; margin-bottom: 12px; margin-top: auto; }
 
-        .product-image {
-            position: absolute;
-            top: 5%;
-            left: 5%;
-            width: 90%;
-            height: 90%;
-            object-fit: contain;
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5));
-            transition: transform 0.5s ease;
-        }
-        
-        .product-card:hover .product-image {
-            transform: scale(1.05);
-        }
+        .volume-selector { display: flex; gap: 6px; margin-bottom: 12px; background: rgba(0,0,0,0.3); border-radius: 6px; padding: 4px; }
+        .volume-btn { flex: 1; background: transparent; border: none; color: var(--text-muted); font-size: 0.75rem; padding: 6px 0; border-radius: 4px; cursor: pointer; transition: all 0.2s ease; font-family: var(--font-sans); }
+        .volume-btn.active { background: var(--accent-gold); color: var(--bg-dark); box-shadow: 0 2px 5px rgba(212,175,55,0.3); }
 
-        .product-info {
-            z-index: 1;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
+        .btn-add { width: 100%; padding: 10px 0; background: var(--accent-gold); border: none; color: #000; border-radius: 6px; font-size: 0.8rem; font-family: var(--font-sans); text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; transition: all 0.3s ease; font-weight: 600; }
+        .btn-add:active { background: #b8941e; }
 
-        .product-brand {
-            font-size: 0.7rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            margin-bottom: 2px;
-        }
-
-        .product-name {
-            font-family: var(--font-serif);
-            font-size: 1.1rem;
-            font-weight: 500;
-            margin-bottom: 12px;
-            line-height: 1.2;
-        }
-
-        .product-price {
-            font-size: 1rem;
-            font-weight: 500;
-            margin-bottom: 12px;
-            margin-top: auto;
-        }
-
-        /* Volume Selector */
-        .volume-selector {
-            display: flex;
-            gap: 6px;
-            margin-bottom: 12px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 6px;
-            padding: 4px;
-        }
-
-        .volume-btn {
-            flex: 1;
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            font-size: 0.75rem;
-            padding: 6px 0;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            font-family: var(--font-sans);
-        }
-
-        .volume-btn.active {
-            background: var(--accent-gold);
-            color: var(--bg-dark);
-            box-shadow: 0 2px 5px rgba(212, 175, 55, 0.3);
-        }
-
-        .btn-add {
-            width: 100%;
-            padding: 10px 0;
-            background: var(--accent-gold);
-            border: none;
-            color: #000;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            font-family: var(--font-sans);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-        }
-
-        .btn-add:active {
-            background: #b8941e;
-        }
-
-        /* Modals & Overlays */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: #0A0A0A;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .overlay-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            border-bottom: 1px solid var(--border-glass);
-        }
-
-        .overlay-title {
-            font-family: var(--font-serif);
-            font-size: 1.5rem;
-        }
-
-        .btn-close {
-            background: transparent;
-            border: none;
-            color: var(--text-main);
-            cursor: pointer;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background: var(--bg-glass);
-            border: 1px solid var(--border-glass);
-        }
-        
-        .btn-close svg {
-            width: 16px;
-            height: 16px;
-            stroke: currentColor;
-            stroke-width: 2;
-        }
-
-        /* Product Detail Modal */
-        .product-detail-content {
-            flex-grow: 1;
-            overflow-y: auto;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .detail-glow {
-            position: absolute;
-            top: 20%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80vw;
-            height: 80vw;
-            max-width: 400px;
-            max-height: 400px;
-            border-radius: 50%;
-            filter: blur(60px);
-            z-index: -1;
-            opacity: 0.4;
-        }
-
-        .detail-image-wrapper {
-            height: 40vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .detail-image {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.8));
-            transform: translateY(20px);
-            opacity: 0;
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .overlay.active .detail-image {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .detail-info {
-            background: linear-gradient(to top, rgba(5,5,5,1) 80%, rgba(5,5,5,0));
-            padding: 40px 20px 100px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .detail-brand {
-            font-size: 0.9rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 4px;
-        }
-
-        .detail-name {
-            font-family: var(--font-serif);
-            font-size: 2.2rem;
-            line-height: 1.1;
-            margin-bottom: 12px;
-        }
-        
-        .detail-tags {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 24px;
-        }
-        
-        .tag {
-            font-size: 0.7rem;
-            padding: 4px 10px;
-            background: var(--bg-glass);
-            border: 1px solid var(--border-glass);
-            border-radius: 100px;
-            color: var(--text-main);
-            letter-spacing: 0.05em;
-        }
-
-        .detail-desc {
-            font-size: 0.95rem;
-            color: #d1d1d6;
-            margin-bottom: 30px;
-            line-height: 1.6;
-        }
-        
-        .detail-desc strong {
-            color: var(--text-main);
-            font-weight: 500;
-        }
-
-        .detail-volume-selector {
-            margin-bottom: 30px;
-        }
-
-        .detail-volume-label {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .detail-volumes {
-            display: flex;
-            gap: 12px;
-        }
-
-        .dv-btn {
-            flex: 1;
-            padding: 12px 0;
-            background: var(--bg-glass);
-            border: 1px solid var(--border-glass);
-            border-radius: 8px;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .dv-btn span {
-            font-size: 0.7rem;
-            opacity: 0.7;
-        }
-
-        .dv-btn.active {
-            background: var(--accent-gold);
-            border-color: var(--accent-gold);
-            color: var(--bg-dark);
-        }
-
-        .detail-action {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            padding: 20px;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-top: 1px solid var(--border-glass);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-            flex-wrap: nowrap;
-            z-index: 10;
-        }
-
-        .detail-price-big {
-            font-size: 1.2rem;
-            font-family: var(--font-serif);
-            font-weight: 600;
-            white-space: nowrap;
-            flex-shrink: 0;
-            color: var(--accent-gold);
-        }
-        
-        .detail-action .btn {
-            flex-shrink: 0;
-            white-space: nowrap;
-            padding: 12px 20px;
-        }
-
-        @media (max-width: 360px) {
-            .detail-price-big { font-size: 1rem; }
-            .detail-action .btn { padding: 10px 14px; font-size: 0.8rem; }
-        }
-
-        /* Cart Overlay */
-        .cart-body {
-            padding: 20px;
-            overflow-y: auto;
-            flex-grow: 1;
-        }
-
-        .cart-empty {
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            gap: 16px;
-        }
-        
-        .cart-empty svg {
-            width: 48px;
-            height: 48px;
-            opacity: 0.2;
-        }
-
-        .cart-items {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .cart-item {
-            display: flex;
-            gap: 16px;
-            background: var(--bg-glass);
-            border: 1px solid var(--border-glass);
-            padding: 12px;
-            border-radius: 12px;
-            position: relative;
-        }
-
-        .cart-item-img {
-            width: 60px;
-            height: 60px;
-            object-fit: contain;
-            background: rgba(0,0,0,0.2);
-            border-radius: 8px;
-            padding: 5px;
-        }
-
-        .cart-item-info {
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .cart-item-brand {
-            font-size: 0.65rem;
-            color: var(--text-muted);
-            line-height: 1;
-            margin-bottom: 4px;
-        }
-
-        .cart-item-title {
-            font-size: 0.95rem;
-            font-weight: 500;
-            margin-bottom: 4px;
-            line-height: 1.2;
-        }
-
-        .cart-item-meta {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-        }
-
-        .cart-item-price {
-            font-weight: 600;
-            margin-top: auto;
-        }
-
-        .cart-item-remove {
-            position: absolute;
-            top: 12px;
-            right: 12px;
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            border-radius: 50%;
-            background: rgba(0,0,0,0.3);
-        }
-
-        .cart-footer {
-            padding: 20px;
-            background: rgba(5, 5, 5, 0.9);
-            border-top: 1px solid var(--border-glass);
-        }
-
-        .cart-total {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            font-size: 1.2rem;
-            font-family: var(--font-serif);
-        }
-        
-        .cart-total-value {
-            font-weight: 700;
-            font-size: 1.4rem;
-        }
-
-        .btn-whatsapp {
-            background: #25D366;
-            color: #fff;
-            width: 100%;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .btn-whatsapp:hover, .btn-whatsapp:active {
-            background: #128C7E;
-        }
-        
-        /* Utility Format */
-        .format-price {
-            white-space: nowrap;
-        }
-
-        /* Phase 2 Additions */
-        .filter-bar {
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-            margin-bottom: 24px;
-            padding: 0 20px;
-            max-width: 1200px;
-            margin: 0 auto 24px;
-        }
-        .filter-group {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding-bottom: 8px;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-        .filter-group::-webkit-scrollbar { display: none; }
-        .filter-label {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            margin-bottom: 4px;
-            padding-left: 4px;
-        }
-        .filter-btn {
-            white-space: nowrap;
-            padding: 8px 16px;
-            background: var(--bg-glass);
-            border: 1px solid var(--border-glass);
-            border-radius: 100px;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        .filter-btn.active {
-            background: var(--accent-gold);
-            color: var(--bg-dark);
-            border-color: var(--accent-gold);
-        }
-
-        .info-section {
-            padding: 0 20px 40px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        .info-card {
-            background: var(--bg-glass);
-            border: 1px solid var(--border-glass);
-            border-radius: 16px;
-            padding: 30px 20px;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            margin-bottom: 24px;
-            position: relative;
-            overflow: hidden;
-        }
-        .info-card::before {
-            content: '';
-            position: absolute;
-            top: -50px; left: -50px;
-            width: 150px; height: 150px;
-            background: rgba(255,255,255,0.03);
-            filter: blur(30px);
-            border-radius: 50%;
-        }
-        .info-card h3 {
-            font-family: var(--font-serif);
-            font-size: 1.8rem;
-            margin-bottom: 16px;
-            color: var(--text-main);
-        }
-        .info-card p {
-            color: #d1d1d6;
-            line-height: 1.6;
-            margin-bottom: 16px;
-            font-weight: 300;
-        }
-        .info-card p:last-child {
-            margin-bottom: 0;
-        }
-
-        .location-city {
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 1.1rem;
-            color: var(--text-main);
-            margin-top: 24px;
-        }
-        .location-city:first-of-type {
-            margin-top: 0;
-        }
-        .location-address {
-            display: flex;
-            align-items: flex-start;
-            gap: 8px;
-            color: #d1d1d6;
-            font-weight: 300;
-            line-height: 1.5;
-            margin-bottom: 8px;
-        }
-
-        .footer {
-            padding: 40px 20px;
-            text-align: center;
-            border-top: 1px solid var(--border-glass);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 16px;
-            background: rgba(5,5,5,0.8);
-        }
-        .footer-logo {
-            height: 24px;
-            filter: invert(1);
-            opacity: 0.5;
-        }
-        .footer-text {
-            color: var(--text-muted);
-            font-size: 0.8rem;
-        }
-        .footer-links {
-            display: flex;
-            gap: 20px;
-        }
-        .footer-link {
-            color: var(--text-main);
-            text-decoration: none;
-            font-size: 0.9rem;
-            opacity: 0.8;
-            transition: opacity 0.3s;
-        }
-        
-        .detail-full-desc {
-            font-size: 0.95rem;
-            color: #d1d1d6;
-            margin-bottom: 24px;
-            line-height: 1.6;
-            font-weight: 300;
-        }
-        .detail-breakdown {
-            background: rgba(0,0,0,0.3);
-            border: 1px solid var(--border-glass);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 30px;
-        }
-        .detail-breakdown-row {
-            margin-bottom: 12px;
-        }
-        .detail-breakdown-row:last-child { margin-bottom: 0; }
-        .detail-breakdown-title {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--text-muted);
-            margin-bottom: 4px;
-        }
-        .detail-breakdown-val {
-            font-size: 0.9rem;
-            color: var(--text-main);
-        }
-
-        /* Badge */
+        /* Badges */
         .card-badge { position: absolute; top: 10px; right: 10px; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 9px; border-radius: 100px; z-index: 3; pointer-events: none; }
         .card-badge.hit { background: var(--accent-gold); color: #000; }
         .card-badge.new { background: #3B82F6; color: #fff; }
         .mood-tag { display: inline-block; font-size: 0.68rem; color: var(--text-muted); background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; padding: 2px 8px; margin-bottom: 8px; }
         .stock-low { font-size: 0.72rem; color: #F59E0B; font-weight: 500; margin-top: -4px; margin-bottom: 8px; }
+
+        /* ── Overlays ── */
+        .overlay-backdrop {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 999;
+            opacity: 0; visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        .overlay-backdrop.active { opacity: 1; visibility: visible; }
+
+        .overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #0A0A0A;
+            z-index: 1000;
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            display: flex; flex-direction: column;
+            transform: translateY(16px);
+        }
+        .overlay.active { opacity: 1; visibility: visible; transform: translateY(0); }
+
+        .overlay-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px; border-bottom: 1px solid var(--border-glass);
+            touch-action: pan-y;
+        }
+        .overlay-title { font-family: var(--font-serif); font-size: 1.5rem; }
+
+        .btn-close {
+            background: var(--bg-glass); border: 1px solid var(--border-glass);
+            color: var(--text-main); cursor: pointer;
+            width: 32px; height: 32px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%;
+        }
+        .btn-close svg { width: 16px; height: 16px; stroke: currentColor; stroke-width: 2; fill: none; }
+
+        /* Product Detail */
+        .product-detail-content { flex-grow: 1; overflow-y: auto; position: relative; display: flex; flex-direction: column; }
+        .detail-glow { position: absolute; top: 20%; left: 50%; transform: translate(-50%, -50%); width: 80vw; height: 80vw; max-width: 400px; max-height: 400px; border-radius: 50%; filter: blur(60px); z-index: -1; opacity: 0.4; }
+        .detail-image-wrapper { height: 40vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .detail-image { max-width: 100%; max-height: 100%; object-fit: contain; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.8)); transform: translateY(20px); opacity: 0; transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .overlay.active .detail-image { transform: translateY(0); opacity: 1; }
+        .detail-info { background: linear-gradient(to top, rgba(5,5,5,1) 80%, rgba(5,5,5,0)); padding: 40px 20px 100px; flex-grow: 1; display: flex; flex-direction: column; }
+        .detail-brand { font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+        .detail-name { font-family: var(--font-serif); font-size: 2.2rem; line-height: 1.1; margin-bottom: 12px; }
+        .detail-tags { display: flex; gap: 8px; margin-bottom: 24px; }
+        .tag { font-size: 0.7rem; padding: 4px 10px; background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: 100px; color: var(--text-main); letter-spacing: 0.05em; }
+        .detail-full-desc { font-size: 0.95rem; color: #d1d1d6; margin-bottom: 24px; line-height: 1.6; font-weight: 300; }
+        .detail-breakdown { background: rgba(0,0,0,0.3); border: 1px solid var(--border-glass); border-radius: 12px; padding: 16px; margin-bottom: 30px; }
+        .detail-breakdown-row { margin-bottom: 12px; }
+        .detail-breakdown-row:last-child { margin-bottom: 0; }
+        .detail-breakdown-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 4px; }
+        .detail-breakdown-val { font-size: 0.9rem; color: var(--text-main); }
+        .detail-volume-selector { margin-bottom: 30px; }
+        .detail-volume-label { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+        .detail-volumes { display: flex; gap: 12px; }
+        .dv-btn { flex: 1; padding: 12px 0; background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: 8px; color: var(--text-muted); font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease; display: flex; flex-direction: column; align-items: center; gap: 4px; font-family: var(--font-sans); }
+        .dv-btn span { font-size: 0.7rem; opacity: 0.7; }
+        .dv-btn.active { background: var(--accent-gold); border-color: var(--accent-gold); color: var(--bg-dark); }
+        .dv-btn.active span { opacity: 0.8; }
+        .detail-action { position: fixed; bottom: 0; left: 0; width: 100%; padding: 20px; background: rgba(10,10,10,0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top: 1px solid var(--border-glass); display: flex; justify-content: space-between; align-items: center; gap: 12px; z-index: 10; }
+        .detail-price-big { font-size: 1.2rem; font-family: var(--font-serif); font-weight: 600; white-space: nowrap; flex-shrink: 0; color: var(--accent-gold); }
+        .detail-action .btn { flex-shrink: 0; white-space: nowrap; padding: 12px 20px; }
+        @media (max-width: 360px) { .detail-price-big { font-size: 1rem; } .detail-action .btn { padding: 10px 14px; font-size: 0.8rem; } }
+
+        /* Cart */
+        .cart-body { padding: 20px; overflow-y: auto; flex-grow: 1; }
+        .cart-empty { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); gap: 16px; }
+        .cart-empty svg { width: 48px; height: 48px; opacity: 0.2; }
+
+        .cart-item { display: flex; gap: 12px; background: var(--bg-glass); border: 1px solid var(--border-glass); padding: 12px; border-radius: 12px; align-items: center; margin-bottom: 12px; }
+        .cart-item-img { width: 60px; height: 60px; object-fit: contain; background: rgba(0,0,0,0.2); border-radius: 8px; padding: 5px; flex-shrink: 0; }
+        .cart-item-info { flex-grow: 1; min-width: 0; }
+        .cart-item-brand { font-size: 0.65rem; color: var(--text-muted); margin-bottom: 2px; }
+        .cart-item-title { font-size: 0.9rem; font-weight: 500; margin-bottom: 2px; line-height: 1.2; }
+        .cart-item-meta { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 6px; }
+        .cart-item-price { font-size: 0.9rem; font-weight: 600; }
+        .cart-item-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; flex-shrink: 0; }
+        .cart-item-remove { background: rgba(0,0,0,0.3); border: none; color: var(--text-muted); width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; cursor: pointer; border-radius: 50%; }
+        .cart-item-remove svg { width: 12px; height: 12px; stroke: currentColor; stroke-width: 2; fill: none; }
+        .qty-controls { display: flex; align-items: center; gap: 8px; }
+        .qty-btn { width: 26px; height: 26px; background: var(--bg-glass); border: 1px solid var(--border-glass); color: var(--text-main); border-radius: 50%; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; line-height: 1; transition: background 0.2s; font-family: var(--font-sans); }
+        .qty-btn:active { background: rgba(255,255,255,0.15); }
+        .qty-val { font-size: 0.9rem; font-weight: 500; min-width: 18px; text-align: center; }
+
+        .cart-footer { padding: 20px; background: rgba(5,5,5,0.9); border-top: 1px solid var(--border-glass); }
+        .cart-total { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-size: 1.2rem; font-family: var(--font-serif); }
+        .cart-total-value { font-weight: 700; font-size: 1.4rem; }
+        .btn-whatsapp { background: #25D366; color: #fff; width: 100%; font-weight: 600; display: flex; align-items: center; gap: 10px; }
+        .btn-whatsapp:hover, .btn-whatsapp:active { background: #128C7E; }
+
+        /* ── Info Section ── */
+        .info-section { padding: 0 20px 40px; max-width: 1200px; margin: 0 auto; }
+        .info-card { background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: 16px; padding: 30px 20px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); margin-bottom: 24px; position: relative; overflow: hidden; }
+        .info-card::before { content: ''; position: absolute; top: -50px; left: -50px; width: 150px; height: 150px; background: rgba(255,255,255,0.03); filter: blur(30px); border-radius: 50%; }
+        .info-card h3 { font-family: var(--font-serif); font-size: 1.8rem; margin-bottom: 16px; }
+        .info-card p { color: #d1d1d6; line-height: 1.6; margin-bottom: 16px; font-weight: 300; }
+        .info-card p:last-child { margin-bottom: 0; }
+        .location-city { font-weight: 600; margin-bottom: 8px; font-size: 1.1rem; color: var(--text-main); margin-top: 24px; }
+        .location-city:first-of-type { margin-top: 0; }
+        .location-address {
+            display: flex; align-items: flex-start; gap: 8px;
+            color: #d1d1d6; font-weight: 300; line-height: 1.5; margin-bottom: 10px;
+            text-decoration: none; transition: color 0.2s;
+        }
+        .location-address:hover { color: var(--text-main); }
+        .location-map-hint { font-size: 0.7rem; color: var(--accent-gold); margin-left: auto; white-space: nowrap; padding-top: 3px; flex-shrink: 0; }
+
+        /* ── FAQ ── */
+        .faq-section { padding: 0 20px 40px; max-width: 1200px; margin: 0 auto; }
+        .faq-title { font-family: var(--font-serif); font-size: 1.8rem; margin-bottom: 20px; }
+        .faq-item { border: 1px solid var(--border-glass); border-radius: 12px; margin-bottom: 10px; overflow: hidden; background: var(--bg-glass); }
+        .faq-question { padding: 18px 20px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 0.95rem; font-weight: 500; user-select: none; gap: 12px; }
+        .faq-question svg { width: 16px; height: 16px; stroke: var(--text-muted); flex-shrink: 0; transition: transform 0.3s; fill: none; stroke-width: 2; }
+        .faq-item.open .faq-question svg { transform: rotate(180deg); }
+        .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.35s ease; }
+        .faq-answer-inner { padding: 0 20px 18px; font-size: 0.9rem; color: #d1d1d6; line-height: 1.7; font-weight: 300; }
+        .faq-item.open .faq-answer { max-height: 300px; }
+
+        /* ── Reviews ── */
         .reviews-section { padding: 0 20px 40px; max-width: 1200px; margin: 0 auto; }
         .reviews-title { font-family: var(--font-serif); font-size: 1.8rem; margin-bottom: 20px; }
         .reviews-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
-        @media (min-width: 640px) { .reviews-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 640px)  { .reviews-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1024px) { .reviews-grid { grid-template-columns: repeat(3, 1fr); } }
         .review-card { background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: 14px; padding: 20px; }
         .review-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
         .review-author { font-weight: 600; font-size: 0.95rem; }
@@ -1033,6 +412,13 @@
         .review-product { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px; }
         .review-text { font-size: 0.88rem; color: #d1d1d6; line-height: 1.6; }
 
+        /* ── Footer ── */
+        .footer { padding: 40px 20px; text-align: center; border-top: 1px solid var(--border-glass); display: flex; flex-direction: column; align-items: center; gap: 16px; background: rgba(5,5,5,0.8); }
+        .footer-logo { height: 24px; filter: invert(1); opacity: 0.5; }
+        .footer-text { color: var(--text-muted); font-size: 0.8rem; }
+        .footer-links { display: flex; gap: 20px; }
+        .footer-link { color: var(--text-main); text-decoration: none; font-size: 0.9rem; opacity: 0.8; transition: opacity 0.3s; }
+        .footer-link:hover { opacity: 1; }
     </style>
 </head>
 <body>
@@ -1040,7 +426,6 @@
     <!-- Navbar -->
     <nav class="navbar">
         <div class="nav-logo">
-            <!-- Using text as fallback if logo.svg is missing -->
             <img src="картинки и лого/images 1 (Traced).svg" alt="RAYAL" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
             <span style="display:none; font-family:var(--font-serif); font-size:1.5rem; font-weight:600; letter-spacing:0.1em;">RAYAL</span>
         </div>
@@ -1055,19 +440,14 @@
     <!-- Hero -->
     <header class="hero">
         <div class="hero-fog"></div>
-        
         <img src="картинки и лого/images 1 (Traced).svg" alt="RAYAL" class="hero-main-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-        <h1 class="hero-logo-text" style="display:none; font-family:var(--font-serif); font-size:4rem; font-weight:600; letter-spacing:0.2em; z-index:10; margin-bottom:1rem;">RAYAL</h1>
-        
+        <h1 style="display:none; font-family:var(--font-serif); font-size:4rem; font-weight:600; letter-spacing:0.2em; z-index:10; margin-bottom:1rem;">RAYAL</h1>
         <div class="hero-carousel" id="hero-carousel">
             <div class="hero-glow" id="hero-glow"></div>
-            <!-- Carousel items rendered via JS -->
         </div>
-
-        <button class="btn btn-outline" id="btn-explore" style="z-index: 10;">В каталог</button>
-        
+        <button class="btn btn-outline" id="btn-explore" style="z-index:10;">В каталог</button>
         <div class="scroll-indicator">
-            <span>Scroll</span>
+            <span>Прокрутите</span>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
         </div>
     </header>
@@ -1077,13 +457,20 @@
         <div class="section-header">
             <h2 class="section-title">Коллекция</h2>
             <p class="section-subtitle">Избранные нишевые ароматы</p>
-            <button class="btn btn-outline" id="btn-toggle-filters" style="margin-top: 20px; font-size: 0.8rem; padding: 10px 20px;">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px; vertical-align: middle;"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg>
+            <button class="btn btn-outline" id="btn-toggle-filters" style="margin-top:20px; font-size:0.8rem; padding:10px 20px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px; vertical-align:middle;"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg>
                 Фильтры
             </button>
         </div>
-        
-        <div class="filter-bar" id="filter-bar" style="display:none;">
+
+        <!-- Search -->
+        <div class="search-wrapper">
+            <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+            <input type="text" class="search-input" id="search-input" placeholder="Поиск аромата, бренда, ноты...">
+        </div>
+
+        <!-- Filters -->
+        <div class="filter-bar" id="filter-bar">
             <div>
                 <div class="filter-label">Бренд</div>
                 <div class="filter-group" id="filter-brand">
@@ -1094,7 +481,6 @@
                     <button class="filter-btn" data-filter="Creed">Creed</button>
                     <button class="filter-btn" data-filter="Parfums de Marly">Parfums de Marly</button>
                     <button class="filter-btn" data-filter="Louis Vuitton">Louis Vuitton</button>
-                    <button class="filter-btn" data-filter="Byredo">Byredo</button>
                 </div>
             </div>
             <div>
@@ -1117,12 +503,10 @@
             </div>
         </div>
 
-        <div class="product-grid" id="product-grid">
-            <!-- Products injected here via JS -->
-        </div>
+        <div class="product-grid" id="product-grid"></div>
     </section>
 
-    <!-- Info Sections -->
+    <!-- Info -->
     <section class="info-section">
         <div class="info-card">
             <h3>О RAYAL</h3>
@@ -1131,21 +515,43 @@
             <p>Мы не копируем оригиналы один в один. Наши ароматы вдохновлены известными композициями, но имеют свой характер и собственное звучание. При этом они передают тот же вайб, те же эмоции и то же впечатление, за которое люди любят оригиналы.</p>
             <p>Вы получите столько же комплиментов и ощущений, но без переплаты за бренд.</p>
         </div>
-        
+
         <div class="info-card">
             <h3>Наши точки</h3>
-            
+
             <div class="location-city">г. Актобе</div>
-            <div class="location-address">📍 Проспект Алии Молдагуловой, 30Б/1</div>
-            
+            <a href="https://2gis.kz/aktobe/search/Молдагуловой 30Б" target="_blank" class="location-address">
+                📍 Проспект Алии Молдагуловой, 30Б/1
+                <span class="location-map-hint">На карте →</span>
+            </a>
+
             <div class="location-city">г. Алматы</div>
-            <div class="location-address">📍 ТЦ Grand Park, Е линия, 6 блок</div>
-            <div class="location-address">📍 ТЦ Сатти, улица Яссауи, 68</div>
-            <div class="location-address">📍 ТЦ Ялян, шоссе Северное Кольцо 9, G22 бутик, 2 этаж</div>
-            <div class="location-address">📍 Проспект Абылай хана, 66</div>
+            <a href="https://2gis.kz/almaty/search/ТЦ Grand Park Алматы" target="_blank" class="location-address">
+                📍 ТЦ Grand Park, Е линия, 6 блок
+                <span class="location-map-hint">На карте →</span>
+            </a>
+            <a href="https://2gis.kz/almaty/search/ТЦ Сатти Яссауи 68" target="_blank" class="location-address">
+                📍 ТЦ Сатти, улица Яссауи, 68
+                <span class="location-map-hint">На карте →</span>
+            </a>
+            <a href="https://2gis.kz/almaty/search/ТЦ Ялян Северное Кольцо 9" target="_blank" class="location-address">
+                📍 ТЦ Ялян, шоссе Северное Кольцо 9, G22 бутик, 2 этаж
+                <span class="location-map-hint">На карте →</span>
+            </a>
+            <a href="https://2gis.kz/almaty/search/Абылай хана 66" target="_blank" class="location-address">
+                📍 Проспект Абылай хана, 66
+                <span class="location-map-hint">На карте →</span>
+            </a>
         </div>
     </section>
 
+    <!-- FAQ -->
+    <section class="faq-section">
+        <h3 class="faq-title">Частые вопросы</h3>
+        <div id="faq-list"></div>
+    </section>
+
+    <!-- Reviews -->
     <section class="reviews-section">
         <h3 class="reviews-title">Отзывы покупателей</h3>
         <div class="reviews-grid">
@@ -1153,6 +559,8 @@
             <div class="review-card"><div class="review-header"><div><div class="review-author">Дина С.</div><div class="review-date">2 марта 2026</div></div><div class="review-stars">★★★★★</div></div><div class="review-product">Louis Vuitton — LV Lovers</div><div class="review-text">Очень нежный и женственный. Шлейф держится долго. Уже смотрю на Imagination для мужа.</div></div>
             <div class="review-card"><div class="review-header"><div><div class="review-author">Нурлан К.</div><div class="review-date">19 февраля 2026</div></div><div class="review-stars">★★★★★</div></div><div class="review-product">Tom Ford — Oud Wood</div><div class="review-text">Очень близко к оригиналу. Стойкость отличная, особенно на одежде. Буду брать снова.</div></div>
             <div class="review-card"><div class="review-header"><div><div class="review-author">Алия Б.</div><div class="review-date">8 февраля 2026</div></div><div class="review-stars">★★★★★</div></div><div class="review-product">Parfums de Marly — Althaïr</div><div class="review-text">Подарила мужу на день рождения, он в восторге. Качество за эту цену удивляет.</div></div>
+            <div class="review-card"><div class="review-header"><div><div class="review-author">Максат Д.</div><div class="review-date">25 января 2026</div></div><div class="review-stars">★★★★★</div></div><div class="review-product">Versace — Eros Flame</div><div class="review-text">Взял 30мл флакон, хватает надолго. Буквально каждый день спрашивают — что это за аромат. Очень доволен.</div></div>
+            <div class="review-card"><div class="review-header"><div><div class="review-author">Сания Е.</div><div class="review-date">10 января 2026</div></div><div class="review-stars">★★★★★</div></div><div class="review-product">Roja Parfums — Isola Blu</div><div class="review-text">Нежный, свежий, стойкий. Именно то, что я искала для работы. Спасибо RAYAL за доступные цены!</div></div>
         </div>
     </section>
 
@@ -1161,19 +569,22 @@
         <img src="картинки и лого/images 1 (Traced).svg" alt="RAYAL" class="footer-logo" onerror="this.style.display='none';">
         <div class="footer-text">© 2026 RAYAL. Нишевая парфюмерия</div>
         <div class="footer-links">
-            <a href="https://instagram.com/rayal" target="_blank" class="footer-link">Instagram: @rayal</a>
-            <a href="https://wa.me/77001234567" target="_blank" class="footer-link">WhatsApp</a>
+            <a href="https://instagram.com/rayal_parfum" target="_blank" class="footer-link">Instagram</a>
+            <a id="footer-whatsapp" href="#" target="_blank" class="footer-link">WhatsApp</a>
         </div>
     </footer>
 
+    <!-- Backdrop -->
+    <div class="overlay-backdrop" id="overlay-backdrop"></div>
+
     <!-- Product Detail Overlay -->
     <div class="overlay" id="product-modal">
-        <div class="overlay-header">
+        <div class="overlay-header" id="product-modal-header">
             <button class="btn-close" id="close-product">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
             </button>
-            <span style="font-family:var(--font-sans); font-size:0.8rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--text-muted)">Детали аромата</span>
-            <div style="width:32px"></div> <!-- Spacer -->
+            <span style="font-family:var(--font-sans); font-size:0.8rem; text-transform:uppercase; letter-spacing:0.1em; color:var(--text-muted);">Детали аромата</span>
+            <div style="width:32px;"></div>
         </div>
         <div class="product-detail-content">
             <div class="detail-glow" id="detail-glow"></div>
@@ -1181,21 +592,12 @@
                 <img src="" alt="" class="detail-image" id="detail-image">
             </div>
             <div class="detail-info">
-                <div class="detail-brand" id="detail-brand">Brand</div>
-                <h2 class="detail-name" id="detail-name">Name</h2>
-                
+                <div class="detail-brand" id="detail-brand"></div>
+                <h2 class="detail-name" id="detail-name"></h2>
                 <div class="detail-tags">
-                    <span class="tag" id="detail-gender">Унисекс</span>
+                    <span class="tag" id="detail-gender"></span>
                 </div>
-                
-                <p class="detail-desc" style="display:none;">
-                    <strong>Ноты:</strong> <span id="detail-notes">Note, Note</span>
-                </p>
-                
-                <div class="detail-full-desc" id="detail-full-desc">
-                    Описание...
-                </div>
-                
+                <div class="detail-full-desc" id="detail-full-desc"></div>
                 <div class="detail-breakdown">
                     <div class="detail-breakdown-row">
                         <div class="detail-breakdown-title">Верхние ноты</div>
@@ -1210,12 +612,9 @@
                         <div class="detail-breakdown-val" id="detail-notes-base">-</div>
                     </div>
                 </div>
-                
                 <div class="detail-volume-selector">
                     <div class="detail-volume-label">Выберите объём</div>
-                    <div class="detail-volumes" id="detail-volumes">
-                        <!-- Volumes injected here -->
-                    </div>
+                    <div class="detail-volumes" id="detail-volumes"></div>
                 </div>
             </div>
         </div>
@@ -1227,23 +626,20 @@
 
     <!-- Cart Overlay -->
     <div class="overlay" id="cart-modal">
-        <div class="overlay-header">
+        <div class="overlay-header" id="cart-modal-header">
             <h2 class="overlay-title">Корзина</h2>
             <button class="btn-close" id="close-cart">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
             </button>
         </div>
-        
         <div class="cart-body" id="cart-body">
-            <!-- Cart items injected here -->
             <div class="cart-empty" id="cart-empty">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
                 <p>Ваша корзина пуста</p>
-                <button class="btn btn-outline" id="btn-cart-continue" style="margin-top:10px">В каталог</button>
+                <button class="btn btn-outline" id="btn-cart-continue" style="margin-top:10px;">В каталог</button>
             </div>
         </div>
-        
-        <div class="cart-footer" id="cart-footer" style="display:none">
+        <div class="cart-footer" id="cart-footer" style="display:none;">
             <div class="cart-total">
                 <span>Итого:</span>
                 <span class="cart-total-value" id="cart-total-sum">₸ 0</span>
@@ -1258,18 +654,15 @@
     </div>
 
     <script>
-        // Data
+        // ── Data ──────────────────────────────────────────────────────────────
         const products = [
             {
                 id: "versace-eros-flame",
-                brand: "Versace",
-                name: "Eros Flame",
+                brand: "Versace", name: "Eros Flame",
                 image: "картинки и лого/hf_20260325_184451_0d32ced4-0831-4649-991f-1dedf72d1e91.png",
-                notes: "Цитрус, Перец, Древесный",
-                gender: "Мужской",
-                accent_color: "#8B1A1A",
-                mood: "Вечерний", badge: "Хит", inStock: "ok",
-                full_desc: "Страстный мужской аромат, вдохновлённый огненной сущностью любви. Открывается ярким цитрусовым стартом — мандарин и чёрный перец создают энергичную, жгучую композицию. В сердце раскрывается роза и герань с перечными акцентами. База оставляет тёплый пряно-ванильный шлейф с нотами сандала и бобов тонка. Идеален для осени и зимы, особенно в вечернее время.",
+                notes: "Цитрус, Перец, Древесный", gender: "Мужской",
+                accent_color: "#8B1A1A", mood: "Вечерний", badge: "Хит", inStock: "ok",
+                full_desc: "Страстный мужской аромат, вдохновлённый огненной сущностью любви. Открывается ярким цитрусовым стартом — мандарин и чёрный перец создают энергичную, жгучую композицию. В сердце раскрывается роза и герань с перечными акцентами. База оставляет тёплый пряно-ванильный шлейф с нотами сандала и бобов тонка.",
                 notes_top: "Мандарин, Чёрный перец, Лимон, Розмарин",
                 notes_heart: "Роза, Герань, Перечное дерево",
                 notes_base: "Ваниль, Сандал, Бобы тонка, Ветивер",
@@ -1277,29 +670,23 @@
             },
             {
                 id: "roja-isola-blu",
-                brand: "Roja Parfums",
-                name: "Isola Blu",
+                brand: "Roja Parfums", name: "Isola Blu",
                 image: "картинки и лого/hf_20260325_183305_3a2917b3-bd9b-4e46-bd4a-082e30b79abf.png",
-                notes: "Цитрус, Зеленое яблоко, Чабрец",
-                gender: "Мужской",
-                accent_color: "#1B6FA5",
-                mood: "Летний", badge: "", inStock: "low",
-                full_desc: "Роскошный средиземноморский аромат, вдохновлённый бескрайней синевой моря и неба итальянских островов. Свежая цитрусовая композиция с глубоким амбровым основанием. Сочетание бергамота и морских нот создаёт ощущение солёного бриза, а мускус и амбра придают благородную стойкость. Универсальный аромат для уверенного мужчины.",
+                notes: "Цитрус, Морские ноты, Амбра", gender: "Мужской",
+                accent_color: "#1B6FA5", mood: "Летний", badge: "", inStock: "low",
+                full_desc: "Роскошный средиземноморский аромат, вдохновлённый бескрайней синевой моря и неба итальянских островов. Сочетание бергамота и морских нот создаёт ощущение солёного бриза, а мускус и амбра придают благородную стойкость.",
                 notes_top: "Бергамот, Лимон, Морские ноты",
                 notes_heart: "Лаванда, Герань, Кориандр",
                 notes_base: "Амбра, Мускус, Кедр",
                 volumes: { "10": 8000, "20": 15000, "30": 20000, "50": 30000 }
             },
             {
-                id: "lv-ombre-nomade",
-                brand: "Tom Ford",
-                name: "Oud Wood",
+                id: "tf-oud-wood",
+                brand: "Tom Ford", name: "Oud Wood",
                 image: "картинки и лого/hf_20260325_181301_f6f65769-f895-43d5-a3ed-1064bee0856d.png",
-                notes: "Уд, Сандал, Ветивер",
-                gender: "Унисекс",
-                accent_color: "#5C3A1E",
-                mood: "Вечерний", badge: "Хит", inStock: "ok",
-                full_desc: "Культовый унисекс-аромат из коллекции Private Blend. Редкий уд в сочетании с экзотическими специями и тонкой древесностью. Сандал и ветивер придают шелковистую мягкость, а бобы тонка и амбра — тёплую чувственность. Изысканный, ненавязчивый и невероятно элегантный. Один из самых узнаваемых ароматов в мире нишевой парфюмерии.",
+                notes: "Уд, Сандал, Ветивер", gender: "Унисекс",
+                accent_color: "#5C3A1E", mood: "Вечерний", badge: "Хит", inStock: "ok",
+                full_desc: "Культовый унисекс-аромат из коллекции Private Blend. Редкий уд в сочетании с экзотическими специями и тонкой древесностью. Сандал и ветивер придают шелковистую мягкость, а бобы тонка и амбра — тёплую чувственность.",
                 notes_top: "Уд, Розовое дерево, Кардамон",
                 notes_heart: "Сандал, Ветивер, Сычуаньский перец",
                 notes_base: "Бобы тонка, Амбра, Мускус",
@@ -1307,14 +694,11 @@
             },
             {
                 id: "creed-absolu-aventus",
-                brand: "Creed",
-                name: "Absolu Aventus",
+                brand: "Creed", name: "Absolu Aventus",
                 image: "картинки и лого/hf_20260325_182409_4c85086c-58d6-4ecf-ad30-3cec99e58e38.jpeg",
-                notes: "Ананас, Бергамот, Дубовый мох",
-                gender: "Мужской",
-                accent_color: "#1A2F1A",
-                mood: "Деловой", badge: "", inStock: "ok",
-                full_desc: "Усиленная версия легендарного Aventus. Смелый и мощный аромат с фруктовым стартом — ананас и чёрная смородина создают яркое первое впечатление. Берёзовый дым и пачули добавляют дерзости. База из дубового мха и мускуса обеспечивает стойкий, властный шлейф. Аромат успеха и лидерства.",
+                notes: "Ананас, Бергамот, Дубовый мох", gender: "Мужской",
+                accent_color: "#1A2F1A", mood: "Деловой", badge: "", inStock: "ok",
+                full_desc: "Усиленная версия легендарного Aventus. Смелый и мощный аромат с фруктовым стартом — ананас и чёрная смородина создают яркое первое впечатление. Берёзовый дым и пачули добавляют дерзости. База из дубового мха и мускуса обеспечивает стойкий, властный шлейф.",
                 notes_top: "Ананас, Бергамот, Чёрная смородина, Яблоко",
                 notes_heart: "Берёзовый дым, Пачули, Жасмин",
                 notes_base: "Дубовый мох, Мускус, Амбра, Ваниль",
@@ -1322,14 +706,11 @@
             },
             {
                 id: "pdm-haltane",
-                brand: "Parfums de Marly",
-                name: "Haltane",
+                brand: "Parfums de Marly", name: "Haltane",
                 image: "картинки и лого/hf_20260325_181942_0d25b5b5-0c9e-4ec5-9c72-a58f1132010c.jpeg",
-                notes: "Кожа, Уд, Амбра",
-                gender: "Мужской",
-                accent_color: "#1B5E3A",
-                mood: "Вечерний", badge: "", inStock: "low",
-                full_desc: "Благородный мужской аромат, вдохновлённый силой и элегантностью арабских скакунов. Свежее начало с бергамотом переходит в пряное сердце с корицей и шафраном. Кожа и уд в базе создают глубокий, властный шлейф. Аромат для мужчины, который знает себе цену.",
+                notes: "Кожа, Уд, Амбра", gender: "Мужской",
+                accent_color: "#1B5E3A", mood: "Вечерний", badge: "", inStock: "low",
+                full_desc: "Благородный мужской аромат, вдохновлённый силой и элегантностью арабских скакунов. Свежее начало с бергамотом переходит в пряное сердце с корицей и шафраном. Кожа и уд в базе создают глубокий, властный шлейф.",
                 notes_top: "Бергамот, Кардамон, Розовый перец",
                 notes_heart: "Ирис, Корица, Шафран",
                 notes_base: "Уд, Кожа, Амбра, Ветивер",
@@ -1337,14 +718,11 @@
             },
             {
                 id: "pdm-althair",
-                brand: "Parfums de Marly",
-                name: "Althaïr",
+                brand: "Parfums de Marly", name: "Althaïr",
                 image: "картинки и лого/image (26).webp",
-                notes: "Бурбонская ваниль, Пралине, Мускус",
-                gender: "Мужской",
-                accent_color: "#8B5A2B",
-                mood: "Зимний", badge: "Новинка", inStock: "ok",
-                full_desc: "Гурманский мужской аромат с восточным характером. Бурбонская ваниль и пралине создают богатую сладость, которая сбалансирована свежими нотами бергамота и мяты. Мускус и амбра в базе придают глубину и стойкость. Уютный, обволакивающий аромат, идеальный для холодного времени года.",
+                notes: "Бурбонская ваниль, Пралине, Мускус", gender: "Мужской",
+                accent_color: "#8B5A2B", mood: "Зимний", badge: "Новинка", inStock: "ok",
+                full_desc: "Гурманский мужской аромат с восточным характером. Бурбонская ваниль и пралине создают богатую сладость, которая сбалансирована свежими нотами бергамота и мяты. Уютный, обволакивающий аромат для холодного времени года.",
                 notes_top: "Бергамот, Мята, Лаванда",
                 notes_heart: "Бурбонская ваниль, Пралине, Корица",
                 notes_base: "Мускус, Амбра, Бобы тонка",
@@ -1352,14 +730,11 @@
             },
             {
                 id: "lv-imagination",
-                brand: "Louis Vuitton",
-                name: "Imagination",
+                brand: "Louis Vuitton", name: "Imagination",
                 image: "картинки и лого/hf_20260325_175215_01936d51-de90-41ea-b051-e9393a2ba20c.png",
-                notes: "Цитрус, Имбирь, Амброксан",
-                gender: "Мужской",
-                accent_color: "#2A7B9B",
-                mood: "Повседневный", badge: "", inStock: "ok",
-                full_desc: "Современный мужской аромат, вдохновлённый идеей свободы и творчества. Энергичное цитрусовое начало с калабрийским бергамотом и сицилийским апельсином. Сердце объединяет пряные нюансы нероли, имбиря и корицы. В базе — глубокие древесные оттенки чёрного чая и амброксана. Свежий, но не поверхностный, лёгкий, но оставляющий запоминающийся след.",
+                notes: "Цитрус, Имбирь, Амброксан", gender: "Мужской",
+                accent_color: "#2A7B9B", mood: "Повседневный", badge: "", inStock: "ok",
+                full_desc: "Современный мужской аромат, вдохновлённый идеей свободы и творчества. Энергичное цитрусовое начало с калабрийским бергамотом и сицилийским апельсином. В базе — глубокие древесные оттенки чёрного чая и амброксана.",
                 notes_top: "Бергамот, Апельсин, Цитрон",
                 notes_heart: "Нероли, Имбирь, Корица",
                 notes_base: "Чёрный чай, Гваяковое дерево, Амброксан",
@@ -1367,14 +742,11 @@
             },
             {
                 id: "lv-lovers",
-                brand: "Louis Vuitton",
-                name: "LV Lovers",
+                brand: "Louis Vuitton", name: "LV Lovers",
                 image: "картинки и лого/image (17).webp",
-                notes: "Роза, Жасмин, Мускус",
-                gender: "Унисекс",
-                accent_color: "#C9A0DC",
-                mood: "Романтичный", badge: "", inStock: "ok",
-                full_desc: "Романтичный унисекс-аромат с цветочно-мускусным характером. Нежная роза и жасмин окутаны тёплым мускусом и амбровыми нотами. Современная интерпретация классической цветочной темы — чувственная, лёгкая и обволакивающая. Аромат для тех, кто не боится выражать свои чувства.",
+                notes: "Роза, Жасмин, Мускус", gender: "Унисекс",
+                accent_color: "#C9A0DC", mood: "Романтичный", badge: "", inStock: "ok",
+                full_desc: "Романтичный унисекс-аромат с цветочно-мускусным характером. Нежная роза и жасмин окутаны тёплым мускусом и амбровыми нотами. Чувственная, лёгкая и обволакивающая интерпретация классической цветочной темы.",
                 notes_top: "Роза, Цитрусы",
                 notes_heart: "Жасмин, Ирис, Магнолия",
                 notes_base: "Мускус, Амбра, Кедр",
@@ -1382,14 +754,11 @@
             },
             {
                 id: "lv-limmensite",
-                brand: "Louis Vuitton",
-                name: "L'Immensité",
+                brand: "Louis Vuitton", name: "L'Immensité",
                 image: "картинки и лого/hf_20260325_174431_f5d1173d-bbbc-46d0-9363-28b5b44ab4e9.png",
-                notes: "Грейпфрут, Имбирь, Амбра",
-                gender: "Мужской",
-                accent_color: "#9B7B3A",
-                mood: "Деловой", badge: "Новинка", inStock: "ok",
-                full_desc: "Бескрайний как горизонт мужской аромат. Энергичный грейпфрут и имбирь в старте создают ощущение свежести раннего утра. Амбровое сердце добавляет глубину, а лабданум и мускус в базе обеспечивают стойкий, чувственный шлейф. Аромат безграничных возможностей и открытого неба.",
+                notes: "Грейпфрут, Имбирь, Амбра", gender: "Мужской",
+                accent_color: "#9B7B3A", mood: "Деловой", badge: "Новинка", inStock: "ok",
+                full_desc: "Бескрайний как горизонт мужской аромат. Энергичный грейпфрут и имбирь создают ощущение свежести раннего утра. Амбровое сердце добавляет глубину, а лабданум и мускус в базе обеспечивают стойкий, чувственный шлейф.",
                 notes_top: "Грейпфрут, Имбирь, Цитрон",
                 notes_heart: "Амбра, Лабданум",
                 notes_base: "Мускус, Древесные ноты, Амброксан",
@@ -1397,60 +766,82 @@
             }
         ];
 
-        // State
+        const PHONE = "+77001234567";
+
+        const faqs = [
+            {
+                q: "Это оригиналы или копии?",
+                a: "Это авторские ароматы, вдохновлённые известными нишевыми композициями. Не клоны, не дубликаты — у каждого есть свой характер и звучание. Мы честно об этом говорим. При этом они передают тот же вайб и настроение, что и оригиналы — и вы получите не меньше комплиментов."
+            },
+            {
+                q: "Что такое распив?",
+                a: "Распив — это возможность приобрести аромат в небольшом объёме, от 10 мл. Идеально, чтобы попробовать новый аромат без больших вложений, или иметь несколько ароматов на разные случаи."
+            },
+            {
+                q: "Как долго держится аромат?",
+                a: "Благодаря концентрации Extrait de Parfum (самая высокая) ароматы держатся 8–12 часов. Особенно хорошо — на коже и ткани одежды. Рекомендуем наносить на точки пульса: запястья, шея, за ухом."
+            },
+            {
+                q: "Как оформить заказ?",
+                a: "Выберите аромат и объём, добавьте в корзину, нажмите «Оформить заказ» — откроется WhatsApp с готовым сообщением. Просто отправьте его, и мы свяжемся, чтобы договориться о доставке или самовывозе."
+            },
+            {
+                q: "Есть ли доставка?",
+                a: "Да! Доставляем по Алматы и Актобе. Для других городов Казахстана — отправка Казпочтой или СДЭК. Также можно забрать самовывозом из любой нашей точки."
+            },
+            {
+                q: "Можно ли понюхать перед покупкой?",
+                a: "Конечно! Приходите в любую из наших точек в Алматы или Актобе — мы дадим понюхать любой аромат перед покупкой. Адреса — в разделе «Наши точки» выше."
+            }
+        ];
+
+        // ── State ──────────────────────────────────────────────────────────────
         let cart = [];
         let activeProduct = null;
         let activeDetailVolume = "10";
-        const phone = "+77001234567";
+        let currentFilterBrand = 'all';
+        let currentFilterGender = 'all';
+        let currentSort = 'default';
+        let searchQuery = '';
+        let activeCarouselId = 0;
 
-        // Utils
-        const formatMoney = (amount) => `₸${amount.toLocaleString('ru-RU')}`;
-        
-        // DOM Elements
+        // ── DOM ──────────────────────────────────────────────────────────────
         const grid = document.getElementById('product-grid');
         const cartCounter = document.getElementById('cart-counter');
         const productModal = document.getElementById('product-modal');
         const cartModal = document.getElementById('cart-modal');
-        
-        // Filter State
-        let currentFilterBrand = 'all';
-        let currentFilterGender = 'all';
-        let currentSort = 'default';
+        const backdrop = document.getElementById('overlay-backdrop');
 
-        // Initialize
-        let activeCarouselId = 0;
-        let carouselTimer = null;
+        // ── Utils ──────────────────────────────────────────────────────────────
+        const formatMoney = (n) => `₸${n.toLocaleString('ru-RU')}`;
 
+        // ── Init ──────────────────────────────────────────────────────────────
         function init() {
+            loadCart();
             renderCatalog();
             initCarousel();
-            bindGlobalEvents();
+            initFAQ();
+            bindEvents();
+            document.getElementById('footer-whatsapp').href = `https://wa.me/${PHONE.replace('+', '')}`;
         }
 
+        // ── Carousel ──────────────────────────────────────────────────────────
         function initCarousel() {
             const container = document.getElementById('hero-carousel');
             const glow = document.getElementById('hero-glow');
-            
-            // Randomly select 4 featured perfumes for the carousel
-            const shuffled = [...products].sort(() => 0.5 - Math.random());
-            const featured = shuffled.slice(0, 4);
-            
+            const featured = [...products].sort(() => 0.5 - Math.random()).slice(0, 4);
+
             featured.forEach((p, idx) => {
                 const item = document.createElement('div');
-                item.className = `carousel-item ${idx === 0 ? 'active' : ''}`;
+                item.className = `carousel-item${idx === 0 ? ' active' : ''}`;
                 item.id = `hero-item-${idx}`;
-                
-                item.innerHTML = `
-                    <img src="${p.image}" alt="${p.name}">
-                    <div class="carousel-title">${p.name}</div>
-                `;
-                
+                item.innerHTML = `<img src="${p.image}" alt="${p.name}"><div class="carousel-title">${p.name}</div>`;
                 container.appendChild(item);
             });
-            
+
             glow.style.background = featured[0].accent_color;
-            
-            carouselTimer = setInterval(() => {
+
+            setInterval(() => {
                 document.getElementById(`hero-item-${activeCarouselId}`).classList.remove('active');
                 activeCarouselId = (activeCarouselId + 1) % featured.length;
                 document.getElementById(`hero-item-${activeCarouselId}`).classList.add('active');
@@ -1458,37 +849,59 @@
             }, 4500);
         }
 
-        // Render Catalog
+        // ── FAQ ──────────────────────────────────────────────────────────────
+        function initFAQ() {
+            const list = document.getElementById('faq-list');
+            faqs.forEach(faq => {
+                const item = document.createElement('div');
+                item.className = 'faq-item';
+                item.innerHTML = `
+                    <div class="faq-question">
+                        <span>${faq.q}</span>
+                        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                    </div>
+                    <div class="faq-answer"><div class="faq-answer-inner">${faq.a}</div></div>
+                `;
+                item.querySelector('.faq-question').addEventListener('click', () => {
+                    const isOpen = item.classList.contains('open');
+                    document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
+                    if (!isOpen) item.classList.add('open');
+                });
+                list.appendChild(item);
+            });
+        }
+
+        // ── Catalog ──────────────────────────────────────────────────────────
         function renderCatalog() {
             grid.innerHTML = '';
-            
-            let filteredList = products.filter(p => {
-                const brandMatch = currentFilterBrand === 'all' || p.brand === currentFilterBrand;
-                const genderMatch = currentFilterGender === 'all' || p.gender === currentFilterGender;
-                return brandMatch && genderMatch;
+            const q = searchQuery.toLowerCase();
+
+            let list = products.filter(p => {
+                const brandOk  = currentFilterBrand === 'all' || p.brand === currentFilterBrand;
+                const genderOk = currentFilterGender === 'all' || p.gender === currentFilterGender;
+                const searchOk = !q ||
+                    p.name.toLowerCase().includes(q) ||
+                    p.brand.toLowerCase().includes(q) ||
+                    p.notes.toLowerCase().includes(q) ||
+                    (p.mood && p.mood.toLowerCase().includes(q));
+                return brandOk && genderOk && searchOk;
             });
-            
-            if(currentSort === 'price-asc') {
-                filteredList.sort((a,b) => a.volumes["10"] - b.volumes["10"]);
-            } else if(currentSort === 'price-desc') {
-                filteredList.sort((a,b) => b.volumes["10"] - a.volumes["10"]);
-            } else if(currentSort === 'name') {
-                filteredList.sort((a,b) => a.name.localeCompare(b.name));
-            }
-            
-            if (filteredList.length === 0) {
-                grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding: 40px; color: var(--text-muted); font-size: 0.9rem;">Нет ароматов, подходящих под выбранные фильтры</div>';
+
+            if (currentSort === 'price-asc')  list.sort((a, b) => a.volumes["10"] - b.volumes["10"]);
+            if (currentSort === 'price-desc') list.sort((a, b) => b.volumes["10"] - a.volumes["10"]);
+            if (currentSort === 'name')       list.sort((a, b) => a.name.localeCompare(b.name));
+
+            if (list.length === 0) {
+                grid.innerHTML = '<div class="no-results">Нет ароматов, подходящих под выбранные фильтры</div>';
                 return;
             }
-            
-            filteredList.forEach(p => {
+
+            list.forEach(p => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
                 card.style.setProperty('--card-glow', p.accent_color);
-                
-                // Track selected volume for this card
                 let selectedVol = "10";
-                
+
                 card.innerHTML = `
                     ${p.badge ? `<span class="card-badge ${p.badge === 'Хит' ? 'hit' : 'new'}">${p.badge}</span>` : ''}
                     <div class="product-image-container" onclick="openProductDetail('${p.id}')">
@@ -1498,172 +911,164 @@
                         <div class="product-brand">${p.brand}</div>
                         <h3 class="product-name">${p.name}</h3>
                         ${p.mood ? `<span class="mood-tag">${p.mood}</span>` : ''}
-                        <div class="volume-selector" id="vs-${p.id}">
-                            ${['10', '20', '30', '50'].map(v =>
-                                `<button class="volume-btn ${v === selectedVol ? 'active' : ''}" data-vol="${v}">${v}</button>`
+                        <div class="volume-selector">
+                            ${['10','20','30','50'].map(v =>
+                                `<button class="volume-btn${v === selectedVol ? ' active' : ''}" data-vol="${v}">${v}</button>`
                             ).join('')}
                         </div>
-                        <div class="product-price" id="price-${p.id}" style="color: var(--accent-gold);">${formatMoney(p.volumes[selectedVol])}</div>
+                        <div class="product-price" id="price-${p.id}" style="color:var(--accent-gold);">${formatMoney(p.volumes[selectedVol])}</div>
                         ${p.inStock === 'low' ? `<div class="stock-low">⚠ Осталось мало</div>` : ''}
                         <button class="btn-add" id="add-${p.id}">В корзину</button>
                     </div>
                 `;
-                
+
                 grid.appendChild(card);
-                
-                // Bind Volume Buttons inside card
+
                 const volBtns = card.querySelectorAll('.volume-btn');
                 volBtns.forEach(btn => {
-                    btn.addEventListener('click', (e) => {
+                    btn.addEventListener('click', e => {
                         e.stopPropagation();
-                        // Update active state
                         volBtns.forEach(b => b.classList.remove('active'));
                         btn.classList.add('active');
-                        // Update price
                         selectedVol = btn.dataset.vol;
                         card.querySelector(`#price-${p.id}`).textContent = formatMoney(p.volumes[selectedVol]);
                     });
                 });
-                
-                // Bind Add Button inside card
-                card.querySelector(`#add-${p.id}`).addEventListener('click', (e) => {
+
+                card.querySelector(`#add-${p.id}`).addEventListener('click', e => {
                     e.stopPropagation();
                     addToCart(p, selectedVol);
-                    
-                    // Button visual feedback
                     const btn = e.target;
-                    const ogText = btn.textContent.trim();
                     btn.textContent = '✓ Добавлено';
                     btn.style.background = 'rgba(255,255,255,0.15)';
                     btn.style.color = '#fff';
-                    setTimeout(() => {
-                        btn.textContent = ogText;
-                        btn.style.background = '';
-                        btn.style.color = '';
-                    }, 1200);
+                    setTimeout(() => { btn.textContent = 'В корзину'; btn.style.background = ''; btn.style.color = ''; }, 1200);
                 });
             });
         }
 
-        // Global Events
-        function bindGlobalEvents() {
-            document.getElementById('btn-explore').addEventListener('click', () => {
-                document.getElementById('catalog').scrollIntoView({ behavior: 'smooth' });
+        // ── Events ──────────────────────────────────────────────────────────
+        function bindEvents() {
+            document.getElementById('btn-explore').addEventListener('click', () =>
+                document.getElementById('catalog').scrollIntoView({ behavior: 'smooth' })
+            );
+
+            document.getElementById('btn-toggle-filters').addEventListener('click', () =>
+                document.getElementById('filter-bar').classList.toggle('visible')
+            );
+
+            document.getElementById('search-input').addEventListener('input', e => {
+                searchQuery = e.target.value;
+                renderCatalog();
             });
-            
-            document.getElementById('btn-toggle-filters').addEventListener('click', () => {
-                const fb = document.getElementById('filter-bar');
-                fb.style.display = fb.style.display === 'none' ? 'flex' : 'none';
-            });
-            
-            // Filter Events
-            document.querySelectorAll('#filter-brand .filter-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    document.querySelectorAll('#filter-brand .filter-btn').forEach(b => b.classList.remove('active'));
-                    e.target.classList.add('active');
-                    currentFilterBrand = e.target.dataset.filter;
-                    renderCatalog();
+
+            // Filters — brand & gender
+            ['filter-brand', 'filter-gender'].forEach(groupId => {
+                document.querySelectorAll(`#${groupId} .filter-btn`).forEach(btn => {
+                    btn.addEventListener('click', e => {
+                        document.querySelectorAll(`#${groupId} .filter-btn`).forEach(b => b.classList.remove('active'));
+                        e.target.classList.add('active');
+                        if (groupId === 'filter-brand') currentFilterBrand = e.target.dataset.filter;
+                        else currentFilterGender = e.target.dataset.filter;
+                        renderCatalog();
+                    });
                 });
             });
-            
-            document.querySelectorAll('#filter-gender .filter-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    document.querySelectorAll('#filter-gender .filter-btn').forEach(b => b.classList.remove('active'));
-                    e.target.classList.add('active');
-                    currentFilterGender = e.target.dataset.filter;
-                    renderCatalog();
-                });
-            });
-            
+
+            // Sort
             document.querySelectorAll('#filter-sort .filter-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => {
+                btn.addEventListener('click', e => {
                     document.querySelectorAll('#filter-sort .filter-btn').forEach(b => b.classList.remove('active'));
                     e.target.classList.add('active');
                     currentSort = e.target.dataset.sort;
                     renderCatalog();
                 });
             });
-            
+
+            // Cart
             document.getElementById('cart-btn').addEventListener('click', openCart);
             document.getElementById('close-cart').addEventListener('click', closeCart);
             document.getElementById('btn-cart-continue').addEventListener('click', closeCart);
             document.getElementById('close-product').addEventListener('click', closeProductDetail);
-            
-            // Add detail button
             document.getElementById('btn-add-detail').addEventListener('click', () => {
-                if(activeProduct) {
-                    addToCart(activeProduct, activeDetailVolume);
-                    closeProductDetail();
-                    
-                    // Optional: open cart immediately? Let's just update counter.
-                    // openCart();
-                }
+                if (activeProduct) { addToCart(activeProduct, activeDetailVolume); closeProductDetail(); }
             });
-            
-            // Checkout
             document.getElementById('btn-checkout').addEventListener('click', checkout);
-            
-            // Navbar scroll effect
+
+            // Close on backdrop click
+            backdrop.addEventListener('click', () => {
+                if (productModal.classList.contains('active')) closeProductDetail();
+                else if (cartModal.classList.contains('active')) closeCart();
+            });
+
+            // Close on Escape
+            document.addEventListener('keydown', e => {
+                if (e.key !== 'Escape') return;
+                if (productModal.classList.contains('active')) closeProductDetail();
+                else if (cartModal.classList.contains('active')) closeCart();
+            });
+
+            // Swipe down to close (on header drag)
+            bindSwipeClose(document.getElementById('product-modal-header'), closeProductDetail);
+            bindSwipeClose(document.getElementById('cart-modal-header'), closeCart);
+
+            // Navbar scroll
             window.addEventListener('scroll', () => {
-                const nav = document.querySelector('.navbar');
-                if(window.scrollY > 50) {
-                    nav.style.background = 'rgba(5, 5, 5, 0.95)';
-                    nav.style.padding = '0 20px';
-                } else {
-                    nav.style.background = 'rgba(5, 5, 5, 0.85)';
-                    nav.style.padding = '0 20px';
-                }
+                document.querySelector('.navbar').style.background =
+                    window.scrollY > 50 ? 'rgba(5,5,5,0.98)' : 'rgba(5,5,5,0.85)';
             });
         }
 
-        // Product Detail Modal
+        function bindSwipeClose(el, closeFn) {
+            let startY = 0;
+            el.addEventListener('touchstart', e => { startY = e.touches[0].clientY; }, { passive: true });
+            el.addEventListener('touchend', e => {
+                if (e.changedTouches[0].clientY - startY > 80) closeFn();
+            }, { passive: true });
+        }
+
+        // ── Product Detail ──────────────────────────────────────────────────
         function openProductDetail(id) {
             const p = products.find(x => x.id === id);
-            if(!p) return;
-            
+            if (!p) return;
             activeProduct = p;
             activeDetailVolume = "10";
-            
+
             document.getElementById('detail-brand').textContent = p.brand;
             document.getElementById('detail-name').textContent = p.name;
-            document.getElementById('detail-notes').textContent = p.notes;
             document.getElementById('detail-gender').textContent = p.gender;
-            
-            // Phase 2 Details
             document.getElementById('detail-full-desc').textContent = p.full_desc || '';
             document.getElementById('detail-notes-top').textContent = p.notes_top || '-';
             document.getElementById('detail-notes-heart').textContent = p.notes_heart || '-';
             document.getElementById('detail-notes-base').textContent = p.notes_base || '-';
-            
             document.getElementById('detail-image').src = p.image;
             document.getElementById('detail-glow').style.background = p.accent_color;
-            
-            document.getElementById('btn-add-detail').style.background = p.accent_color;
-            document.getElementById('btn-add-detail').style.color = '#ffffff';
-            document.getElementById('btn-add-detail').style.border = 'none';
-            
+
+            const addBtn = document.getElementById('btn-add-detail');
+            addBtn.style.cssText = `background:${p.accent_color}; color:#fff; border:none;`;
+
             renderDetailVolumes(p);
             updateDetailPrice();
-            
+
             document.body.style.overflow = 'hidden';
+            backdrop.classList.add('active');
             productModal.classList.add('active');
         }
 
         function closeProductDetail() {
             document.body.style.overflow = '';
+            backdrop.classList.remove('active');
             productModal.classList.remove('active');
             activeProduct = null;
         }
 
         function renderDetailVolumes(p) {
             const container = document.getElementById('detail-volumes');
-            container.innerHTML = ['10', '20', '30', '50'].map(v => `
-                <button class="dv-btn ${v === activeDetailVolume ? 'active' : ''}" data-vol="${v}">
-                    ${v}мл
-                    <span>₸${(p.volumes[v]/1000).toFixed(0)}k</span>
+            container.innerHTML = ['10','20','30','50'].map(v => `
+                <button class="dv-btn${v === activeDetailVolume ? ' active' : ''}" data-vol="${v}">
+                    ${v} мл<span>${formatMoney(p.volumes[v])}</span>
                 </button>
             `).join('');
-            
             container.querySelectorAll('.dv-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     container.querySelectorAll('.dv-btn').forEach(b => b.classList.remove('active'));
@@ -1675,114 +1080,147 @@
         }
 
         function updateDetailPrice() {
-            if(!activeProduct) return;
+            if (!activeProduct) return;
             document.getElementById('detail-price').textContent = formatMoney(activeProduct.volumes[activeDetailVolume]);
         }
 
-        // Cart Logic
+        // ── Cart ─────────────────────────────────────────────────────────────
         function addToCart(product, volume) {
-            // Check if same product + volume exists
-            const exist = cart.find(item => item.product.id === product.id && item.volume === volume);
-            if(exist) {
-                exist.qty += 1;
-            } else {
-                cart.push({ product, volume, qty: 1 });
-            }
+            const exist = cart.find(i => i.product.id === product.id && i.volume === volume);
+            if (exist) exist.qty++;
+            else cart.push({ product, volume, qty: 1 });
             updateCartCounter();
             renderCartContent();
+            saveCart();
+            bounceCart();
+        }
+
+        function changeQty(index, delta) {
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) cart.splice(index, 1);
+            updateCartCounter();
+            renderCartContent();
+            saveCart();
         }
 
         function removeFromCart(index) {
             cart.splice(index, 1);
             updateCartCounter();
             renderCartContent();
+            saveCart();
         }
 
         function updateCartCounter() {
-            const count = cart.reduce((acc, item) => acc + item.qty, 0);
+            const count = cart.reduce((acc, i) => acc + i.qty, 0);
             cartCounter.textContent = count;
-            if(count > 0) {
-                cartCounter.classList.add('has-items');
-            } else {
-                cartCounter.classList.remove('has-items');
-            }
+            cartCounter.classList.toggle('has-items', count > 0);
+        }
+
+        function bounceCart() {
+            const w = document.getElementById('cart-btn');
+            w.classList.remove('bounce');
+            void w.offsetWidth; // reflow
+            w.classList.add('bounce');
+            w.addEventListener('animationend', () => w.classList.remove('bounce'), { once: true });
         }
 
         function openCart() {
             renderCartContent();
             document.body.style.overflow = 'hidden';
+            backdrop.classList.add('active');
             cartModal.classList.add('active');
         }
 
         function closeCart() {
             document.body.style.overflow = '';
+            backdrop.classList.remove('active');
             cartModal.classList.remove('active');
         }
 
         function renderCartContent() {
-            const body = document.getElementById('cart-body');
-            const empty = document.getElementById('cart-empty');
+            const body   = document.getElementById('cart-body');
+            const empty  = document.getElementById('cart-empty');
             const footer = document.getElementById('cart-footer');
-            
-            // Clear existing items but preserve empty state template
-            const items = body.querySelectorAll('.cart-item');
-            items.forEach(i => i.remove());
-            
-            if(cart.length === 0) {
+
+            body.querySelectorAll('.cart-item').forEach(el => el.remove());
+
+            if (cart.length === 0) {
                 empty.style.display = 'flex';
                 footer.style.display = 'none';
-            } else {
-                empty.style.display = 'none';
-                footer.style.display = 'block';
-                
-                let sum = 0;
-                cart.forEach((item, index) => {
-                    const price = item.product.volumes[item.volume];
-                    sum += price * item.qty;
-                    
-                    const el = document.createElement('div');
-                    el.className = 'cart-item';
-                    el.innerHTML = `
-                        <img src="${item.product.image}" class="cart-item-img">
-                        <div class="cart-item-info">
-                            <div class="cart-item-brand">${item.product.brand}</div>
-                            <div class="cart-item-title">${item.product.name}</div>
-                            <div class="cart-item-meta">${item.volume}мл ${item.qty > 1 ? `x ${item.qty}` : ''}</div>
-                            <div class="cart-item-price">${formatMoney(price * item.qty)}</div>
-                        </div>
-                        <button class="cart-item-remove" onclick="removeFromCart(${index})">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
-                        </button>
-                    `;
-                    // Insert before empty state
-                    body.insertBefore(el, empty);
-                });
-                
-                document.getElementById('cart-total-sum').textContent = formatMoney(sum);
+                return;
             }
+
+            empty.style.display = 'none';
+            footer.style.display = 'block';
+            let sum = 0;
+
+            cart.forEach((item, index) => {
+                const price = item.product.volumes[item.volume];
+                sum += price * item.qty;
+
+                const el = document.createElement('div');
+                el.className = 'cart-item';
+                el.innerHTML = `
+                    <img src="${item.product.image}" class="cart-item-img" alt="${item.product.name}">
+                    <div class="cart-item-info">
+                        <div class="cart-item-brand">${item.product.brand}</div>
+                        <div class="cart-item-title">${item.product.name}</div>
+                        <div class="cart-item-meta">${item.volume} мл</div>
+                        <div class="cart-item-price">${formatMoney(price * item.qty)}</div>
+                    </div>
+                    <div class="cart-item-right">
+                        <button class="cart-item-remove" onclick="removeFromCart(${index})">
+                            <svg viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                        </button>
+                        <div class="qty-controls">
+                            <button class="qty-btn" onclick="changeQty(${index}, -1)">−</button>
+                            <span class="qty-val">${item.qty}</span>
+                            <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                        </div>
+                    </div>
+                `;
+                body.insertBefore(el, empty);
+            });
+
+            document.getElementById('cart-total-sum').textContent = formatMoney(sum);
         }
 
-        // WhatsApp Checkout
+        // ── LocalStorage ──────────────────────────────────────────────────────
+        function saveCart() {
+            try {
+                localStorage.setItem('rayal_cart', JSON.stringify(
+                    cart.map(i => ({ id: i.product.id, volume: i.volume, qty: i.qty }))
+                ));
+            } catch (e) {}
+        }
+
+        function loadCart() {
+            try {
+                const saved = localStorage.getItem('rayal_cart');
+                if (!saved) return;
+                cart = JSON.parse(saved).map(item => {
+                    const product = products.find(p => p.id === item.id);
+                    return product ? { product, volume: item.volume, qty: item.qty } : null;
+                }).filter(Boolean);
+                updateCartCounter();
+            } catch (e) { cart = []; }
+        }
+
+        // ── Checkout ──────────────────────────────────────────────────────────
         function checkout() {
-            if(cart.length === 0) return;
-            
+            if (cart.length === 0) return;
             let text = "Здравствуйте! Хочу заказать:\n";
             let sum = 0;
-            
             cart.forEach(item => {
                 const price = item.product.volumes[item.volume];
                 const sub = price * item.qty;
                 sum += sub;
                 text += `- ${item.product.brand} ${item.product.name} ${item.volume}мл${item.qty > 1 ? ` (x${item.qty})` : ''} — ₸${sub.toLocaleString('ru-RU')}\n`;
             });
-            
             text += `Итого: ₸${sum.toLocaleString('ru-RU')}`;
-            
-            const url = `https://wa.me/${phone.replace('+','')}?text=${encodeURIComponent(text)}`;
-            window.open(url, '_blank');
+            window.open(`https://wa.me/${PHONE.replace('+', '')}?text=${encodeURIComponent(text)}`, '_blank');
         }
 
-        // Run
         document.addEventListener('DOMContentLoaded', init);
     </script>
 </body>

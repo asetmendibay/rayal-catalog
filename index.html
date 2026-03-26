@@ -461,9 +461,9 @@
         .btn-add {
             width: 100%;
             padding: 10px 0;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--text-main);
+            background: var(--accent-gold);
+            border: none;
+            color: #000;
             border-radius: 6px;
             font-size: 0.8rem;
             font-family: var(--font-sans);
@@ -471,10 +471,11 @@
             letter-spacing: 0.05em;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-weight: 600;
         }
 
         .btn-add:active {
-            background: rgba(255, 255, 255, 0.15);
+            background: #b8941e;
         }
 
         /* Modals & Overlays */
@@ -694,17 +695,23 @@
         }
 
         .detail-price-big {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-family: var(--font-serif);
             font-weight: 600;
             white-space: nowrap;
+            flex-shrink: 0;
             color: var(--accent-gold);
         }
         
         .detail-action .btn {
             flex-shrink: 0;
             white-space: nowrap;
-            padding: 14px 24px;
+            padding: 12px 20px;
+        }
+
+        @media (max-width: 360px) {
+            .detail-price-big { font-size: 1rem; }
+            .detail-action .btn { padding: 10px 14px; font-size: 0.8rem; }
         }
 
         /* Cart Overlay */
@@ -1458,7 +1465,7 @@
                             ).join('')}
                         </div>
                         <div class="product-price" id="price-${p.id}" style="color: var(--accent-gold);">${formatMoney(p.volumes[selectedVol])}</div>
-                        <button class="btn-add" id="add-${p.id}" style="background: ${p.accent_color}; color: #fff; border: none;">В корзину</button>
+                        <button class="btn-add" id="add-${p.id}">В корзину</button>
                     </div>
                 `;
                 
@@ -1485,13 +1492,15 @@
                     
                     // Button visual feedback
                     const btn = e.target;
-                    const ogText = btn.textContent;
-                    btn.textContent = 'Добавлено';
-                    btn.style.background = 'rgba(255,255,255,0.2)';
+                    const ogText = btn.textContent.trim();
+                    btn.textContent = '✓ Добавлено';
+                    btn.style.background = 'rgba(255,255,255,0.15)';
+                    btn.style.color = '#fff';
                     setTimeout(() => {
                         btn.textContent = ogText;
                         btn.style.background = '';
-                    }, 1000);
+                        btn.style.color = '';
+                    }, 1200);
                 });
             });
         }

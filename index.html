@@ -113,26 +113,12 @@
             z-index: 10;
             margin-bottom: 2rem;
             opacity: 0;
-            cursor: pointer;
             animation: logo-appear 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
             overflow: visible;
         }
         @keyframes logo-appear {
             from { opacity: 0; transform: translateY(24px) scale(0.95); }
             to   { opacity: 1; transform: translateY(0) scale(1); }
-        }
-
-        /* Gold particle burst on click */
-        .gold-particle {
-            position: fixed; pointer-events: none; z-index: 9999;
-            width: 7px; height: 7px; border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, #FFFACD, #D4AF37 60%, #8B6914);
-            box-shadow: 0 0 4px rgba(212,175,55,0.8);
-            animation: particle-fly var(--dur, 0.9s) ease-out forwards;
-        }
-        @keyframes particle-fly {
-            0%   { transform: translate(0,0) scale(1);   opacity: 1; }
-            100% { transform: translate(var(--dx), var(--dy)) scale(0); opacity: 0; }
         }
 
         .hero-carousel {
@@ -280,21 +266,21 @@
         .product-info { z-index: 1; display: flex; flex-direction: column; flex-grow: 1; }
         .product-brand { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; }
         .product-name { font-family: var(--font-serif); font-size: 1.1rem; font-weight: 500; margin-bottom: 12px; line-height: 1.2; }
-        .product-price { font-size: 1rem; font-weight: 500; margin-bottom: 12px; margin-top: auto; }
+        .product-price { font-size: 1rem; font-weight: 500; margin-bottom: 12px; }
 
         .volume-selector { display: flex; gap: 6px; margin-bottom: 12px; background: rgba(0,0,0,0.3); border-radius: 6px; padding: 4px; }
         .volume-btn { flex: 1; background: transparent; border: none; color: var(--text-muted); font-size: 0.75rem; padding: 6px 0; border-radius: 4px; cursor: pointer; transition: all 0.2s ease; font-family: var(--font-sans); }
         .volume-btn.active { background: var(--accent-gold); color: var(--bg-dark); box-shadow: 0 2px 5px rgba(212,175,55,0.3); }
 
-        .btn-add { width: 100%; padding: 10px 0; background: var(--accent-gold); border: none; color: #000; border-radius: 6px; font-size: 0.8rem; font-family: var(--font-sans); text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; transition: all 0.3s ease; font-weight: 600; }
+        .btn-add { width: 100%; margin-top: auto; padding: 10px 0; background: var(--accent-gold); border: none; color: #000; border-radius: 6px; font-size: 0.8rem; font-family: var(--font-sans); text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; transition: all 0.3s ease; font-weight: 600; }
         .btn-add:active { background: #b8941e; }
 
         /* Badges */
         .card-badge { position: absolute; top: 10px; right: 10px; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 9px; border-radius: 100px; z-index: 3; pointer-events: none; }
         .card-badge.hit { background: var(--accent-gold); color: #000; }
         .card-badge.new { background: #3B82F6; color: #fff; }
+        .card-badge.low { background: #F59E0B; color: #000; }
         .mood-tag { display: inline-block; font-size: 0.68rem; color: var(--text-muted); background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 100px; padding: 2px 8px; margin-bottom: 8px; }
-        .stock-low { min-height: 1.4em; font-size: 0.72rem; color: #F59E0B; font-weight: 500; margin-top: -4px; margin-bottom: 8px; }
 
         /* ── Overlays ── */
         .overlay-backdrop {
@@ -953,9 +939,11 @@
                 card.className = 'product-card';
                 card.style.setProperty('--card-glow', p.accent_color);
                 let selectedVol = "10";
+                const badgeLabel = p.inStock === 'low' ? 'Осталось мало' : p.badge;
+                const badgeClass = p.inStock === 'low' ? 'low' : (p.badge === 'Хит' ? 'hit' : 'new');
 
                 card.innerHTML = `
-                    ${p.badge ? `<span class="card-badge ${p.badge === 'Хит' ? 'hit' : 'new'}">${p.badge}</span>` : ''}
+                    ${badgeLabel ? `<span class="card-badge ${badgeClass}">${badgeLabel}</span>` : ''}
                     <div class="product-image-container" onclick="openProductDetail('${p.id}')">
                         <img src="${p.image}" alt="${p.name}" class="product-image" loading="lazy">
                     </div>
@@ -969,7 +957,6 @@
                             ).join('')}
                         </div>
                         <div class="product-price" id="price-${p.id}" style="color:var(--accent-gold);">${formatMoney(p.volumes[selectedVol])}</div>
-                        <div class="stock-low">${p.inStock === 'low' ? '⚠ Осталось мало' : ''}</div>
                         <button class="btn-add" id="add-${p.id}">В корзину</button>
                     </div>
                 `;
@@ -1288,32 +1275,8 @@
             glow.style.fill = hex;
         }
 
-        // ── Gold particle burst ───────────────────────────────────────────────
-        function spawnGoldParticles(x, y) {
-            const count = 28;
-            for (let i = 0; i < count; i++) {
-                const dot = document.createElement('div');
-                dot.className = 'gold-particle';
-                const angle = (Math.PI * 2 * i) / count + (Math.random() - 0.5) * 0.6;
-                const speed = 60 + Math.random() * 110;
-                dot.style.setProperty('--dx', `${Math.cos(angle) * speed}px`);
-                dot.style.setProperty('--dy', `${Math.sin(angle) * speed - 40}px`);
-                dot.style.setProperty('--dur', `${0.7 + Math.random() * 0.5}s`);
-                dot.style.left = `${x - 3}px`;
-                dot.style.top  = `${y - 3}px`;
-                dot.style.width  = `${4 + Math.random() * 6}px`;
-                dot.style.height = dot.style.width;
-                document.body.appendChild(dot);
-                dot.addEventListener('animationend', () => dot.remove(), { once: true });
-            }
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
             init();
-            const logo = document.getElementById('hero-logo');
-            if (logo) {
-                logo.addEventListener('click', e => spawnGoldParticles(e.clientX, e.clientY));
-            }
         });
     </script>
 </body>

@@ -844,6 +844,172 @@
             white-space: nowrap;
         }
 
+        /* Phase 2 Additions */
+        .filter-bar {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 24px;
+            padding: 0 20px;
+            max-width: 1200px;
+            margin: 0 auto 24px;
+        }
+        .filter-group {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .filter-group::-webkit-scrollbar { display: none; }
+        .filter-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 4px;
+            padding-left: 4px;
+        }
+        .filter-btn {
+            white-space: nowrap;
+            padding: 8px 16px;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 100px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .filter-btn.active {
+            background: rgba(255, 255, 255, 0.15);
+            color: var(--text-main);
+            border-color: rgba(255,255,255,0.4);
+        }
+
+        .info-section {
+            padding: 0 20px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .info-card {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 16px;
+            padding: 30px 20px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+        .info-card::before {
+            content: '';
+            position: absolute;
+            top: -50px; left: -50px;
+            width: 150px; height: 150px;
+            background: rgba(255,255,255,0.03);
+            filter: blur(30px);
+            border-radius: 50%;
+        }
+        .info-card h3 {
+            font-family: var(--font-serif);
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+            color: var(--text-main);
+        }
+        .info-card p {
+            color: #d1d1d6;
+            line-height: 1.6;
+            margin-bottom: 16px;
+            font-weight: 300;
+        }
+        .info-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .location-city {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+            color: var(--text-main);
+            margin-top: 24px;
+        }
+        .location-city:first-of-type {
+            margin-top: 0;
+        }
+        .location-address {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            color: #d1d1d6;
+            font-weight: 300;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        .footer {
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 1px solid var(--border-glass);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            background: rgba(5,5,5,0.8);
+        }
+        .footer-logo {
+            height: 24px;
+            filter: invert(1);
+            opacity: 0.5;
+        }
+        .footer-text {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+        .footer-link {
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+        
+        .detail-full-desc {
+            font-size: 0.95rem;
+            color: #d1d1d6;
+            margin-bottom: 24px;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+        .detail-breakdown {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 30px;
+        }
+        .detail-breakdown-row {
+            margin-bottom: 12px;
+        }
+        .detail-breakdown-row:last-child { margin-bottom: 0; }
+        .detail-breakdown-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+        .detail-breakdown-val {
+            font-size: 0.9rem;
+            color: var(--text-main);
+        }
+
     </style>
 </head>
 <body>
@@ -891,10 +1057,79 @@
             <h2 class="section-title">Коллекция</h2>
             <p class="section-subtitle">Избранные нишевые ароматы</p>
         </div>
+        
+        <div class="filter-bar">
+            <div>
+                <div class="filter-label">Бренд</div>
+                <div class="filter-group" id="filter-brand">
+                    <button class="filter-btn active" data-filter="all">Все</button>
+                    <button class="filter-btn" data-filter="Versace">Versace</button>
+                    <button class="filter-btn" data-filter="Roja Parfums">Roja Parfums</button>
+                    <button class="filter-btn" data-filter="Tom Ford">Tom Ford</button>
+                    <button class="filter-btn" data-filter="Creed">Creed</button>
+                    <button class="filter-btn" data-filter="Parfums de Marly">Parfums de Marly</button>
+                    <button class="filter-btn" data-filter="Louis Vuitton">Louis Vuitton</button>
+                    <button class="filter-btn" data-filter="Byredo">Byredo</button>
+                </div>
+            </div>
+            <div>
+                <div class="filter-label">Пол</div>
+                <div class="filter-group" id="filter-gender">
+                    <button class="filter-btn active" data-filter="all">Все</button>
+                    <button class="filter-btn" data-filter="Мужской">Мужской</button>
+                    <button class="filter-btn" data-filter="Женский">Женский</button>
+                    <button class="filter-btn" data-filter="Унисекс">Унисекс</button>
+                </div>
+            </div>
+            <div>
+                <div class="filter-label">Сортировка</div>
+                <div class="filter-group" id="filter-sort">
+                    <button class="filter-btn active" data-sort="default">По умолчанию</button>
+                    <button class="filter-btn" data-sort="price-asc">По цене ↑</button>
+                    <button class="filter-btn" data-sort="price-desc">По цене ↓</button>
+                    <button class="filter-btn" data-sort="name">По названию</button>
+                </div>
+            </div>
+        </div>
+
         <div class="product-grid" id="product-grid">
             <!-- Products injected here via JS -->
         </div>
     </section>
+
+    <!-- Info Sections -->
+    <section class="info-section">
+        <div class="info-card">
+            <h3>О RAYAL</h3>
+            <p>Rayal — честная, качественная и доступная альтернатива дорогой парфюмерии. Без обмана, пафоса и лишних переплат.</p>
+            <p>Наши ароматы выполнены в самой высокой концентрации — Extrait de Parfum. Поэтому они насыщенные, яркие и рассчитаны на длительную стойкость.</p>
+            <p>Мы не копируем оригиналы один в один. Наши ароматы вдохновлены известными композициями, но имеют свой характер и собственное звучание. При этом они передают тот же вайб, те же эмоции и то же впечатление, за которое люди любят оригиналы.</p>
+            <p>Вы получите столько же комплиментов и ощущений, но без переплаты за бренд.</p>
+        </div>
+        
+        <div class="info-card">
+            <h3>Наши точки</h3>
+            
+            <div class="location-city">г. Актобе</div>
+            <div class="location-address">📍 Проспект Алии Молдагуловой, 30Б/1</div>
+            
+            <div class="location-city">г. Алматы</div>
+            <div class="location-address">📍 ТЦ Grand Park, Е линия, 6 блок</div>
+            <div class="location-address">📍 ТЦ Сатти, улица Яссауи, 68</div>
+            <div class="location-address">📍 ТЦ Ялян, шоссе Северное Кольцо 9, G22 бутик, 2 этаж</div>
+            <div class="location-address">📍 Проспект Абылай хана, 66</div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <img src="картинки и лого/images 1 (Traced).svg" alt="RAYAL" class="footer-logo" onerror="this.style.display='none';">
+        <div class="footer-text">© 2026 RAYAL. Нишевая парфюмерия</div>
+        <div class="footer-links">
+            <a href="https://instagram.com/rayal" target="_blank" class="footer-link">Instagram: @rayal</a>
+            <a href="https://wa.me/77001234567" target="_blank" class="footer-link">WhatsApp</a>
+        </div>
+    </footer>
 
     <!-- Product Detail Overlay -->
     <div class="overlay" id="product-modal">
@@ -918,9 +1153,28 @@
                     <span class="tag" id="detail-gender">Унисекс</span>
                 </div>
                 
-                <p class="detail-desc">
+                <p class="detail-desc" style="display:none;">
                     <strong>Ноты:</strong> <span id="detail-notes">Note, Note</span>
                 </p>
+                
+                <div class="detail-full-desc" id="detail-full-desc">
+                    Описание...
+                </div>
+                
+                <div class="detail-breakdown">
+                    <div class="detail-breakdown-row">
+                        <div class="detail-breakdown-title">Верхние ноты</div>
+                        <div class="detail-breakdown-val" id="detail-notes-top">-</div>
+                    </div>
+                    <div class="detail-breakdown-row">
+                        <div class="detail-breakdown-title">Ноты сердца</div>
+                        <div class="detail-breakdown-val" id="detail-notes-heart">-</div>
+                    </div>
+                    <div class="detail-breakdown-row">
+                        <div class="detail-breakdown-title">Базовые ноты</div>
+                        <div class="detail-breakdown-val" id="detail-notes-base">-</div>
+                    </div>
+                </div>
                 
                 <div class="detail-volume-selector">
                     <div class="detail-volume-label">Выберите объём</div>
@@ -978,7 +1232,11 @@
                 image: "картинки и лого/hf_20260325_184451_0d32ced4-0831-4649-991f-1dedf72d1e91.png",
                 notes: "Цитрус, Перец, Древесный",
                 gender: "Мужской",
-                accent_color: "#E74C3C",
+                accent_color: "#8B1A1A",
+                full_desc: "Страстный мужской аромат, вдохновлённый огненной сущностью любви. Открывается ярким цитрусовым стартом — мандарин и чёрный перец создают энергичную, жгучую композицию. В сердце раскрывается роза и герань с перечными акцентами. База оставляет тёплый пряно-ванильный шлейф с нотами сандала и бобов тонка. Идеален для осени и зимы, особенно в вечернее время.",
+                notes_top: "Мандарин, Чёрный перец, Лимон, Розмарин",
+                notes_heart: "Роза, Герань, Перечное дерево",
+                notes_base: "Ваниль, Сандал, Бобы тонка, Ветивер",
                 volumes: { "10": 5000, "20": 9000, "30": 12000, "50": 18000 }
             },
             {
@@ -988,7 +1246,11 @@
                 image: "картинки и лого/hf_20260325_183305_3a2917b3-bd9b-4e46-bd4a-082e30b79abf.png",
                 notes: "Цитрус, Зеленое яблоко, Чабрец",
                 gender: "Мужской",
-                accent_color: "#3498DB",
+                accent_color: "#1B6FA5",
+                full_desc: "Роскошный средиземноморский аромат, вдохновлённый бескрайней синевой моря и неба итальянских островов. Свежая цитрусовая композиция с глубоким амбровым основанием. Сочетание бергамота и морских нот создаёт ощущение солёного бриза, а мускус и амбра придают благородную стойкость. Универсальный аромат для уверенного мужчины.",
+                notes_top: "Бергамот, Лимон, Морские ноты",
+                notes_heart: "Лаванда, Герань, Кориандр",
+                notes_base: "Амбра, Мускус, Кедр",
                 volumes: { "10": 8000, "20": 15000, "30": 20000, "50": 30000 }
             },
             {
@@ -998,7 +1260,11 @@
                 image: "картинки и лого/hf_20260325_181301_f6f65769-f895-43d5-a3ed-1064bee0856d.png",
                 notes: "Уд, Сандал, Ветивер",
                 gender: "Унисекс",
-                accent_color: "#5D6D7E",
+                accent_color: "#5C3A1E",
+                full_desc: "Культовый унисекс-аромат из коллекции Private Blend. Редкий уд в сочетании с экзотическими специями и тонкой древесностью. Сандал и ветивер придают шелковистую мягкость, а бобы тонка и амбра — тёплую чувственность. Изысканный, ненавязчивый и невероятно элегантный. Один из самых узнаваемых ароматов в мире нишевой парфюмерии.",
+                notes_top: "Уд, Розовое дерево, Кардамон",
+                notes_heart: "Сандал, Ветивер, Сычуаньский перец",
+                notes_base: "Бобы тонка, Амбра, Мускус",
                 volumes: { "10": 7000, "20": 13000, "30": 18000, "50": 28000 }
             },
             {
@@ -1008,7 +1274,11 @@
                 image: "картинки и лого/hf_20260325_182409_4c85086c-58d6-4ecf-ad30-3cec99e58e38.jpeg",
                 notes: "Ананас, Бергамот, Дубовый мох",
                 gender: "Мужской",
-                accent_color: "#1C1C1C",
+                accent_color: "#1A2F1A",
+                full_desc: "Усиленная версия легендарного Aventus. Смелый и мощный аромат с фруктовым стартом — ананас и чёрная смородина создают яркое первое впечатление. Берёзовый дым и пачули добавляют дерзости. База из дубового мха и мускуса обеспечивает стойкий, властный шлейф. Аромат успеха и лидерства.",
+                notes_top: "Ананас, Бергамот, Чёрная смородина, Яблоко",
+                notes_heart: "Берёзовый дым, Пачули, Жасмин",
+                notes_base: "Дубовый мох, Мускус, Амбра, Ваниль",
                 volumes: { "10": 10000, "20": 18000, "30": 25000, "50": 38000 }
             },
             {
@@ -1018,7 +1288,11 @@
                 image: "картинки и лого/hf_20260325_181942_0d25b5b5-0c9e-4ec5-9c72-a58f1132010c.jpeg",
                 notes: "Кожа, Уд, Амбра",
                 gender: "Мужской",
-                accent_color: "#1E8449",
+                accent_color: "#1B5E3A",
+                full_desc: "Благородный мужской аромат, вдохновлённый силой и элегантностью арабских скакунов. Свежее начало с бергамотом переходит в пряное сердце с корицей и шафраном. Кожа и уд в базе создают глубокий, властный шлейф. Аромат для мужчины, который знает себе цену.",
+                notes_top: "Бергамот, Кардамон, Розовый перец",
+                notes_heart: "Ирис, Корица, Шафран",
+                notes_base: "Уд, Кожа, Амбра, Ветивер",
                 volumes: { "10": 7000, "20": 13000, "30": 18000, "50": 27000 }
             },
             {
@@ -1028,7 +1302,11 @@
                 image: "картинки и лого/image (26).webp",
                 notes: "Бурбонская ваниль, Пралине, Мускус",
                 gender: "Мужской",
-                accent_color: "#D35400",
+                accent_color: "#8B5A2B",
+                full_desc: "Гурманский мужской аромат с восточным характером. Бурбонская ваниль и пралине создают богатую сладость, которая сбалансирована свежими нотами бергамота и мяты. Мускус и амбра в базе придают глубину и стойкость. Уютный, обволакивающий аромат, идеальный для холодного времени года.",
+                notes_top: "Бергамот, Мята, Лаванда",
+                notes_heart: "Бурбонская ваниль, Пралине, Корица",
+                notes_base: "Мускус, Амбра, Бобы тонка",
                 volumes: { "10": 7000, "20": 13000, "30": 18000, "50": 27000 }
             },
             {
@@ -1038,7 +1316,11 @@
                 image: "картинки и лого/hf_20260325_175215_01936d51-de90-41ea-b051-e9393a2ba20c.png",
                 notes: "Цитрус, Имбирь, Амброксан",
                 gender: "Мужской",
-                accent_color: "#1ABC9C",
+                accent_color: "#2A7B9B",
+                full_desc: "Современный мужской аромат, вдохновлённый идеей свободы и творчества. Энергичное цитрусовое начало с калабрийским бергамотом и сицилийским апельсином. Сердце объединяет пряные нюансы нероли, имбиря и корицы. В базе — глубокие древесные оттенки чёрного чая и амброксана. Свежий, но не поверхностный, лёгкий, но оставляющий запоминающийся след.",
+                notes_top: "Бергамот, Апельсин, Цитрон",
+                notes_heart: "Нероли, Имбирь, Корица",
+                notes_base: "Чёрный чай, Гваяковое дерево, Амброксан",
                 volumes: { "10": 10000, "20": 18000, "30": 25500, "50": 40000 }
             },
             {
@@ -1048,7 +1330,11 @@
                 image: "картинки и лого/image (17).webp",
                 notes: "Роза, Жасмин, Мускус",
                 gender: "Унисекс",
-                accent_color: "#E8B4D8",
+                accent_color: "#C9A0DC",
+                full_desc: "Романтичный унисекс-аромат с цветочно-мускусным характером. Нежная роза и жасмин окутаны тёплым мускусом и амбровыми нотами. Современная интерпретация классической цветочной темы — чувственная, лёгкая и обволакивающая. Аромат для тех, кто не боится выражать свои чувства.",
+                notes_top: "Роза, Цитрусы",
+                notes_heart: "Жасмин, Ирис, Магнолия",
+                notes_base: "Мускус, Амбра, Кедр",
                 volumes: { "10": 20000, "20": 38000, "30": 55000, "50": 85000 }
             },
             {
@@ -1058,7 +1344,11 @@
                 image: "картинки и лого/hf_20260325_174431_f5d1173d-bbbc-46d0-9363-28b5b44ab4e9.png",
                 notes: "Грейпфрут, Имбирь, Амбра",
                 gender: "Мужской",
-                accent_color: "#F39C12",
+                accent_color: "#9B7B3A",
+                full_desc: "Бескрайний как горизонт мужской аромат. Энергичный грейпфрут и имбирь в старте создают ощущение свежести раннего утра. Амбровое сердце добавляет глубину, а лабданум и мускус в базе обеспечивают стойкий, чувственный шлейф. Аромат безграничных возможностей и открытого неба.",
+                notes_top: "Грейпфрут, Имбирь, Цитрон",
+                notes_heart: "Амбра, Лабданум",
+                notes_base: "Мускус, Древесные ноты, Амброксан",
                 volumes: { "10": 10000, "20": 18000, "30": 25000, "50": 40000 }
             }
         ];
@@ -1078,6 +1368,11 @@
         const productModal = document.getElementById('product-modal');
         const cartModal = document.getElementById('cart-modal');
         
+        // Filter State
+        let currentFilterBrand = 'all';
+        let currentFilterGender = 'all';
+        let currentSort = 'default';
+
         // Initialize
         let activeCarouselId = 0;
         let carouselTimer = null;
@@ -1123,7 +1418,26 @@
         function renderCatalog() {
             grid.innerHTML = '';
             
-            products.forEach(p => {
+            let filteredList = products.filter(p => {
+                const brandMatch = currentFilterBrand === 'all' || p.brand === currentFilterBrand;
+                const genderMatch = currentFilterGender === 'all' || p.gender === currentFilterGender;
+                return brandMatch && genderMatch;
+            });
+            
+            if(currentSort === 'price-asc') {
+                filteredList.sort((a,b) => a.volumes["10"] - b.volumes["10"]);
+            } else if(currentSort === 'price-desc') {
+                filteredList.sort((a,b) => b.volumes["10"] - a.volumes["10"]);
+            } else if(currentSort === 'name') {
+                filteredList.sort((a,b) => a.name.localeCompare(b.name));
+            }
+            
+            if (filteredList.length === 0) {
+                grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; padding: 40px; color: var(--text-muted); font-size: 0.9rem;">Нет ароматов, подходящих под выбранные фильтры</div>';
+                return;
+            }
+            
+            filteredList.forEach(p => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
                 card.style.setProperty('--card-glow', p.accent_color);
@@ -1188,6 +1502,34 @@
                 document.getElementById('catalog').scrollIntoView({ behavior: 'smooth' });
             });
             
+            // Filter Events
+            document.querySelectorAll('#filter-brand .filter-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('#filter-brand .filter-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    currentFilterBrand = e.target.dataset.filter;
+                    renderCatalog();
+                });
+            });
+            
+            document.querySelectorAll('#filter-gender .filter-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('#filter-gender .filter-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    currentFilterGender = e.target.dataset.filter;
+                    renderCatalog();
+                });
+            });
+            
+            document.querySelectorAll('#filter-sort .filter-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    document.querySelectorAll('#filter-sort .filter-btn').forEach(b => b.classList.remove('active'));
+                    e.target.classList.add('active');
+                    currentSort = e.target.dataset.sort;
+                    renderCatalog();
+                });
+            });
+            
             document.getElementById('cart-btn').addEventListener('click', openCart);
             document.getElementById('close-cart').addEventListener('click', closeCart);
             document.getElementById('btn-cart-continue').addEventListener('click', closeCart);
@@ -1232,6 +1574,13 @@
             document.getElementById('detail-name').textContent = p.name;
             document.getElementById('detail-notes').textContent = p.notes;
             document.getElementById('detail-gender').textContent = p.gender;
+            
+            // Phase 2 Details
+            document.getElementById('detail-full-desc').textContent = p.full_desc || '';
+            document.getElementById('detail-notes-top').textContent = p.notes_top || '-';
+            document.getElementById('detail-notes-heart').textContent = p.notes_heart || '-';
+            document.getElementById('detail-notes-base').textContent = p.notes_base || '-';
+            
             document.getElementById('detail-image').src = p.image;
             document.getElementById('detail-glow').style.background = p.accent_color;
             

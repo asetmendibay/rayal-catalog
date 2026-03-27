@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>RAYAL | Премиальная Нишевая Парфюмерия</title>
     <meta name="description" content="Нишевая парфюмерия в Казахстане. Люксовые ароматы на распив и полные флаконы. Extrait de Parfum.">
 
@@ -305,7 +305,8 @@
         .overlay-backdrop.active { opacity: 1; visibility: visible; }
 
         .overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            position: fixed; top: 0; left: 0; width: 100%;
+            height: 100vh; height: 100dvh;
             background: #0A0A0A;
             z-index: 1000;
             opacity: 0; visibility: hidden;
@@ -337,7 +338,7 @@
         .detail-image-wrapper { height: 40vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
         .detail-image { max-width: 100%; max-height: 100%; object-fit: contain; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.8)); transform: translateY(20px); opacity: 0; transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
         .overlay.active .detail-image { transform: translateY(0); opacity: 1; }
-        .detail-info { background: linear-gradient(to top, rgba(5,5,5,1) 80%, rgba(5,5,5,0)); padding: 40px 20px 100px; flex-grow: 1; display: flex; flex-direction: column; }
+        .detail-info { background: linear-gradient(to top, rgba(5,5,5,1) 80%, rgba(5,5,5,0)); padding: 40px 20px 40px; flex-grow: 1; display: flex; flex-direction: column; }
         .detail-brand { font-size: 0.9rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
         .detail-name { font-family: var(--font-serif); font-size: 2.2rem; line-height: 1.1; margin-bottom: 12px; }
         .detail-tags { display: flex; gap: 8px; margin-bottom: 24px; }
@@ -355,7 +356,7 @@
         .dv-btn span { font-size: 0.7rem; opacity: 0.7; }
         .dv-btn.active { background: var(--accent-gold); border-color: var(--accent-gold); color: var(--bg-dark); }
         .dv-btn.active span { opacity: 0.8; }
-        .detail-action { position: fixed; bottom: 0; left: 0; width: 100%; padding: 20px; background: rgba(10,10,10,0.95); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top: 1px solid var(--border-glass); display: flex; justify-content: space-between; align-items: center; gap: 12px; z-index: 10; }
+        .detail-action { flex-shrink: 0; padding: 20px; background: rgba(10,10,10,0.98); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-top: 1px solid var(--border-glass); display: flex; justify-content: space-between; align-items: center; gap: 12px; }
         .detail-price-big { font-size: 1.2rem; font-family: var(--font-serif); font-weight: 600; white-space: nowrap; flex-shrink: 0; color: var(--accent-gold); }
         .detail-action .btn { flex-shrink: 0; white-space: nowrap; padding: 12px 20px; }
         @media (max-width: 360px) { .detail-price-big { font-size: 1rem; } .detail-action .btn { padding: 10px 14px; font-size: 0.8rem; } }

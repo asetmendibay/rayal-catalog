@@ -32,10 +32,15 @@
             --font-serif: 'Cormorant Garamond', serif;
             --font-sans: 'Inter', sans-serif;
             --accent-gold: #D4AF37;
+            --nav-height: 70px;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-        html { scrollbar-gutter: stable; }
+        html {
+            scrollbar-gutter: stable;
+            scroll-behavior: smooth;
+            scroll-padding-top: 110px;
+        }
 
         body {
             background-color: var(--bg-dark);
@@ -52,9 +57,9 @@
 
         /* ── Navbar ── */
         .navbar {
-            position: fixed; top: 0; left: 0; width: 100%; height: 70px;
+            position: fixed; top: 0; left: 0; width: 100%; height: var(--nav-height);
             display: flex; justify-content: space-between; align-items: center;
-            padding: 0 20px;
+            padding: 0 clamp(14px, 3vw, 28px);
             background: var(--bg-nav);
             backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-glass);
@@ -64,10 +69,53 @@
         .nav-logo { height: 24px; display: flex; align-items: center; }
         .nav-logo img { height: 100%; filter: invert(1); }
 
-        .nav-links { display: flex; gap: 24px; align-items: center; }
-        .nav-links a { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); text-decoration: none; transition: color 0.2s ease; cursor: pointer; }
-        .nav-links a:hover { color: var(--text-main); }
+        .nav-links { display: flex; gap: clamp(14px, 2vw, 24px); align-items: center; }
+        .nav-links a {
+            font-size: 0.76rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s ease, opacity 0.2s ease;
+            opacity: 0.92;
+        }
+        .nav-links a:hover { color: var(--text-main); opacity: 1; }
         @media (max-width: 768px) { .nav-links { display: none; } }
+
+        .mobile-quick-nav {
+            display: none;
+            position: fixed;
+            top: var(--nav-height);
+            left: 0;
+            width: 100%;
+            z-index: 99;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 9px 12px 10px;
+            background: rgba(5, 5, 5, 0.74);
+            border-bottom: 1px solid var(--border-glass);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            scrollbar-width: none;
+        }
+        .mobile-quick-nav::-webkit-scrollbar { display: none; }
+        .mobile-quick-nav a {
+            flex: 0 0 auto;
+            color: var(--text-main);
+            text-decoration: none;
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border: 1px solid var(--border-glass);
+            border-radius: 100px;
+            padding: 7px 12px;
+            background: rgba(255,255,255,0.03);
+            white-space: nowrap;
+        }
+        @media (max-width: 768px) {
+            html { scroll-padding-top: 145px; }
+            .mobile-quick-nav { display: flex; }
+        }
 
         .cart-icon-wrapper {
             position: relative; cursor: pointer;
@@ -96,42 +144,41 @@
 
         /* ── Hero ── */
         .hero {
-            height: 100dvh;
-            min-height: 600px;
-            display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
+            display: flex;
+            justify-content: center;
             position: relative;
-            padding: 80px 20px 40px;
+            min-height: max(700px, 100svh);
+            padding: calc(var(--nav-height) + 28px) clamp(16px, 4vw, 48px) clamp(18px, 4vh, 42px);
             text-align: center;
-            background: radial-gradient(circle at 50% 100%, #151520 0%, #050505 60%);
-            overflow-x: clip;
+            background: radial-gradient(110% 95% at 50% 100%, #171723 0%, #050505 63%);
+            overflow: clip;
         }
-        @media (max-height: 650px) {
-            .hero { padding-top: 70px; padding-bottom: 20px; }
-            .hero-logo-svg { width: min(260px, 65vw) !important; margin-bottom: 2vh !important; }
-            .hero-text { margin-bottom: 2vh !important; }
-        }
-        @media (max-width: 480px) {
-            .hero-logo-svg { width: min(380px, 90vw) !important; }
-            .hero-btns { gap: 8px; }
-            .btn { padding: 12px 20px; font-size: 0.85rem; }
+        .hero-inner {
+            width: min(1120px, 100%);
+            display: grid;
+            grid-template-rows: auto auto minmax(260px, 1fr);
+            align-items: start;
+            gap: clamp(12px, 2.5vh, 24px);
+            position: relative;
+            z-index: 2;
         }
 
         .hero-fog {
             position: absolute; bottom: 0; left: 0;
-            width: 200%; height: 40%;
+            width: 180%; height: 42%;
             background: linear-gradient(to top, rgba(255,255,255,0.05), transparent);
-            opacity: 0.5; animation: fog 20s linear infinite alternate;
+            opacity: 0.45; animation: fog 20s linear infinite alternate;
             z-index: 0; pointer-events: none; filter: blur(20px);
         }
         @keyframes fog { 0% { transform: translateX(0); } 100% { transform: translateX(-20%); } }
 
         .hero-logo-svg {
-            width: min(520px, 85vw);
+            width: min(500px, 70vw);
             height: auto;
-            z-index: 10;
-            margin-bottom: 3vh;
+            z-index: 4;
+            margin: 0 auto;
             opacity: 0;
+            filter: drop-shadow(0 0 20px rgba(212,175,55,0.16));
             animation: logo-appear 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.2s forwards;
             overflow: visible;
         }
@@ -141,9 +188,13 @@
         }
 
         .hero-carousel {
-            position: relative; width: 100%; flex-grow: 1; max-height: 45vh;
+            position: relative;
+            width: min(920px, 100%);
+            min-height: clamp(230px, 39vh, 430px);
+            max-height: 430px;
             display: flex; justify-content: center; align-items: center;
-            z-index: 5; margin-bottom: 2rem;
+            z-index: 3;
+            margin: 0 auto;
         }
 
         .carousel-item {
@@ -155,35 +206,71 @@
             pointer-events: none;
         }
         .carousel-item.active { opacity: 1; transform: scale(1) translateY(0); pointer-events: auto; }
+        .carousel-item::before {
+            content: '';
+            position: absolute;
+            top: 48%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: min(72vw, 540px);
+            height: min(46vh, 320px);
+            border-radius: 50%;
+            background: radial-gradient(circle at 50% 45%, var(--hero-halo-inner, rgba(212,175,55,0.25)) 0%, var(--hero-halo-color, rgba(212,175,55,0.15)) 48%, rgba(0,0,0,0) 74%);
+            filter: blur(14px);
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+        .carousel-item.active::before { opacity: 1; }
 
         .hero-glow {
-            position: absolute; top: 60%; left: 50%;
+            position: absolute; top: 58%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 200px; height: 200px; border-radius: 50%;
-            filter: blur(50px); z-index: -1; opacity: 0.5;
-            transition: background-color 1.5s ease;
+            width: clamp(220px, 34vw, 360px);
+            height: clamp(180px, 30vw, 300px);
+            border-radius: 50%;
+            filter: blur(54px);
+            z-index: -1;
+            opacity: 0.34;
+            transition: background 1.5s ease, opacity 1.2s ease;
             animation: pulse-glow 6s infinite alternate;
         }
         @keyframes pulse-glow {
-            0%   { opacity: 0.4; transform: translate(-50%, -50%) scale(0.9); }
-            100% { opacity: 0.7; transform: translate(-50%, -50%) scale(1.1); }
+            0%   { opacity: 0.28; transform: translate(-50%, -50%) scale(0.92); }
+            100% { opacity: 0.42; transform: translate(-50%, -50%) scale(1.08); }
         }
 
         .carousel-item img {
-            height: 42vh; width: auto; object-fit: contain;
-            display: block; margin: 0 auto;
-            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.6));
+            position: relative;
+            z-index: 1;
+            max-height: clamp(190px, 34vh, 360px);
+            width: auto;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+            transform: scale(var(--hero-scale, 1));
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.58)) drop-shadow(0 0 26px var(--hero-image-shadow, rgba(212,175,55,0.2)));
             animation: float 6s ease-in-out infinite;
         }
         @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50%       { transform: translateY(-12px); }
+            0%, 100% { transform: translateY(0) scale(var(--hero-scale, 1)); }
+            50%       { transform: translateY(-12px) scale(var(--hero-scale, 1)); }
         }
 
         .carousel-title {
-            font-family: var(--font-serif); font-size: 1.6rem; margin-top: 1rem;
-            color: var(--accent-gold);
-            transition: color 1.4s ease;
+            font-family: var(--font-serif);
+            font-size: clamp(1.05rem, 2.2vw, 1.75rem);
+            margin-top: clamp(12px, 2vh, 20px);
+            color: var(--hero-title-color, #F6F6F7);
+            transition: color 1s ease, background 1s ease, border-color 1s ease;
+            line-height: 1.1;
+            text-shadow: 0 6px 26px rgba(0,0,0,0.72);
+            background: var(--hero-title-overlay, rgba(6,6,9,0.46));
+            border: 1px solid var(--hero-title-border, rgba(255,255,255,0.14));
+            border-radius: 999px;
+            padding: 8px 18px 9px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
 
         .btn {
@@ -202,16 +289,48 @@
         .btn-outline:active { background: rgba(255,255,255,0.1); }
 
         .scroll-indicator {
-            position: absolute; bottom: 30px; left: 50%;
+            position: absolute; bottom: clamp(12px, 2.6vh, 28px); left: 50%;
             transform: translateX(-50%);
             display: flex; flex-direction: column; align-items: center;
-            gap: 8px; opacity: 0.6; animation: bounce 2s infinite;
+            gap: 6px; opacity: 0.56; animation: bounce 2.3s infinite;
+            z-index: 4;
         }
-        .scroll-indicator span { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; }
+        .scroll-indicator span { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--text-muted); }
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
             40% { transform: translateX(-50%) translateY(-10px); }
             60% { transform: translateX(-50%) translateY(-5px); }
+        }
+        @media (max-width: 1024px) {
+            .hero { min-height: max(690px, 100svh); }
+            .hero-logo-svg { width: min(440px, 78vw); }
+        }
+        @media (max-width: 768px) {
+            .hero {
+                padding-top: calc(var(--nav-height) + 78px);
+                min-height: max(760px, 100svh);
+            }
+            .hero-inner {
+                grid-template-rows: auto auto minmax(220px, 1fr);
+                gap: 14px;
+            }
+            .hero-logo-svg { width: min(360px, 86vw); }
+            .hero-carousel {
+                min-height: clamp(210px, 30vh, 300px);
+                max-height: 320px;
+            }
+            .carousel-item img { max-height: clamp(170px, 24vh, 250px); }
+            .carousel-title { margin-top: 10px; font-size: clamp(1rem, 4.4vw, 1.25rem); }
+            .scroll-indicator { display: none; }
+        }
+        @media (max-height: 760px) and (min-width: 769px) {
+            .hero {
+                min-height: 650px;
+                padding-top: calc(var(--nav-height) + 16px);
+            }
+            .hero-logo-svg { width: min(360px, 62vw); }
+            .hero-carousel { max-height: 320px; }
+            .carousel-item img { max-height: 250px; }
         }
 
         /* ── Catalog ── */
@@ -262,7 +381,7 @@
 
         /* Product Card */
         .product-card {
-            background: var(--bg-glass); border: 1px solid var(--border-glass);
+            background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass);
             border-radius: 12px; padding: 16px 12px;
             display: flex; flex-direction: column;
             position: relative; overflow: hidden;
@@ -271,22 +390,50 @@
             height: 100%;
         }
         .product-card::before {
-            content: ''; position: absolute; top: 30%; left: 50%;
+            content: ''; position: absolute; top: 32%; left: 50%;
             transform: translate(-50%, -50%);
-            width: 120px; height: 120px; border-radius: 50%;
-            filter: blur(35px); z-index: 0; opacity: 0.3;
+            width: 160px; height: 160px; border-radius: 50%;
+            filter: blur(30px); z-index: 0; opacity: 0.45;
             transition: opacity 0.4s ease; pointer-events: none;
-            background: var(--card-glow);
+            background: radial-gradient(circle, var(--card-halo-inner, rgba(212,175,55,0.25)) 0%, var(--card-halo, rgba(212,175,55,0.14)) 58%, rgba(0,0,0,0) 84%);
         }
         .product-card:active { transform: scale(0.98); }
 
         .product-image-container { width: 100%; padding-top: 100%; position: relative; z-index: 1; margin-bottom: 16px; cursor: pointer; }
-        .product-image { position: absolute; top: 5%; left: 5%; width: 90%; height: 90%; object-fit: contain; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5)); transition: transform 0.5s ease; }
+        .product-image-container::before {
+            content: '';
+            position: absolute;
+            inset: 12%;
+            border-radius: 50%;
+            background: var(--card-surface, radial-gradient(circle, rgba(255,255,255,0.06) 0%, rgba(0,0,0,0) 70%));
+            filter: blur(12px);
+            z-index: 0;
+            pointer-events: none;
+        }
+        .product-image {
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            width: 90%;
+            height: 90%;
+            object-fit: contain;
+            filter: drop-shadow(0 12px 20px rgba(0,0,0,0.58)) drop-shadow(0 0 18px var(--card-image-shadow, rgba(212,175,55,0.22)));
+            transition: transform 0.5s ease;
+            z-index: 1;
+        }
         .product-card:hover .product-image { transform: scale(1.05); }
 
         .product-info { z-index: 1; display: flex; flex-direction: column; flex-grow: 1; }
         .product-brand { font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; }
-        .product-name { font-family: var(--font-serif); font-size: 1.1rem; font-weight: 500; margin-bottom: 12px; line-height: 1.2; }
+        .product-name {
+            font-family: var(--font-serif);
+            font-size: clamp(1.05rem, 2.1vw, 1.22rem);
+            font-weight: 520;
+            margin-bottom: 12px;
+            line-height: 1.2;
+            color: #F7F7FA;
+            text-shadow: 0 6px 20px rgba(0,0,0,0.72);
+        }
         .product-price { font-size: 1rem; font-weight: 500; margin-bottom: 12px; }
 
         .volume-selector { display: flex; gap: 6px; margin-bottom: 12px; background: rgba(0,0,0,0.3); border-radius: 6px; padding: 4px; }
@@ -439,16 +586,66 @@
         .review-text { font-size: 0.88rem; color: #d1d1d6; line-height: 1.6; }
 
         /* ── Hero text ── */
-        .hero-text { text-align: center; z-index: 10; padding: 0 20px; margin-bottom: 3vh; }
-        .hero-headline { font-family: var(--font-serif); font-size: clamp(1.6rem, 5vw, 2.8rem); font-weight: 500; line-height: 1.2; margin-bottom: 12px; background: linear-gradient(135deg, #fff 60%, #D4AF37 100%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero-sub { font-size: clamp(0.82rem, 2.2vw, 1rem); color: var(--text-muted); font-weight: 300; max-width: 520px; margin: 0 auto 24px; line-height: 1.6; }
-        .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
-        .btn-gold { background: var(--accent-gold); color: #000; font-weight: 600; }
-        .btn-gold:hover { background: #e0c040; }
-        .trust-bar { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.04em; }
-        .trust-bar span { display: flex; align-items: center; gap: 5px; }
-        .trust-bar span::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--accent-gold); flex-shrink: 0; }
-
+        .hero-text {
+            text-align: center;
+            z-index: 4;
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 0;
+        }
+        .hero-kicker {
+            font-size: 0.66rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.72);
+            margin-bottom: 10px;
+        }
+        .hero-headline {
+            font-family: var(--font-serif);
+            font-size: clamp(1.6rem, 4.8vw, 3.1rem);
+            font-weight: 500;
+            line-height: 1.08;
+            margin-bottom: 14px;
+            color: #F7F5F1;
+            text-shadow: 0 8px 30px rgba(0,0,0,0.65);
+        }
+        .hero-sub {
+            font-size: clamp(0.82rem, 1.9vw, 1.02rem);
+            color: #D5D5DB;
+            font-weight: 320;
+            max-width: 600px;
+            margin: 0 auto 20px;
+            line-height: 1.58;
+            text-shadow: 0 4px 16px rgba(0,0,0,0.52);
+        }
+        .hero-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 2px; }
+        .hero-btns .btn {
+            border-radius: 999px;
+            padding: 11px 21px;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            min-width: 188px;
+            text-transform: uppercase;
+        }
+        .hero-btns .btn-gold {
+            background: linear-gradient(135deg, #E1C76B 0%, #C49A2A 100%);
+            color: #0A0A0A;
+            border: 1px solid rgba(255,255,255,0.12);
+            box-shadow: 0 10px 30px rgba(212,175,55,0.22);
+        }
+        .hero-btns .btn-gold:hover { filter: brightness(1.04); }
+        .hero-btns .btn-outline {
+            background: rgba(255,255,255,0.03);
+            border-color: rgba(255,255,255,0.23);
+            color: #ECECF2;
+        }
+        .hero-btns .btn-outline:hover { background: rgba(255,255,255,0.08); }
+        @media (max-width: 768px) {
+            .hero-kicker { font-size: 0.61rem; letter-spacing: 0.15em; margin-bottom: 8px; }
+            .hero-headline { font-size: clamp(1.45rem, 7.8vw, 2.2rem); }
+            .hero-sub { font-size: 0.83rem; margin-bottom: 16px; }
+            .hero-btns .btn { min-width: 168px; font-size: 0.68rem; padding: 10px 16px; }
+        }
         /* ── Scroll reveal ── */
         .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
         .reveal.visible { opacity: 1; transform: translateY(0); }
@@ -541,16 +738,16 @@
 
     <!-- Navbar -->
     <nav class="navbar">
-        <div class="nav-logo">
+        <a class="nav-logo" href="#top" aria-label="RAYAL — в начало">
             <img src="картинки и лого/images 1 (Traced).svg" alt="RAYAL" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
             <span style="display:none; font-family:var(--font-serif); font-size:1.5rem; font-weight:600; letter-spacing:0.1em;">RAYAL</span>
+        </a>
+        <div class="nav-links" aria-label="Основная навигация">
+            <a href="#quiz">Подобрать аромат</a>
+            <a href="#catalog">Каталог</a>
+            <a href="#about">О нас</a>
+            <a href="#locations">Адреса</a>
         </div>
-        <nav class="nav-links">
-            <a onclick="document.getElementById('quiz').scrollIntoView({behavior:'smooth'})">Подобрать аромат</a>
-            <a onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">Каталог</a>
-            <a onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">О нас</a>
-            <a onclick="document.getElementById('locations').scrollIntoView({behavior:'smooth'})">Адреса</a>
-        </nav>
         <div class="cart-icon-wrapper" id="cart-btn">
             <svg class="cart-icon" viewBox="0 0 24 24">
                 <path d="M16 11V7a4 4 0 0 0-8 0v4M5 9h14l1 12H4L5 9z"/>
@@ -558,10 +755,17 @@
             <span class="cart-counter" id="cart-counter">0</span>
         </div>
     </nav>
+    <div class="mobile-quick-nav" aria-label="Быстрые разделы">
+        <a href="#quiz">Подбор</a>
+        <a href="#catalog">Каталог</a>
+        <a href="#about">О нас</a>
+        <a href="#locations">Адреса</a>
+    </div>
 
     <!-- Hero -->
-    <header class="hero">
+    <header class="hero" id="top">
         <div class="hero-fog"></div>
+        <div class="hero-inner">
         <!-- Inline SVG logo — glass prism, color synced to carousel -->
         <svg class="hero-logo-svg" id="hero-logo"
              viewBox="0 0 5025 1305" xmlns="http://www.w3.org/2000/svg"
@@ -597,13 +801,21 @@
             <use href="#logo-shape" fill="url(#glass-shine)"/>
         </svg>
         <div class="hero-text">
+            <p class="hero-kicker">RAYAL Niche Perfumery</p>
             <h1 class="hero-headline">Нишевая парфюмерия<br>без лишних наценок</h1>
+            <p class="hero-sub">Выберите аромат под характер и настроение. Формат распива от 10 мл и полноценные флаконы — с быстрой консультацией в WhatsApp.</p>
+            <div class="hero-btns">
+                <a class="btn btn-gold" id="hero-cta-primary" href="#quiz">Подобрать аромат</a>
+                <a class="btn btn-outline" id="hero-cta-secondary" href="#catalog">Смотреть каталог</a>
+            </div>
         </div>
         <div class="hero-carousel" id="hero-carousel">
             <div class="hero-glow" id="hero-glow"></div>
         </div>
+        </div>
         <div class="scroll-indicator">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+            <span>Листайте</span>
         </div>
     </header>
 
@@ -1132,6 +1344,94 @@
 
         // ── Utils ──────────────────────────────────────────────────────────────
         const formatMoney = (n) => `₸${n.toLocaleString('ru-RU')}`;
+        const clip = (v, min, max) => Math.min(max, Math.max(min, v));
+
+        function hexToRgb(hex) {
+            if (!hex || hex.length < 7) return { r: 160, g: 160, b: 160 };
+            return {
+                r: parseInt(hex.slice(1, 3), 16),
+                g: parseInt(hex.slice(3, 5), 16),
+                b: parseInt(hex.slice(5, 7), 16)
+            };
+        }
+        function hexToRgba(hex, alpha) {
+            const { r, g, b } = hexToRgb(hex);
+            return `rgba(${r},${g},${b},${clip(alpha, 0, 1)})`;
+        }
+        function blendHex(hexA, hexB, weight = 0.5) {
+            const a = hexToRgb(hexA);
+            const b = hexToRgb(hexB);
+            const t = clip(weight, 0, 1);
+            const mix = (x, y) => Math.round(x * (1 - t) + y * t).toString(16).padStart(2, '0');
+            return `#${mix(a.r, b.r)}${mix(a.g, b.g)}${mix(a.b, b.b)}`;
+        }
+        function hexLuminance(hex) {
+            const { r, g, b } = hexToRgb(hex);
+            const toLinear = (c) => {
+                const v = c / 255;
+                return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4;
+            };
+            return 0.2126 * toLinear(r) + 0.7152 * toLinear(g) + 0.0722 * toLinear(b);
+        }
+        function resolveVisualTone(accent, forcedTone) {
+            if (forcedTone) return forcedTone;
+            const lum = hexLuminance(accent);
+            if (lum < 0.26) return 'dark';
+            if (lum > 0.64) return 'light';
+            return 'color';
+        }
+        function getVisualProfile(accent, forcedTone) {
+            const tone = resolveVisualTone(accent, forcedTone);
+            if (tone === 'dark') {
+                return {
+                    heroHaloInner: 'rgba(246,238,220,0.30)',
+                    heroHaloColor: 'rgba(228,214,176,0.21)',
+                    heroImageShadow: 'rgba(235,220,180,0.28)',
+                    heroTitleColor: '#F9F7F2',
+                    heroTitleOverlay: 'rgba(7,8,12,0.64)',
+                    heroTitleBorder: 'rgba(255,255,255,0.23)',
+                    glow: 'radial-gradient(circle, rgba(233,213,167,0.32) 0%, rgba(9,10,14,0) 74%)',
+                    glowOpacity: '0.40',
+                    cardHaloInner: 'rgba(242,231,201,0.30)',
+                    cardHaloColor: 'rgba(226,208,165,0.17)',
+                    cardImageShadow: 'rgba(236,221,182,0.30)',
+                    cardSurface: 'radial-gradient(circle, rgba(255,255,255,0.10) 0%, rgba(0,0,0,0) 70%)'
+                };
+            }
+            if (tone === 'light') {
+                return {
+                    heroHaloInner: 'rgba(20,24,32,0.44)',
+                    heroHaloColor: 'rgba(20,24,32,0.24)',
+                    heroImageShadow: 'rgba(0,0,0,0.38)',
+                    heroTitleColor: '#FBFBFC',
+                    heroTitleOverlay: 'rgba(5,6,10,0.56)',
+                    heroTitleBorder: 'rgba(255,255,255,0.17)',
+                    glow: 'radial-gradient(circle, rgba(24,28,36,0.35) 0%, rgba(6,7,10,0) 76%)',
+                    glowOpacity: '0.30',
+                    cardHaloInner: 'rgba(17,20,28,0.36)',
+                    cardHaloColor: 'rgba(17,20,28,0.2)',
+                    cardImageShadow: 'rgba(0,0,0,0.34)',
+                    cardSurface: 'radial-gradient(circle, rgba(16,20,28,0.28) 0%, rgba(0,0,0,0) 70%)'
+                };
+            }
+
+            const warm = blendHex(accent, '#DFC77B', 0.24);
+            const deep = blendHex(accent, '#111318', 0.5);
+            return {
+                heroHaloInner: hexToRgba(warm, 0.33),
+                heroHaloColor: hexToRgba(accent, 0.2),
+                heroImageShadow: hexToRgba(warm, 0.27),
+                heroTitleColor: '#F7F6F4',
+                heroTitleOverlay: `linear-gradient(130deg, ${hexToRgba(deep, 0.74)} 0%, rgba(7,8,11,0.56) 100%)`,
+                heroTitleBorder: hexToRgba(warm, 0.32),
+                glow: `radial-gradient(circle, ${hexToRgba(accent, 0.30)} 0%, rgba(8,9,12,0) 72%)`,
+                glowOpacity: '0.35',
+                cardHaloInner: hexToRgba(warm, 0.29),
+                cardHaloColor: hexToRgba(accent, 0.16),
+                cardImageShadow: hexToRgba(warm, 0.29),
+                cardSurface: `radial-gradient(circle, ${hexToRgba(deep, 0.24)} 0%, rgba(0,0,0,0) 72%)`
+            };
+        }
 
         // ── Init ──────────────────────────────────────────────────────────────
         function init() {
@@ -1150,52 +1450,54 @@
             const container = document.getElementById('hero-carousel');
             const glow = document.getElementById('hero-glow');
             carouselFeatured = [
-                { id: "pdm-althair",        name: "Althaïr",         image: "картинки и лого/Frame 18.png", accent_color: "#8B5A2B", scale: 1.0  },
-                { id: "roja-isola-blu",     name: "Isola Blu",        image: "картинки и лого/Frame 19.png", accent_color: "#1B6FA5", scale: 0.82 },
-                { id: "creed-absolu-aventus", name: "Absolu Aventus", image: "картинки и лого/Frame 20.png", accent_color: "#1A2F1A", scale: 1.0  },
-                { id: "versace-eros-flame",  name: "Eros Flame",      image: "картинки и лого/Frame 21.png", accent_color: "#8B1A1A", scale: 0.9  },
-                { id: "pdm-haltane",         name: "Haltane",         image: "картинки и лого/Frame 22.png", accent_color: "#1B5E3A", scale: 1.0  },
-                { id: "lv-lovers",           name: "LV Lovers",       image: "картинки и лого/Frame 23.png", accent_color: "#C9A0DC", scale: 0.85 },
-                { id: "lv-limmensite",       name: "L'Immensité",     image: "картинки и лого/Frame 24.png", accent_color: "#9B7B3A", scale: 0.88 },
-                { id: "tf-oud-wood",         name: "Oud Wood",        image: "картинки и лого/hf_20260325_181301_f6f65769-f895-43d5-a3ed-1064bee0856d.png", accent_color: "#5C3A1E", scale: 1.0  },
-                { id: "lv-imagination",      name: "Imagination",     image: "картинки и лого/Frame 26.png", accent_color: "#2A7B9B", scale: 0.9  },
-                { id: "lv-ombre-nomade",     name: "Ombre Nomade",    image: "картинки и лого/Frame 25.png", accent_color: "#4A2C0A", scale: 0.95 },
-                { id: "tf-ombre-leather",    name: "Ombre Leather",   image: "картинки и лого/Frame 27.png", accent_color: "#1C1C1C", scale: 0.9  },
-                { id: "pdm-delina",          name: "Delina",          image: "картинки и лого/Frame 28.png", accent_color: "#C9607A", scale: 0.95 },
-                { id: "mfk-baccarat-rouge",  name: "Baccarat Rouge 540", image: "картинки и лого/Frame 29.png", accent_color: "#8B0000", scale: 0.88 }
+                { id: "pdm-althair",         name: "Althaïr",            image: "картинки и лого/Frame 18.png", accent_color: "#8B5A2B", scale: 1.0,  tone: "color" },
+                { id: "roja-isola-blu",      name: "Isola Blu",          image: "картинки и лого/Frame 19.png", accent_color: "#1B6FA5", scale: 0.82, tone: "light" },
+                { id: "creed-absolu-aventus",name: "Absolu Aventus",     image: "картинки и лого/Frame 20.png", accent_color: "#1A2F1A", scale: 1.0,  tone: "dark" },
+                { id: "versace-eros-flame",  name: "Eros Flame",         image: "картинки и лого/Frame 21.png", accent_color: "#8B1A1A", scale: 0.9,  tone: "dark" },
+                { id: "pdm-haltane",         name: "Haltane",            image: "картинки и лого/Frame 22.png", accent_color: "#1B5E3A", scale: 1.0,  tone: "dark" },
+                { id: "lv-lovers",           name: "LV Lovers",          image: "картинки и лого/Frame 23.png", accent_color: "#C9A0DC", scale: 0.85, tone: "light" },
+                { id: "lv-limmensite",       name: "L'Immensité",        image: "картинки и лого/Frame 24.png", accent_color: "#9B7B3A", scale: 0.88, tone: "color" },
+                { id: "tf-oud-wood",         name: "Oud Wood",           image: "картинки и лого/hf_20260325_181301_f6f65769-f895-43d5-a3ed-1064bee0856d.png", accent_color: "#5C3A1E", scale: 1.0,  tone: "dark" },
+                { id: "lv-imagination",      name: "Imagination",        image: "картинки и лого/Frame 26.png", accent_color: "#2A7B9B", scale: 0.9,  tone: "light" },
+                { id: "lv-ombre-nomade",     name: "Ombre Nomade",       image: "картинки и лого/Frame 25.png", accent_color: "#4A2C0A", scale: 0.95, tone: "dark" },
+                { id: "tf-ombre-leather",    name: "Ombre Leather",      image: "картинки и лого/Frame 27.png", accent_color: "#1C1C1C", scale: 0.9,  tone: "dark" },
+                { id: "pdm-delina",          name: "Delina",             image: "картинки и лого/Frame 28.png", accent_color: "#C9607A", scale: 0.95, tone: "light" },
+                { id: "mfk-baccarat-rouge",  name: "Baccarat Rouge 540", image: "картинки и лого/Frame 29.png", accent_color: "#8B0000", scale: 0.88, tone: "color" }
             ];
+
+            container.querySelectorAll('.carousel-item').forEach(el => el.remove());
 
             carouselFeatured.forEach((p, idx) => {
                 const item = document.createElement('div');
                 item.className = `carousel-item${idx === 0 ? ' active' : ''}`;
                 item.id = `hero-item-${idx}`;
-                item.innerHTML = `<img src="${p.image}" alt="${p.name}" style="cursor:pointer; transform:scale(${p.scale || 1}); transform-origin:center bottom;"><div class="carousel-title">${p.name}</div>`;
+                const visual = getVisualProfile(p.accent_color, p.tone);
+                item.style.setProperty('--hero-scale', `${p.scale || 1}`);
+                item.style.setProperty('--hero-halo-inner', visual.heroHaloInner);
+                item.style.setProperty('--hero-halo-color', visual.heroHaloColor);
+                item.style.setProperty('--hero-image-shadow', visual.heroImageShadow);
+                item.style.setProperty('--hero-title-color', visual.heroTitleColor);
+                item.style.setProperty('--hero-title-overlay', visual.heroTitleOverlay);
+                item.style.setProperty('--hero-title-border', visual.heroTitleBorder);
+                item.innerHTML = `<img src="${p.image}" alt="${p.name}" loading="${idx < 2 ? 'eager' : 'lazy'}" style="cursor:pointer;"><div class="carousel-title">${p.name}</div>`;
                 item.addEventListener('click', () => openProductDetail(p.id));
                 container.appendChild(item);
             });
 
-            glow.style.background = carouselFeatured[0].accent_color;
-            updateLogoColor(carouselFeatured[0].accent_color);
-            document.querySelector('.hero-headline').style.webkitTextFillColor = carouselFeatured[0].accent_color;
-            document.querySelector('.hero-headline').style.backgroundImage = 'none';
-            document.getElementById('hero-logo').style.filter = `drop-shadow(0 0 20px ${carouselFeatured[0].accent_color})`;
-            document.querySelectorAll('.carousel-title').forEach(el => el.style.color = '');
-            const firstTitle = document.querySelector('.carousel-item.active .carousel-title');
-            if (firstTitle) firstTitle.style.color = carouselFeatured[0].accent_color;
+            const applyHeroScene = (product) => {
+                const visual = getVisualProfile(product.accent_color, product.tone);
+                glow.style.background = visual.glow;
+                glow.style.opacity = visual.glowOpacity;
+                updateLogoColor(product.accent_color);
+            };
+            applyHeroScene(carouselFeatured[0]);
 
             setInterval(() => {
                 document.getElementById(`hero-item-${activeCarouselId}`).classList.remove('active');
                 activeCarouselId = (activeCarouselId + 1) % carouselFeatured.length;
                 document.getElementById(`hero-item-${activeCarouselId}`).classList.add('active');
                 const currentProduct = carouselFeatured[activeCarouselId];
-                glow.style.background = currentProduct.accent_color;
-                updateLogoColor(currentProduct.accent_color);
-                document.querySelector('.hero-headline').style.webkitTextFillColor = currentProduct.accent_color;
-                document.querySelector('.hero-headline').style.backgroundImage = 'none';
-                document.getElementById('hero-logo').style.filter = `drop-shadow(0 0 20px ${currentProduct.accent_color})`;
-                document.querySelectorAll('.carousel-title').forEach(el => el.style.color = '');
-                const activeTitle = document.querySelector('.carousel-item.active .carousel-title');
-                if (activeTitle) activeTitle.style.color = currentProduct.accent_color;
+                applyHeroScene(currentProduct);
             }, 4500);
         }
 
@@ -1250,7 +1552,11 @@
             list.forEach(p => {
                 const card = document.createElement('div');
                 card.className = 'product-card';
-                card.style.setProperty('--card-glow', p.accent_color);
+                const visual = getVisualProfile(p.accent_color, p.tone);
+                card.style.setProperty('--card-halo-inner', visual.cardHaloInner);
+                card.style.setProperty('--card-halo', visual.cardHaloColor);
+                card.style.setProperty('--card-image-shadow', visual.cardImageShadow);
+                card.style.setProperty('--card-surface', visual.cardSurface);
                 let selectedVol = "10";
                 const badgeLabel = p.inStock === 'low' ? 'Осталось мало' : p.badge;
                 const badgeClass = p.inStock === 'low' ? 'low' : (p.badge === 'Хит' ? 'hit' : 'new');
@@ -1570,18 +1876,15 @@
         }
 
         // ── Logo color sync ───────────────────────────────────────────────────
-        function lightenHex(hex, t) {
-            const r = parseInt(hex.slice(1, 3), 16);
-            const g = parseInt(hex.slice(3, 5), 16);
-            const b = parseInt(hex.slice(5, 7), 16);
-            return `rgb(${Math.round(r + (255 - r) * t)},${Math.round(g + (255 - g) * t)},${Math.round(b + (255 - b) * t)})`;
-        }
         function updateLogoColor(hex) {
             const base = document.getElementById('logo-base-use');
             const glow = document.getElementById('logo-glow-use');
-            if (!base || !hex || hex.length < 7) return;
-            base.style.fill = lightenHex(hex, 0.45);
-            glow.style.fill = hex;
+            if (!base || !glow || !hex || hex.length < 7) return;
+            const stableBase = blendHex('#C8C1AF', hex, 0.22);
+            const stableGlow = blendHex('#9B885C', hex, 0.34);
+            base.style.fill = stableBase;
+            glow.style.fill = stableGlow;
+            glow.style.opacity = '0.2';
         }
 
         // ── Quiz ──────────────────────────────────────────────────────────────

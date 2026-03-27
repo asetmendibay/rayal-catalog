@@ -1093,7 +1093,7 @@
             updateLogoColor(carouselFeatured[0].accent_color);
             document.querySelector('.hero-headline').style.webkitTextFillColor = carouselFeatured[0].accent_color;
             document.querySelector('.hero-headline').style.backgroundImage = 'none';
-            document.getElementById('hero-logo').style.filter = `invert(1) drop-shadow(0 0 20px ${carouselFeatured[0].accent_color})`;
+            document.getElementById('hero-logo').style.filter = `drop-shadow(0 0 20px ${carouselFeatured[0].accent_color})`;
             document.querySelectorAll('.carousel-title').forEach(el => el.style.color = '');
             const firstTitle = document.querySelector('.carousel-item.active .carousel-title');
             if (firstTitle) firstTitle.style.color = carouselFeatured[0].accent_color;
@@ -1107,7 +1107,7 @@
                 updateLogoColor(currentProduct.accent_color);
                 document.querySelector('.hero-headline').style.webkitTextFillColor = currentProduct.accent_color;
                 document.querySelector('.hero-headline').style.backgroundImage = 'none';
-                document.getElementById('hero-logo').style.filter = `invert(1) drop-shadow(0 0 20px ${currentProduct.accent_color})`;
+                document.getElementById('hero-logo').style.filter = `drop-shadow(0 0 20px ${currentProduct.accent_color})`;
                 document.querySelectorAll('.carousel-title').forEach(el => el.style.color = '');
                 const activeTitle = document.querySelector('.carousel-item.active .carousel-title');
                 if (activeTitle) activeTitle.style.color = currentProduct.accent_color;

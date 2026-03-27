@@ -171,8 +171,8 @@
 
         .carousel-item img {
             max-width: 80%; max-height: 55vh; object-fit: contain;
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.6));
             animation: float 6s ease-in-out infinite;
-            mix-blend-mode: multiply;
         }
         @keyframes float {
             0%, 100% { transform: translateY(0); }
@@ -279,8 +279,8 @@
         }
         .product-card:active { transform: scale(0.98); }
 
-        .product-image-container { width: 100%; padding-top: 100%; position: relative; z-index: 1; margin-bottom: 16px; cursor: pointer; isolation: isolate; background: var(--card-glow); border-radius: 8px; }
-        .product-image { position: absolute; top: 5%; left: 5%; width: 90%; height: 90%; object-fit: contain; transition: transform 0.5s ease; mix-blend-mode: multiply; }
+        .product-image-container { width: 100%; padding-top: 100%; position: relative; z-index: 1; margin-bottom: 16px; cursor: pointer; }
+        .product-image { position: absolute; top: 5%; left: 5%; width: 90%; height: 90%; object-fit: contain; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5)); transition: transform 0.5s ease; }
         .product-card:hover .product-image { transform: scale(1.05); }
 
         .product-info { z-index: 1; display: flex; flex-direction: column; flex-grow: 1; }

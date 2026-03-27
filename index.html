@@ -716,8 +716,6 @@
         .quiz-btn:hover { border-color: rgba(212,175,55,0.45); transform: translateY(-2px); }
         .quiz-btn:active { transform: translateY(0); }
         .quiz-btn.active { background: rgba(212,175,55,0.14); border-color: var(--accent-gold); color: #F2D980; }
-        .quiz-reset { border-style: dashed; opacity: 0.7; }
-        .quiz-reset:hover, .quiz-reset.active { opacity: 1; }
         .quiz-emoji { font-size: 1.5rem; }
         .quiz-result {
             margin-top: 18px;
@@ -759,6 +757,7 @@
             gap: 8px;
             min-height: 130px;
             transition: transform 0.2s ease, border-color 0.2s ease;
+            cursor: pointer;
         }
         .quiz-product-card:hover { transform: translateY(-2px); border-color: rgba(212,175,55,0.4); }
         .quiz-product-name {
@@ -989,7 +988,7 @@
             <button class="quiz-btn" data-scenario="gift"><span class="quiz-emoji">🎁</span>Для подарка</button>
             <button class="quiz-btn" data-scenario="daily"><span class="quiz-emoji">☀️</span>На каждый день</button>
             <button class="quiz-btn" data-scenario="evening"><span class="quiz-emoji">🥂</span>На вечер</button>
-            <button class="quiz-btn quiz-reset" data-scenario="all"><span class="quiz-emoji">✨</span>Вся коллекция</button>
+            <button class="quiz-btn" data-scenario="weekend"><span class="quiz-emoji">🎉</span>На выходные</button>
         </div>
         <div class="quiz-result hidden" id="quiz-result" aria-live="polite">
             <p class="quiz-result-kicker">Персональная рекомендация</p>
@@ -1415,7 +1414,7 @@
             gift:    ["lv-lovers", "mfk-baccarat-rouge", "pdm-delina"],
             fresh:   ["roja-isola-blu", "creed-absolu-aventus", "lv-imagination"],
             warm:    ["pdm-althair", "versace-eros-flame", "lv-ombre-nomade"],
-            all:     ["versace-eros-flame", "creed-absolu-aventus", "lv-lovers"]
+            weekend: ["pdm-althair", "mfk-baccarat-rouge", "lv-lovers"]
         };
 
         const quizScenarioMeta = {
@@ -1424,7 +1423,7 @@
             gift:    { title: "Для подарка", note: "Комплиментарные бестселлеры, которые легко дарить без риска." },
             fresh:   { title: "Свежий сценарий", note: "Чистые и бодрые ароматы для офиса, встреч и дневной динамики." },
             warm:    { title: "Тёплый сценарий", note: "Чувственные и уютные композиции для свидания и близкой дистанции." },
-            all:     { title: "Вся коллекция", note: "Быстрый старт с тремя самыми популярными позициями." }
+            weekend: { title: "На выходные", note: "Яркая подборка для отдыха, вечеринок и свободного настроения." }
         };
 
         const quizProductDescriptions = {
@@ -1760,7 +1759,7 @@
             const stateText = document.getElementById('catalog-quiz-text');
             if (!stateWrap || !stateText) return;
 
-            if (!quizCatalogSelection || !quizCatalogSelection.length || !activeQuizScenario || activeQuizScenario === 'all') {
+            if (!quizCatalogSelection || !quizCatalogSelection.length || !activeQuizScenario) {
                 stateWrap.classList.add('hidden');
                 stateText.textContent = '';
                 return;
@@ -1783,11 +1782,9 @@
 
             document.getElementById('catalog-quiz-clear').addEventListener('click', () => {
                 quizCatalogSelection = null;
-                activeQuizScenario = 'all';
+                activeQuizScenario = null;
                 document.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('active'));
-                const allBtn = document.querySelector('.quiz-btn[data-scenario="all"]');
-                if (allBtn) allBtn.classList.add('active');
-                renderQuizResult('all');
+                hideQuizResult();
                 renderCatalog();
             });
 
@@ -2070,6 +2067,13 @@
                 .slice(0, 3);
         }
 
+        function hideQuizResult() {
+            const resultWrap = document.getElementById('quiz-result');
+            if (!resultWrap) return;
+            resultWrap.classList.remove('show');
+            resultWrap.classList.add('hidden');
+        }
+
         function renderQuizResult(scenario) {
             const resultWrap = document.getElementById('quiz-result');
             const resultTitle = document.getElementById('quiz-result-title');
@@ -2084,25 +2088,28 @@
             resultNote.textContent = scenarioMeta.note;
 
             productsWrap.innerHTML = recommendedProducts.map(product => `
-                <article class="quiz-product-card">
+                <article class="quiz-product-card" data-quiz-open="${product.id}" tabindex="0" role="button" aria-label="${product.brand} ${product.name}">
                     <h4 class="quiz-product-name">${product.brand} - ${product.name}</h4>
                     <p class="quiz-product-desc">- ${quizProductDescriptions[product.id] || 'точный аромат под ваш сценарий'}</p>
                     <div class="quiz-product-price">от ${formatMoney(product.volumes["10"])}</div>
-                    <button class="quiz-product-btn" type="button" data-quiz-product="${product.id}">В корзину 10 мл</button>
+                    <button class="quiz-product-btn" type="button" data-quiz-product="${product.id}">Подробнее</button>
                 </article>
             `).join('');
 
+            productsWrap.querySelectorAll('[data-quiz-open]').forEach(card => {
+                const openProduct = () => openProductDetail(card.dataset.quizOpen);
+                card.addEventListener('click', openProduct);
+                card.addEventListener('keydown', (event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        openProduct();
+                    }
+                });
+            });
             productsWrap.querySelectorAll('[data-quiz-product]').forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const product = productsById.get(btn.dataset.quizProduct);
-                    if (!product) return;
-                    addToCart(product, '10');
-                    btn.classList.add('added');
-                    btn.textContent = 'Добавлено';
-                    setTimeout(() => {
-                        btn.classList.remove('added');
-                        btn.textContent = 'В корзину 10 мл';
-                    }, 1200);
+                btn.addEventListener('click', (event) => {
+                    event.stopPropagation();
+                    openProductDetail(btn.dataset.quizProduct);
                 });
             });
 
@@ -2113,7 +2120,7 @@
 
         function applyQuizSelectionToCatalog() {
             if (!activeQuizScenario) return;
-            quizCatalogSelection = activeQuizScenario === 'all' ? null : [...(quizMap[activeQuizScenario] || [])];
+            quizCatalogSelection = [...(quizMap[activeQuizScenario] || [])];
             renderCatalog();
             document.getElementById('catalog').scrollIntoView({ behavior: 'smooth' });
         }
@@ -2122,13 +2129,25 @@
             const cta = document.getElementById('quiz-cta-primary');
             document.querySelectorAll('.quiz-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
+                    const scenario = btn.dataset.scenario;
+                    const isSameScenario = activeQuizScenario === scenario;
+
+                    if (isSameScenario) {
+                        activeQuizScenario = null;
+                        quizCatalogSelection = null;
+                        document.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('active'));
+                        hideQuizResult();
+                        renderCatalog();
+                        return;
+                    }
+
                     document.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('active'));
                     btn.classList.add('active');
                     if (quizCatalogSelection && quizCatalogSelection.length) {
                         quizCatalogSelection = null;
                         renderCatalog();
                     }
-                    activeQuizScenario = btn.dataset.scenario;
+                    activeQuizScenario = scenario;
                     renderQuizResult(activeQuizScenario);
                 });
             });

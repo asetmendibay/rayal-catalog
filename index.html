@@ -52,6 +52,7 @@
             background-image: radial-gradient(circle at 50% 0%, rgba(20,20,25,1) 0%, rgba(5,5,5,1) 60%);
             min-height: 100vh;
         }
+        .hidden { display: none !important; }
 
         h1, h2, h3, h4 { font-family: var(--font-serif); font-weight: 500; letter-spacing: 0.02em; }
 
@@ -327,6 +328,32 @@
         .section-header { text-align: center; margin-bottom: 26px; }
         .section-title { font-size: 2rem; margin-bottom: 8px; }
         .section-subtitle { font-size: 0.9rem; color: var(--text-muted); font-weight: 300; }
+        .catalog-quiz-state {
+            margin: 14px auto 0;
+            max-width: 520px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 10px 12px;
+            border: 1px solid rgba(212,175,55,0.32);
+            border-radius: 999px;
+            background: linear-gradient(120deg, rgba(212,175,55,0.14), rgba(212,175,55,0.05));
+        }
+        .catalog-quiz-text { font-size: 0.78rem; color: #F2E9D3; letter-spacing: 0.02em; }
+        .catalog-quiz-clear {
+            border: 1px solid rgba(255,255,255,0.22);
+            background: rgba(255,255,255,0.03);
+            color: #ECECF2;
+            border-radius: 999px;
+            padding: 6px 10px;
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+        }
+        .catalog-quiz-clear:hover { border-color: rgba(255,255,255,0.35); }
+        .catalog-quiz-clear:active { transform: scale(0.98); }
 
         /* Search */
         .search-wrapper { position: relative; margin-bottom: 20px; }
@@ -386,6 +413,10 @@
             background: radial-gradient(circle, var(--card-halo-inner, rgba(212,175,55,0.25)) 0%, var(--card-halo, rgba(212,175,55,0.14)) 58%, rgba(0,0,0,0) 84%);
         }
         .product-card:active { transform: scale(0.98); }
+        .product-card.recommended {
+            border-color: rgba(212,175,55,0.42);
+            box-shadow: 0 16px 34px rgba(212,175,55,0.14);
+        }
 
         .product-image-container { width: 100%; padding-top: 100%; position: relative; z-index: 1; margin-bottom: 16px; cursor: pointer; }
         .product-image-container::before {
@@ -667,11 +698,115 @@
         .quiz-section { padding: 46px 20px 52px; max-width: 800px; margin: 0 auto; text-align: center; }
         .quiz-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 32px; }
         @media (min-width: 480px) { .quiz-grid { grid-template-columns: repeat(3, 1fr); } }
-        .quiz-btn { padding: 18px 12px; background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: 12px; color: var(--text-main); font-family: var(--font-sans); font-size: 0.9rem; cursor: pointer; transition: all 0.25s ease; display: flex; flex-direction: column; align-items: center; gap: 6px; }
-        .quiz-btn:hover, .quiz-btn.active { background: rgba(212,175,55,0.12); border-color: var(--accent-gold); color: var(--accent-gold); }
+        .quiz-btn {
+            padding: 18px 12px;
+            background: var(--bg-glass);
+            border: 1px solid var(--border-glass);
+            border-radius: 12px;
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+        .quiz-btn:hover { border-color: rgba(212,175,55,0.45); transform: translateY(-2px); }
+        .quiz-btn:active { transform: translateY(0); }
+        .quiz-btn.active { background: rgba(212,175,55,0.14); border-color: var(--accent-gold); color: #F2D980; }
         .quiz-reset { border-style: dashed; opacity: 0.7; }
         .quiz-reset:hover, .quiz-reset.active { opacity: 1; }
         .quiz-emoji { font-size: 1.5rem; }
+        .quiz-result {
+            margin-top: 18px;
+            padding: 18px;
+            border-radius: 16px;
+            border: 1px solid rgba(212,175,55,0.3);
+            background:
+                radial-gradient(circle at 50% -30%, rgba(212,175,55,0.17), transparent 62%),
+                linear-gradient(150deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
+            text-align: left;
+            box-shadow: 0 24px 60px rgba(0,0,0,0.34);
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+        .quiz-result.show { opacity: 1; transform: translateY(0); }
+        .quiz-result-kicker {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: rgba(242,217,128,0.95);
+            margin-bottom: 8px;
+        }
+        .quiz-result-title { font-size: 1.38rem; color: #F8F8FA; margin-bottom: 4px; }
+        .quiz-result-note { font-size: 0.86rem; color: var(--text-muted); margin-bottom: 14px; }
+        .quiz-products {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+        .quiz-product-card {
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            background: rgba(5,5,8,0.7);
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-height: 130px;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+        .quiz-product-card:hover { transform: translateY(-2px); border-color: rgba(212,175,55,0.4); }
+        .quiz-product-name {
+            font-family: var(--font-serif);
+            font-size: 1.05rem;
+            color: #F8F8FA;
+            line-height: 1.2;
+        }
+        .quiz-product-desc { font-size: 0.78rem; color: var(--text-muted); line-height: 1.45; min-height: 34px; }
+        .quiz-product-price { font-size: 0.78rem; color: #E8D39A; letter-spacing: 0.02em; }
+        .quiz-product-btn {
+            margin-top: auto;
+            border: 1px solid rgba(212,175,55,0.35);
+            background: rgba(212,175,55,0.14);
+            color: #F6E9BF;
+            border-radius: 999px;
+            height: 34px;
+            font-size: 0.68rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+        }
+        .quiz-product-btn:hover { background: rgba(212,175,55,0.22); }
+        .quiz-product-btn.added { border-color: rgba(58,197,112,0.55); background: rgba(58,197,112,0.22); color: #D5F7E2; }
+        .quiz-cta-primary {
+            width: 100%;
+            border: 1px solid rgba(212,175,55,0.55);
+            background: linear-gradient(160deg, rgba(212,175,55,0.98), rgba(186,151,43,0.98));
+            color: #101010;
+            border-radius: 12px;
+            height: 46px;
+            font-family: var(--font-sans);
+            font-size: 0.78rem;
+            font-weight: 650;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            box-shadow: 0 14px 30px rgba(212,175,55,0.2);
+        }
+        .quiz-cta-primary:hover { filter: brightness(1.04); }
+        .quiz-cta-primary:active { transform: scale(0.99); }
+        @media (max-width: 768px) {
+            .catalog-quiz-state { border-radius: 14px; padding: 10px; align-items: flex-start; }
+            .catalog-quiz-clear { width: 100%; }
+            .quiz-products { grid-template-columns: 1fr; }
+            .quiz-result { padding: 14px; margin-top: 14px; }
+            .quiz-cta-primary { height: 48px; font-size: 0.74rem; }
+        }
 
         /* ── Price compare ── */
         .compare-section { padding: 64px 20px; max-width: 860px; margin: 0 auto; }
@@ -847,14 +982,21 @@
     <!-- Подбор аромата -->
     <section class="quiz-section reveal" id="quiz">
         <h2 class="section-title">Подбери аромат</h2>
-        <p class="section-subtitle" style="margin-top:8px;">Выбери сценарий — покажем подходящие ароматы</p>
+        <p class="section-subtitle" style="margin-top:8px;">Подберём аромат под твою ситуацию — как в нишевом бутике</p>
         <div class="quiz-grid">
-            <button class="quiz-btn" data-moods="Романтичный,Вечерний"><span class="quiz-emoji">💝</span>На свидание</button>
-            <button class="quiz-btn" data-moods="Деловой"><span class="quiz-emoji">💼</span>На работу</button>
-            <button class="quiz-btn" data-moods="all"><span class="quiz-emoji">🎁</span>Для подарка</button>
-            <button class="quiz-btn" data-moods="Повседневный,Деловой"><span class="quiz-emoji">☀️</span>На каждый день</button>
-            <button class="quiz-btn" data-moods="Вечерний,Зимний"><span class="quiz-emoji">🥂</span>На вечер</button>
-            <button class="quiz-btn quiz-reset" data-moods="all"><span class="quiz-emoji">✨</span>Вся коллекция</button>
+            <button class="quiz-btn" data-scenario="warm"><span class="quiz-emoji">💝</span>На свидание</button>
+            <button class="quiz-btn" data-scenario="fresh"><span class="quiz-emoji">💼</span>На работу</button>
+            <button class="quiz-btn" data-scenario="gift"><span class="quiz-emoji">🎁</span>Для подарка</button>
+            <button class="quiz-btn" data-scenario="daily"><span class="quiz-emoji">☀️</span>На каждый день</button>
+            <button class="quiz-btn" data-scenario="evening"><span class="quiz-emoji">🥂</span>На вечер</button>
+            <button class="quiz-btn quiz-reset" data-scenario="all"><span class="quiz-emoji">✨</span>Вся коллекция</button>
+        </div>
+        <div class="quiz-result hidden" id="quiz-result" aria-live="polite">
+            <p class="quiz-result-kicker">Персональная рекомендация</p>
+            <h3 class="quiz-result-title" id="quiz-result-title">Тебе подойдут:</h3>
+            <p class="quiz-result-note" id="quiz-result-note"></p>
+            <div class="quiz-products" id="quiz-products"></div>
+            <button class="quiz-cta-primary" id="quiz-cta-primary" type="button">Смотреть подбор</button>
         </div>
     </section>
 
@@ -863,6 +1005,10 @@
         <div class="section-header">
             <h2 class="section-title">Коллекция</h2>
             <p class="section-subtitle">Избранные нишевые ароматы</p>
+            <div class="catalog-quiz-state hidden" id="catalog-quiz-state">
+                <span class="catalog-quiz-text" id="catalog-quiz-text"></span>
+                <button class="catalog-quiz-clear" id="catalog-quiz-clear" type="button">Показать всё</button>
+            </div>
             <button class="btn btn-outline" id="btn-toggle-filters" style="margin-top:20px; font-size:0.8rem; padding:10px 20px;">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px; vertical-align:middle;"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg>
                 Фильтры
@@ -1263,6 +1409,39 @@
             }
         ];
 
+        const quizMap = {
+            daily:   ["creed-absolu-aventus", "lv-imagination", "lv-lovers"],
+            evening: ["versace-eros-flame", "lv-ombre-nomade", "tf-ombre-leather"],
+            gift:    ["lv-lovers", "mfk-baccarat-rouge", "pdm-delina"],
+            fresh:   ["roja-isola-blu", "creed-absolu-aventus", "lv-imagination"],
+            warm:    ["pdm-althair", "versace-eros-flame", "lv-ombre-nomade"],
+            all:     ["versace-eros-flame", "creed-absolu-aventus", "lv-lovers"]
+        };
+
+        const quizScenarioMeta = {
+            daily:   { title: "На каждый день", note: "Лёгкие и уверенные ароматы, которые звучат уместно в любом ритме." },
+            evening: { title: "На вечер", note: "Выразительные композиции со шлейфом для событий, встреч и ужинов." },
+            gift:    { title: "Для подарка", note: "Комплиментарные бестселлеры, которые легко дарить без риска." },
+            fresh:   { title: "Свежий сценарий", note: "Чистые и бодрые ароматы для офиса, встреч и дневной динамики." },
+            warm:    { title: "Тёплый сценарий", note: "Чувственные и уютные композиции для свидания и близкой дистанции." },
+            all:     { title: "Вся коллекция", note: "Быстрый старт с тремя самыми популярными позициями." }
+        };
+
+        const quizProductDescriptions = {
+            "creed-absolu-aventus": "свежий, уверенный, дорогой аромат",
+            "lv-imagination": "чистый цитрус и аккуратная древесная база",
+            "lv-lovers": "мягкий, комплиментарный и запоминающийся шлейф",
+            "versace-eros-flame": "тёплый пряный вайб с сильной подачей",
+            "lv-ombre-nomade": "глубокий восточный акцент для вечера",
+            "tf-ombre-leather": "кожаный характер с премиальным звучанием",
+            "mfk-baccarat-rouge": "узнаваемый шлейф и эффектный характер",
+            "pdm-delina": "женственный цветочный акцент для подарка",
+            "roja-isola-blu": "морская свежесть и интеллигентная чистота",
+            "pdm-althair": "тёплая ваниль с благородной мягкостью"
+        };
+
+        const productsById = new Map(products.map(product => [product.id, product]));
+
         const PHONE = "+77776889990";
 
         const faqs = [
@@ -1297,6 +1476,8 @@
         let currentSort = 'default';
         let searchQuery = '';
         let activeCarouselId = 0;
+        let quizCatalogSelection = null;
+        let activeQuizScenario = null;
 
         // ── DOM ──────────────────────────────────────────────────────────────
         const grid = document.getElementById('product-grid');
@@ -1493,27 +1674,33 @@
             let list = products.filter(p => {
                 const brandOk  = currentFilterBrand === 'all' || p.brand === currentFilterBrand;
                 const genderOk = currentFilterGender === 'all' || p.gender === currentFilterGender;
-                const quizOk   = !quizFilter || quizFilter.includes(p.mood);
                 const searchOk = !q ||
                     p.name.toLowerCase().includes(q) ||
                     p.brand.toLowerCase().includes(q) ||
                     p.notes.toLowerCase().includes(q) ||
                     (p.mood && p.mood.toLowerCase().includes(q));
-                return brandOk && genderOk && quizOk && searchOk;
+                return brandOk && genderOk && searchOk;
             });
+
+            if (quizCatalogSelection && quizCatalogSelection.length) {
+                list = list.filter(p => quizCatalogSelection.includes(p.id));
+            }
 
             if (currentSort === 'price-asc')  list.sort((a, b) => a.volumes["10"] - b.volumes["10"]);
             if (currentSort === 'price-desc') list.sort((a, b) => b.volumes["10"] - a.volumes["10"]);
             if (currentSort === 'name')       list.sort((a, b) => a.name.localeCompare(b.name));
 
+            updateCatalogQuizState();
+
             if (list.length === 0) {
-                grid.innerHTML = '<div class="no-results">Нет ароматов, подходящих под выбранные фильтры</div>';
+                grid.innerHTML = '<div class="no-results">Нет ароматов, подходящих под текущие условия. Измени фильтры или открой всю коллекцию.</div>';
                 return;
             }
 
             list.forEach(p => {
                 const card = document.createElement('div');
-                card.className = 'product-card';
+                const isRecommended = !!(quizCatalogSelection && quizCatalogSelection.includes(p.id));
+                card.className = `product-card${isRecommended ? ' recommended' : ''}`;
                 const visual = getVisualProfile(p.accent_color, p.tone);
                 card.style.setProperty('--card-halo-inner', visual.cardHaloInner);
                 card.style.setProperty('--card-halo', visual.cardHaloColor);
@@ -1568,6 +1755,22 @@
         }
 
         // ── Events ──────────────────────────────────────────────────────────
+        function updateCatalogQuizState() {
+            const stateWrap = document.getElementById('catalog-quiz-state');
+            const stateText = document.getElementById('catalog-quiz-text');
+            if (!stateWrap || !stateText) return;
+
+            if (!quizCatalogSelection || !quizCatalogSelection.length || !activeQuizScenario || activeQuizScenario === 'all') {
+                stateWrap.classList.add('hidden');
+                stateText.textContent = '';
+                return;
+            }
+
+            const scenarioTitle = quizScenarioMeta[activeQuizScenario]?.title || 'Персональная подборка';
+            stateText.textContent = `Показана подборка: ${scenarioTitle}`;
+            stateWrap.classList.remove('hidden');
+        }
+
         function bindEvents() {
             document.getElementById('btn-toggle-filters').addEventListener('click', () =>
                 document.getElementById('filter-bar').classList.toggle('visible')
@@ -1575,6 +1778,16 @@
 
             document.getElementById('search-input').addEventListener('input', e => {
                 searchQuery = e.target.value;
+                renderCatalog();
+            });
+
+            document.getElementById('catalog-quiz-clear').addEventListener('click', () => {
+                quizCatalogSelection = null;
+                activeQuizScenario = 'all';
+                document.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('active'));
+                const allBtn = document.querySelector('.quiz-btn[data-scenario="all"]');
+                if (allBtn) allBtn.classList.add('active');
+                renderQuizResult('all');
                 renderCatalog();
             });
 
@@ -1850,19 +2063,76 @@
         }
 
         // ── Quiz ──────────────────────────────────────────────────────────────
-        let quizFilter = null;
+        function getQuizProductsByScenario(scenario) {
+            return (quizMap[scenario] || [])
+                .map(id => productsById.get(id))
+                .filter(Boolean)
+                .slice(0, 3);
+        }
+
+        function renderQuizResult(scenario) {
+            const resultWrap = document.getElementById('quiz-result');
+            const resultTitle = document.getElementById('quiz-result-title');
+            const resultNote = document.getElementById('quiz-result-note');
+            const productsWrap = document.getElementById('quiz-products');
+            if (!resultWrap || !resultTitle || !resultNote || !productsWrap) return;
+
+            const scenarioMeta = quizScenarioMeta[scenario] || { title: 'Персональный подбор', note: 'Подберём лучший вариант под ваш запрос.' };
+            const recommendedProducts = getQuizProductsByScenario(scenario);
+
+            resultTitle.textContent = `Тебе подойдут: ${scenarioMeta.title}`;
+            resultNote.textContent = scenarioMeta.note;
+
+            productsWrap.innerHTML = recommendedProducts.map(product => `
+                <article class="quiz-product-card">
+                    <h4 class="quiz-product-name">${product.brand} - ${product.name}</h4>
+                    <p class="quiz-product-desc">- ${quizProductDescriptions[product.id] || 'точный аромат под ваш сценарий'}</p>
+                    <div class="quiz-product-price">от ${formatMoney(product.volumes["10"])}</div>
+                    <button class="quiz-product-btn" type="button" data-quiz-product="${product.id}">В корзину 10 мл</button>
+                </article>
+            `).join('');
+
+            productsWrap.querySelectorAll('[data-quiz-product]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const product = productsById.get(btn.dataset.quizProduct);
+                    if (!product) return;
+                    addToCart(product, '10');
+                    btn.classList.add('added');
+                    btn.textContent = 'Добавлено';
+                    setTimeout(() => {
+                        btn.classList.remove('added');
+                        btn.textContent = 'В корзину 10 мл';
+                    }, 1200);
+                });
+            });
+
+            resultWrap.classList.remove('show');
+            resultWrap.classList.remove('hidden');
+            requestAnimationFrame(() => resultWrap.classList.add('show'));
+        }
+
+        function applyQuizSelectionToCatalog() {
+            if (!activeQuizScenario) return;
+            quizCatalogSelection = activeQuizScenario === 'all' ? null : [...(quizMap[activeQuizScenario] || [])];
+            renderCatalog();
+            document.getElementById('catalog').scrollIntoView({ behavior: 'smooth' });
+        }
 
         function initQuiz() {
+            const cta = document.getElementById('quiz-cta-primary');
             document.querySelectorAll('.quiz-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     document.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('active'));
-                    const val = btn.dataset.moods;
-                    quizFilter = val === 'all' ? null : val.split(',');
-                    if (quizFilter !== null) btn.classList.add('active');
-                    renderCatalog();
-                    document.getElementById('catalog').scrollIntoView({ behavior: 'smooth' });
+                    btn.classList.add('active');
+                    if (quizCatalogSelection && quizCatalogSelection.length) {
+                        quizCatalogSelection = null;
+                        renderCatalog();
+                    }
+                    activeQuizScenario = btn.dataset.scenario;
+                    renderQuizResult(activeQuizScenario);
                 });
             });
+            if (cta) cta.addEventListener('click', applyQuizSelectionToCatalog);
         }
 
         // ── Scroll reveal ─────────────────────────────────────────────────────

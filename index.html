@@ -90,19 +90,18 @@
 
         /* ── Hero ── */
         .hero {
-            min-height: 100svh;
+            min-height: 100vh;
             display: flex; flex-direction: column;
             justify-content: flex-start; align-items: center;
             position: relative;
-            padding: 90px 0 60px;
+            padding: 100px 0 60px;
             text-align: center;
             background: radial-gradient(circle at 50% 100%, #151520 0%, #050505 60%);
         }
-        @media (min-height: 800px) { .hero { padding-top: max(90px, calc(50svh - 300px)); } }
         @media (max-height: 650px) {
+            .hero { padding-top: 80px; }
             .hero-carousel { height: 25vh !important; }
             .hero-logo-svg { width: min(260px, 65vw) !important; }
-            .hero-text { margin-bottom: 0.75rem !important; }
         }
 
         .hero-fog {

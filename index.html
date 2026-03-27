@@ -566,11 +566,6 @@
                 <button class="btn btn-gold" id="btn-quiz">Подобрать аромат</button>
                 <button class="btn btn-outline" id="btn-explore">Смотреть каталог</button>
             </div>
-            <div class="trust-bar">
-                <span>5 магазинов по Казахстану</span>
-                <span>Доставка по РК и СНГ</span>
-                <span>Контроль качества</span>
-            </div>
         </div>
         <div class="hero-carousel" id="hero-carousel">
             <div class="hero-glow" id="hero-glow"></div>
@@ -1058,28 +1053,31 @@
         }
 
         // ── Carousel ──────────────────────────────────────────────────────────
+        let carouselFeatured = [];
+
         function initCarousel() {
             const container = document.getElementById('hero-carousel');
             const glow = document.getElementById('hero-glow');
-            const featured = [...products].sort(() => 0.5 - Math.random()).slice(0, 4);
+            carouselFeatured = [...products].sort(() => 0.5 - Math.random()).slice(0, 4);
 
-            featured.forEach((p, idx) => {
+            carouselFeatured.forEach((p, idx) => {
                 const item = document.createElement('div');
                 item.className = `carousel-item${idx === 0 ? ' active' : ''}`;
                 item.id = `hero-item-${idx}`;
-                item.innerHTML = `<img src="${p.image}" alt="${p.name}"><div class="carousel-title">${p.name}</div>`;
+                item.innerHTML = `<img src="${p.image}" alt="${p.name}" style="cursor:pointer;"><div class="carousel-title">${p.name}</div>`;
+                item.addEventListener('click', () => openProductDetail(p.id));
                 container.appendChild(item);
             });
 
-            glow.style.background = featured[0].accent_color;
-            updateLogoColor(featured[0].accent_color);
+            glow.style.background = carouselFeatured[0].accent_color;
+            updateLogoColor(carouselFeatured[0].accent_color);
 
             setInterval(() => {
                 document.getElementById(`hero-item-${activeCarouselId}`).classList.remove('active');
-                activeCarouselId = (activeCarouselId + 1) % featured.length;
+                activeCarouselId = (activeCarouselId + 1) % carouselFeatured.length;
                 document.getElementById(`hero-item-${activeCarouselId}`).classList.add('active');
-                glow.style.background = featured[activeCarouselId].accent_color;
-                updateLogoColor(featured[activeCarouselId].accent_color);
+                glow.style.background = carouselFeatured[activeCarouselId].accent_color;
+                updateLogoColor(carouselFeatured[activeCarouselId].accent_color);
             }, 4500);
         }
 

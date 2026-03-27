@@ -468,6 +468,8 @@
         @media (min-width: 480px) { .quiz-grid { grid-template-columns: repeat(3, 1fr); } }
         .quiz-btn { padding: 18px 12px; background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: 12px; color: var(--text-main); font-family: var(--font-sans); font-size: 0.9rem; cursor: pointer; transition: all 0.25s ease; display: flex; flex-direction: column; align-items: center; gap: 6px; }
         .quiz-btn:hover, .quiz-btn.active { background: rgba(212,175,55,0.12); border-color: var(--accent-gold); color: var(--accent-gold); }
+        .quiz-reset { border-style: dashed; opacity: 0.7; }
+        .quiz-reset:hover, .quiz-reset.active { opacity: 1; }
         .quiz-emoji { font-size: 1.5rem; }
 
         /* ── Price compare ── */
@@ -561,7 +563,6 @@
         </svg>
         <div class="hero-text">
             <h1 class="hero-headline">Нишевая парфюмерия<br>без лишних наценок</h1>
-            <p class="hero-sub">Оригинальные ароматы в формате распива. Подбери свой парфюм по стилю, настроению и случаю.</p>
             <div class="hero-btns">
                 <button class="btn btn-gold" id="btn-quiz">Подобрать аромат</button>
                 <button class="btn btn-outline" id="btn-explore">Смотреть каталог</button>
@@ -629,9 +630,9 @@
             <button class="quiz-btn" data-moods="Романтичный,Вечерний"><span class="quiz-emoji">💝</span>На свидание</button>
             <button class="quiz-btn" data-moods="Деловой"><span class="quiz-emoji">💼</span>На работу</button>
             <button class="quiz-btn" data-moods="all"><span class="quiz-emoji">🎁</span>Для подарка</button>
-            <button class="quiz-btn" data-moods="Вечерний,Романтичный"><span class="quiz-emoji">🌙</span>На никах</button>
             <button class="quiz-btn" data-moods="Повседневный,Деловой"><span class="quiz-emoji">☀️</span>На каждый день</button>
             <button class="quiz-btn" data-moods="Вечерний,Зимний"><span class="quiz-emoji">🥂</span>На вечер</button>
+            <button class="quiz-btn quiz-reset" data-moods="all"><span class="quiz-emoji">✨</span>Вся коллекция</button>
         </div>
     </section>
 
@@ -1479,9 +1480,9 @@
             document.querySelectorAll('.quiz-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     document.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
                     const val = btn.dataset.moods;
                     quizFilter = val === 'all' ? null : val.split(',');
+                    if (quizFilter !== null) btn.classList.add('active');
                     renderCatalog();
                     document.getElementById('catalog').scrollIntoView({ behavior: 'smooth' });
                 });

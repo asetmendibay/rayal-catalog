@@ -90,12 +90,19 @@
 
         /* ── Hero ── */
         .hero {
-            height: 100vh;
+            min-height: 100svh;
             display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            position: relative; padding-bottom: 40px;
-            text-align: center; overflow: hidden;
+            justify-content: flex-start; align-items: center;
+            position: relative;
+            padding: 90px 0 60px;
+            text-align: center;
             background: radial-gradient(circle at 50% 100%, #151520 0%, #050505 60%);
+        }
+        @media (min-height: 800px) { .hero { padding-top: max(90px, calc(50svh - 300px)); } }
+        @media (max-height: 650px) {
+            .hero-carousel { height: 25vh !important; }
+            .hero-logo-svg { width: min(260px, 65vw) !important; }
+            .hero-text { margin-bottom: 0.75rem !important; }
         }
 
         .hero-fog {
@@ -416,6 +423,80 @@
         .review-product { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 8px; }
         .review-text { font-size: 0.88rem; color: #d1d1d6; line-height: 1.6; }
 
+        /* ── Hero text ── */
+        .hero-text { text-align: center; z-index: 10; padding: 0 20px; margin-bottom: 1.5rem; }
+        .hero-headline { font-family: var(--font-serif); font-size: clamp(1.6rem, 5vw, 2.8rem); font-weight: 500; line-height: 1.2; margin-bottom: 12px; background: linear-gradient(135deg, #fff 60%, #D4AF37 100%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-sub { font-size: clamp(0.82rem, 2.2vw, 1rem); color: var(--text-muted); font-weight: 300; max-width: 520px; margin: 0 auto 24px; line-height: 1.6; }
+        .hero-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+        .btn-gold { background: var(--accent-gold); color: #000; font-weight: 600; }
+        .btn-gold:hover { background: #e0c040; }
+        .trust-bar { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; font-size: 0.72rem; color: var(--text-muted); letter-spacing: 0.04em; }
+        .trust-bar span { display: flex; align-items: center; gap: 5px; }
+        .trust-bar span::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--accent-gold); flex-shrink: 0; }
+
+        /* ── Scroll reveal ── */
+        .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ── Why RAYAL ── */
+        .why-section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; }
+        .why-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 40px; }
+        @media (min-width: 768px) { .why-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (min-width: 1024px) { .why-grid { grid-template-columns: repeat(5, 1fr); } }
+        .why-card { background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: 16px; padding: 24px 16px; text-align: center; backdrop-filter: blur(10px); }
+        .why-icon { font-size: 2rem; margin-bottom: 12px; }
+        .why-title { font-family: var(--font-serif); font-size: 1rem; margin-bottom: 6px; }
+        .why-desc { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; }
+
+        /* ── Raspiv ── */
+        .raspiv-section { padding: 60px 20px; background: linear-gradient(180deg, transparent, rgba(212,175,55,0.04), transparent); }
+        .raspiv-inner { max-width: 900px; margin: 0 auto; }
+        .raspiv-flow { display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap; margin: 40px 0; }
+        .flow-step { background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: 12px; padding: 16px 20px; text-align: center; flex: 1; min-width: 100px; max-width: 160px; }
+        .flow-step-num { font-size: 0.65rem; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+        .flow-step-text { font-family: var(--font-serif); font-size: 0.95rem; }
+        .flow-arrow { color: var(--accent-gold); font-size: 1.2rem; opacity: 0.6; }
+        .raspiv-perks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 32px; }
+        @media (min-width: 640px) { .raspiv-perks { grid-template-columns: repeat(4, 1fr); } }
+        .raspiv-perk { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
+        .perk-icon { font-size: 1.6rem; }
+        .perk-text { font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; }
+
+        /* ── Quiz ── */
+        .quiz-section { padding: 60px 20px; max-width: 800px; margin: 0 auto; text-align: center; }
+        .quiz-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 32px; }
+        @media (min-width: 480px) { .quiz-grid { grid-template-columns: repeat(3, 1fr); } }
+        .quiz-btn { padding: 18px 12px; background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: 12px; color: var(--text-main); font-family: var(--font-sans); font-size: 0.9rem; cursor: pointer; transition: all 0.25s ease; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+        .quiz-btn:hover, .quiz-btn.active { background: rgba(212,175,55,0.12); border-color: var(--accent-gold); color: var(--accent-gold); }
+        .quiz-emoji { font-size: 1.5rem; }
+
+        /* ── Price compare ── */
+        .compare-section { padding: 80px 20px; max-width: 860px; margin: 0 auto; }
+        .compare-table { margin-top: 40px; border: 1px solid var(--border-glass); border-radius: 16px; overflow: hidden; }
+        .compare-row { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 0; border-bottom: 1px solid var(--border-glass); }
+        .compare-row:last-child { border-bottom: none; }
+        .compare-row.header { background: rgba(255,255,255,0.04); }
+        .compare-cell { padding: 14px 16px; font-size: 0.88rem; display: flex; align-items: center; }
+        .compare-row.header .compare-cell { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); font-weight: 600; padding: 10px 16px; }
+        .compare-cell.name { font-family: var(--font-serif); font-size: 0.95rem; }
+        .compare-cell.orig { color: var(--text-muted); text-decoration: line-through; white-space: nowrap; }
+        .compare-cell.ours { color: var(--accent-gold); font-weight: 600; font-size: 0.95rem; white-space: nowrap; }
+        @media (max-width: 480px) { .compare-cell { padding: 12px 10px; font-size: 0.8rem; } .compare-cell.name { font-size: 0.82rem; } }
+        .compare-note { text-align: center; margin-top: 20px; font-size: 0.8rem; color: var(--text-muted); }
+
+        /* ── Trust stats ── */
+        .stats-bar { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border-glass); border: 1px solid var(--border-glass); border-radius: 16px; overflow: hidden; margin: 0 20px 60px; max-width: 800px; margin-left: auto; margin-right: auto; }
+        @media (min-width: 640px) { .stats-bar { grid-template-columns: repeat(4, 1fr); } }
+        .stat-item { background: var(--bg-dark); padding: 24px 16px; text-align: center; }
+        .stat-num { font-family: var(--font-serif); font-size: 2rem; color: var(--accent-gold); font-weight: 600; line-height: 1; margin-bottom: 6px; }
+        .stat-label { font-size: 0.75rem; color: var(--text-muted); }
+
+        /* ── CTA ── */
+        .cta-section { padding: 80px 20px; text-align: center; position: relative; overflow: hidden; }
+        .cta-section::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 400px; height: 400px; background: radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
+        .cta-title { font-family: var(--font-serif); font-size: clamp(1.8rem, 5vw, 3rem); margin-bottom: 16px; }
+        .cta-sub { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 32px; font-weight: 300; }
+
         /* ── Footer ── */
         .footer { padding: 40px 20px; text-align: center; border-top: 1px solid var(--border-glass); display: flex; flex-direction: column; align-items: center; gap: 16px; background: rgba(5,5,5,0.8); }
         .footer-logo { height: 24px; filter: invert(1); opacity: 0.5; }
@@ -478,15 +559,81 @@
             <!-- Layer 3: glass highlight — static white shine, no JS needed -->
             <use href="#logo-shape" fill="url(#glass-shine)"/>
         </svg>
+        <div class="hero-text">
+            <h1 class="hero-headline">Нишевая парфюмерия<br>без лишних наценок</h1>
+            <p class="hero-sub">Оригинальные ароматы в формате распива. Подбери свой парфюм по стилю, настроению и случаю.</p>
+            <div class="hero-btns">
+                <button class="btn btn-gold" id="btn-quiz">Подобрать аромат</button>
+                <button class="btn btn-outline" id="btn-explore">Смотреть каталог</button>
+            </div>
+            <div class="trust-bar">
+                <span>5 магазинов по Казахстану</span>
+                <span>Доставка по РК и СНГ</span>
+                <span>Контроль качества</span>
+            </div>
+        </div>
         <div class="hero-carousel" id="hero-carousel">
             <div class="hero-glow" id="hero-glow"></div>
         </div>
-        <button class="btn btn-outline" id="btn-explore" style="z-index:10;">В каталог</button>
         <div class="scroll-indicator">
             <span>Прокрутите</span>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
         </div>
     </header>
+
+    <!-- Почему RAYAL -->
+    <section class="why-section reveal">
+        <div class="section-header">
+            <h2 class="section-title">Почему RAYAL</h2>
+            <p class="section-subtitle">Всё что нужно — в одном месте</p>
+        </div>
+        <div class="why-grid">
+            <div class="why-card"><div class="why-icon">💎</div><div class="why-title">Роскошь без переплаты</div><div class="why-desc">Люксовые ароматы по честным ценам — без наценки за бренд</div></div>
+            <div class="why-card"><div class="why-icon">🧴</div><div class="why-title">Распив — попробуй</div><div class="why-desc">От 10 мл. Не нужно покупать весь флакон сразу</div></div>
+            <div class="why-card"><div class="why-icon">📍</div><div class="why-title">5 магазинов в РК</div><div class="why-desc">Алматы и Актобе — можно прийти и понюхать перед покупкой</div></div>
+            <div class="why-card"><div class="why-icon">✅</div><div class="why-title">Контроль качества</div><div class="why-desc">Каждый аромат проверяется перед отправкой</div></div>
+            <div class="why-card"><div class="why-icon">🚚</div><div class="why-title">Доставка по РК и СНГ</div><div class="why-desc">Казпочта, СДЭК, самовывоз из точек</div></div>
+        </div>
+    </section>
+
+    <!-- Что такое распив -->
+    <section class="raspiv-section reveal">
+        <div class="raspiv-inner">
+            <div class="section-header">
+                <h2 class="section-title">Попробуй аромат перед покупкой</h2>
+                <p class="section-subtitle">Формат распива — для тех, кто ценит свой выбор</p>
+            </div>
+            <div class="raspiv-flow">
+                <div class="flow-step"><div class="flow-step-num">Шаг 1</div><div class="flow-step-text">Берёшь 10 мл</div></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step"><div class="flow-step-num">Шаг 2</div><div class="flow-step-text">Носишь неделю</div></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step"><div class="flow-step-num">Шаг 3</div><div class="flow-step-text">Понравилось?</div></div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-step" style="border-color:var(--accent-gold);"><div class="flow-step-num" style="color:var(--accent-gold);">Шаг 4</div><div class="flow-step-text">Берёшь 50 мл</div></div>
+            </div>
+            <div class="raspiv-perks">
+                <div class="raspiv-perk"><div class="perk-icon">💸</div><div class="perk-text">Без риска потерять деньги</div></div>
+                <div class="raspiv-perk"><div class="perk-icon">🎯</div><div class="perk-text">Найди свой аромат точно</div></div>
+                <div class="raspiv-perk"><div class="perk-icon">🎁</div><div class="perk-text">Идеально для подарка</div></div>
+                <div class="raspiv-perk"><div class="perk-icon">✨</div><div class="perk-text">Extrait de Parfum — стойкость 8–12 ч</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Подбор аромата -->
+    <section class="quiz-section reveal" id="quiz">
+        <h2 class="section-title">Подбери аромат</h2>
+        <p class="section-subtitle" style="margin-top:8px;">Выбери сценарий — покажем подходящие ароматы</p>
+        <div class="quiz-grid">
+            <button class="quiz-btn" data-moods="Романтичный,Вечерний"><span class="quiz-emoji">💝</span>На свидание</button>
+            <button class="quiz-btn" data-moods="Деловой"><span class="quiz-emoji">💼</span>На работу</button>
+            <button class="quiz-btn" data-moods="all"><span class="quiz-emoji">🎁</span>Для подарка</button>
+            <button class="quiz-btn" data-moods="Вечерний,Романтичный"><span class="quiz-emoji">🌙</span>На никах</button>
+            <button class="quiz-btn" data-moods="Повседневный,Деловой"><span class="quiz-emoji">☀️</span>На каждый день</button>
+            <button class="quiz-btn" data-moods="Вечерний,Зимний"><span class="quiz-emoji">🥂</span>На вечер</button>
+        </div>
+    </section>
 
     <!-- Catalog -->
     <section class="catalog" id="catalog">
@@ -541,6 +688,45 @@
 
         <div class="product-grid" id="product-grid"></div>
     </section>
+
+    <!-- Сравнение цен -->
+    <section class="compare-section reveal">
+        <div class="section-header">
+            <h2 class="section-title">Тот же аромат. В разы дешевле.</h2>
+            <p class="section-subtitle">Сравни цены с оригиналом</p>
+        </div>
+        <div class="compare-table">
+            <div class="compare-row header">
+                <div class="compare-cell name">Аромат</div>
+                <div class="compare-cell orig">Оригинал</div>
+                <div class="compare-cell ours">RAYAL</div>
+            </div>
+            <div class="compare-row">
+                <div class="compare-cell name">Creed Absolu Aventus</div>
+                <div class="compare-cell orig">₸95 000</div>
+                <div class="compare-cell ours">от ₸10 000</div>
+            </div>
+            <div class="compare-row">
+                <div class="compare-cell name">Tom Ford Oud Wood</div>
+                <div class="compare-cell orig">₸75 000</div>
+                <div class="compare-cell ours">от ₸7 000</div>
+            </div>
+            <div class="compare-row">
+                <div class="compare-cell name">Louis Vuitton L'Immensité</div>
+                <div class="compare-cell orig">₸120 000</div>
+                <div class="compare-cell ours">от ₸10 000</div>
+            </div>
+        </div>
+        <p class="compare-note">* Цены на оригинальные флаконы 100 мл в официальных магазинах РК</p>
+    </section>
+
+    <!-- Статистика доверия -->
+    <div class="stats-bar reveal">
+        <div class="stat-item"><div class="stat-num">3 200+</div><div class="stat-label">Заказов выполнено</div></div>
+        <div class="stat-item"><div class="stat-num">5</div><div class="stat-label">Магазинов в Казахстане</div></div>
+        <div class="stat-item"><div class="stat-num">21К+</div><div class="stat-label">Подписчиков Instagram</div></div>
+        <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">Контроль качества</div></div>
+    </div>
 
     <!-- Info -->
     <section class="info-section">
@@ -598,6 +784,16 @@
             <div class="review-card"><div class="review-header"><div><div class="review-author">Максат Д.</div><div class="review-date">25 января 2026</div></div><div class="review-stars">★★★★★</div></div><div class="review-product">Versace — Eros Flame</div><div class="review-text">Взял 30мл флакон, хватает надолго. Буквально каждый день спрашивают — что это за аромат. Очень доволен.</div></div>
             <div class="review-card"><div class="review-header"><div><div class="review-author">Сания Е.</div><div class="review-date">10 января 2026</div></div><div class="review-stars">★★★★★</div></div><div class="review-product">Roja Parfums — Isola Blu</div><div class="review-text">Нежный, свежий, стойкий. Именно то, что я искала для работы. Спасибо RAYAL за доступные цены!</div></div>
         </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta-section reveal">
+        <h2 class="cta-title">Подбери свой аромат Rayal</h2>
+        <p class="cta-sub">Напиши нам — поможем выбрать идеальный аромат под твой стиль</p>
+        <a class="btn btn-whatsapp" id="cta-whatsapp" href="#" target="_blank" style="display:inline-flex; width:auto; padding:14px 32px; font-size:1rem;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+            Написать в WhatsApp
+        </a>
     </section>
 
     <!-- Footer -->
@@ -917,12 +1113,13 @@
             let list = products.filter(p => {
                 const brandOk  = currentFilterBrand === 'all' || p.brand === currentFilterBrand;
                 const genderOk = currentFilterGender === 'all' || p.gender === currentFilterGender;
+                const quizOk   = !quizFilter || quizFilter.includes(p.mood);
                 const searchOk = !q ||
                     p.name.toLowerCase().includes(q) ||
                     p.brand.toLowerCase().includes(q) ||
                     p.notes.toLowerCase().includes(q) ||
                     (p.mood && p.mood.toLowerCase().includes(q));
-                return brandOk && genderOk && searchOk;
+                return brandOk && genderOk && quizOk && searchOk;
             });
 
             if (currentSort === 'price-asc')  list.sort((a, b) => a.volumes["10"] - b.volumes["10"]);
@@ -1275,8 +1472,38 @@
             glow.style.fill = hex;
         }
 
+        // ── Quiz ──────────────────────────────────────────────────────────────
+        let quizFilter = null;
+
+        function initQuiz() {
+            document.querySelectorAll('.quiz-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.quiz-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    const val = btn.dataset.moods;
+                    quizFilter = val === 'all' ? null : val.split(',');
+                    renderCatalog();
+                    document.getElementById('catalog').scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+            document.getElementById('btn-quiz').addEventListener('click', () =>
+                document.getElementById('quiz').scrollIntoView({ behavior: 'smooth' })
+            );
+        }
+
+        // ── Scroll reveal ─────────────────────────────────────────────────────
+        function initReveal() {
+            const obs = new IntersectionObserver((entries) => {
+                entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+            }, { threshold: 0.1 });
+            document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             init();
+            initQuiz();
+            initReveal();
+            document.getElementById('cta-whatsapp').href = `https://wa.me/${PHONE.replace('+', '')}`;
         });
     </script>
 </body>

@@ -589,7 +589,6 @@
             <div class="hero-glow" id="hero-glow"></div>
         </div>
         <div class="scroll-indicator">
-            <span>Прокрутите</span>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
         </div>
     </header>
@@ -1077,15 +1076,15 @@
             const container = document.getElementById('hero-carousel');
             const glow = document.getElementById('hero-glow');
             carouselFeatured = [
-                { id: "pdm-althair",    name: "Althaïr",   image: "Frame 18.png", accent_color: "#8B5A2B" },
-                { id: "roja-isola-blu", name: "Isola Blu", image: "Frame 19.png", accent_color: "#1B6FA5" }
+                { id: "pdm-althair",    name: "Althaïr",   image: "Frame 18.png", accent_color: "#8B5A2B", scale: 1.0  },
+                { id: "roja-isola-blu", name: "Isola Blu", image: "Frame 19.png", accent_color: "#1B6FA5", scale: 0.82 }
             ];
 
             carouselFeatured.forEach((p, idx) => {
                 const item = document.createElement('div');
                 item.className = `carousel-item${idx === 0 ? ' active' : ''}`;
                 item.id = `hero-item-${idx}`;
-                item.innerHTML = `<img src="${p.image}" alt="${p.name}" style="cursor:pointer;"><div class="carousel-title">${p.name}</div>`;
+                item.innerHTML = `<img src="${p.image}" alt="${p.name}" style="cursor:pointer; transform:scale(${p.scale || 1}); transform-origin:center bottom;"><div class="carousel-title">${p.name}</div>`;
                 item.addEventListener('click', () => openProductDetail(p.id));
                 container.appendChild(item);
             });
@@ -1094,7 +1093,7 @@
             updateLogoColor(carouselFeatured[0].accent_color);
             document.querySelector('.hero-headline').style.webkitTextFillColor = carouselFeatured[0].accent_color;
             document.querySelector('.hero-headline').style.backgroundImage = 'none';
-            document.getElementById('hero-logo').style.filter = `drop-shadow(0 0 8px ${carouselFeatured[0].accent_color}) opacity(0.6)`;
+            document.getElementById('hero-logo').style.filter = `invert(1) drop-shadow(0 0 20px ${carouselFeatured[0].accent_color})`;
             document.querySelectorAll('.carousel-title').forEach(el => el.style.color = '');
             const firstTitle = document.querySelector('.carousel-item.active .carousel-title');
             if (firstTitle) firstTitle.style.color = carouselFeatured[0].accent_color;
@@ -1108,7 +1107,7 @@
                 updateLogoColor(currentProduct.accent_color);
                 document.querySelector('.hero-headline').style.webkitTextFillColor = currentProduct.accent_color;
                 document.querySelector('.hero-headline').style.backgroundImage = 'none';
-                document.getElementById('hero-logo').style.filter = `drop-shadow(0 0 8px ${currentProduct.accent_color}) opacity(0.6)`;
+                document.getElementById('hero-logo').style.filter = `invert(1) drop-shadow(0 0 20px ${currentProduct.accent_color})`;
                 document.querySelectorAll('.carousel-title').forEach(el => el.style.color = '');
                 const activeTitle = document.querySelector('.carousel-item.active .carousel-title');
                 if (activeTitle) activeTitle.style.color = currentProduct.accent_color;

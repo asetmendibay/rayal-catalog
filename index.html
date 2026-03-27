@@ -324,7 +324,7 @@
         /* ── Catalog ── */
         .catalog { padding: 20px 20px 80px; max-width: 1200px; margin: 0 auto; }
 
-        .section-header { text-align: center; margin-bottom: 32px; }
+        .section-header { text-align: center; margin-bottom: 26px; }
         .section-title { font-size: 2rem; margin-bottom: 8px; }
         .section-subtitle { font-size: 0.9rem; color: var(--text-muted); font-weight: 300; }
 
@@ -640,7 +640,7 @@
         .reveal.visible { opacity: 1; transform: translateY(0); }
 
         /* ── Why RAYAL ── */
-        .why-section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; }
+        .why-section { padding: 68px 20px 52px; max-width: 1200px; margin: 0 auto; }
         .why-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 40px; }
         @media (min-width: 768px) { .why-grid { grid-template-columns: repeat(3, 1fr); } }
         @media (min-width: 1024px) { .why-grid { grid-template-columns: repeat(5, 1fr); } }
@@ -650,7 +650,7 @@
         .why-desc { font-size: 0.78rem; color: var(--text-muted); line-height: 1.5; }
 
         /* ── Raspiv ── */
-        .raspiv-section { padding: 60px 20px; background: linear-gradient(180deg, transparent, rgba(212,175,55,0.04), transparent); }
+        .raspiv-section { padding: 52px 20px 42px; background: linear-gradient(180deg, transparent, rgba(212,175,55,0.04), transparent); }
         .raspiv-inner { max-width: 900px; margin: 0 auto; }
         .raspiv-flow { display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap; margin: 40px 0; }
         .flow-step { background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: 12px; padding: 16px 20px; text-align: center; flex: 1; min-width: 100px; max-width: 160px; }
@@ -664,7 +664,7 @@
         .perk-text { font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; }
 
         /* ── Quiz ── */
-        .quiz-section { padding: 60px 20px; max-width: 800px; margin: 0 auto; text-align: center; }
+        .quiz-section { padding: 46px 20px 52px; max-width: 800px; margin: 0 auto; text-align: center; }
         .quiz-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 32px; }
         @media (min-width: 480px) { .quiz-grid { grid-template-columns: repeat(3, 1fr); } }
         .quiz-btn { padding: 18px 12px; background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: 12px; color: var(--text-main); font-family: var(--font-sans); font-size: 0.9rem; cursor: pointer; transition: all 0.25s ease; display: flex; flex-direction: column; align-items: center; gap: 6px; }
@@ -674,7 +674,7 @@
         .quiz-emoji { font-size: 1.5rem; }
 
         /* ── Price compare ── */
-        .compare-section { padding: 80px 20px; max-width: 860px; margin: 0 auto; }
+        .compare-section { padding: 64px 20px; max-width: 860px; margin: 0 auto; }
         .compare-table { margin-top: 40px; border: 1px solid var(--border-glass); border-radius: 16px; overflow: hidden; }
         .compare-row { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 0; border-bottom: 1px solid var(--border-glass); }
         .compare-row:last-child { border-bottom: none; }
@@ -688,14 +688,14 @@
         .compare-note { text-align: center; margin-top: 20px; font-size: 0.8rem; color: var(--text-muted); }
 
         /* ── Trust stats ── */
-        .stats-bar { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border-glass); border: 1px solid var(--border-glass); border-radius: 16px; overflow: hidden; margin: 0 20px 60px; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .stats-bar { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px; background: var(--border-glass); border: 1px solid var(--border-glass); border-radius: 16px; overflow: hidden; margin: 0 20px 48px; max-width: 800px; margin-left: auto; margin-right: auto; }
         @media (min-width: 640px) { .stats-bar { grid-template-columns: repeat(4, 1fr); } }
         .stat-item { background: var(--bg-dark); padding: 24px 16px; text-align: center; }
         .stat-num { font-family: var(--font-serif); font-size: 2rem; color: var(--accent-gold); font-weight: 600; line-height: 1; margin-bottom: 6px; }
         .stat-label { font-size: 0.75rem; color: var(--text-muted); }
 
         /* ── CTA ── */
-        .cta-section { padding: 80px 20px; text-align: center; position: relative; overflow: hidden; }
+        .cta-section { padding: 64px 20px; text-align: center; position: relative; overflow: hidden; }
         .cta-section::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 400px; height: 400px; background: radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
         .cta-title { font-family: var(--font-serif); font-size: clamp(1.8rem, 5vw, 3rem); margin-bottom: 16px; }
         .cta-sub { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 32px; font-weight: 300; }
@@ -912,16 +912,6 @@
         <div class="product-grid" id="product-grid"></div>
     </section>
 
-    <!-- Mini CTA после каталога -->
-    <div style="background:rgba(212,175,55,0.08); border-top:1px solid rgba(212,175,55,0.2); border-bottom:1px solid rgba(212,175,55,0.2); padding:40px 20px; text-align:center;">
-        <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:10px;">Не нашли нужный аромат?</p>
-        <h3 style="font-family:var(--font-serif); font-size:1.6rem; font-weight:500; color:var(--text-main); margin-bottom:24px;">Напишите нам — подберём за 5 минут</h3>
-        <a href="https://wa.me/77776889990" target="_blank" class="btn btn-whatsapp" style="display:inline-flex; width:auto; padding:14px 28px;">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-            Написать в WhatsApp
-        </a>
-    </div>
-
     <!-- Сравнение цен -->
     <section class="compare-section reveal">
         <div class="section-header">
@@ -940,7 +930,7 @@
                 <div class="compare-cell ours">от ₸10 000</div>
             </div>
             <div class="compare-row">
-                <div class="compare-cell name">Tom Ford Oud Wood</div>
+                <div class="compare-cell name">Versace Eros Flame</div>
                 <div class="compare-cell orig">₸75 000</div>
                 <div class="compare-cell ours">от ₸7 000</div>
             </div>
@@ -1012,7 +1002,7 @@
         <div class="reviews-grid">
             <div class="review-card"><div class="review-header"><div><div class="review-author">Айдар М.</div><div class="review-date">14 марта 2026</div></div><div class="review-stars">★★★★★</div></div><div class="review-product">Creed — Absolu Aventus</div><div class="review-text">Заказал на распив, стойкость на весь день. Получил несколько комплиментов на работе. За такую цену — просто огонь.</div></div>
             <div class="review-card"><div class="review-header"><div><div class="review-author">Дина С.</div><div class="review-date">2 марта 2026</div></div><div class="review-stars">★★★★★</div></div><div class="review-product">Louis Vuitton — LV Lovers</div><div class="review-text">Очень нежный и женственный. Шлейф держится долго. Уже смотрю на Imagination для мужа.</div></div>
-            <div class="review-card"><div class="review-header"><div><div class="review-author">Нурлан К.</div><div class="review-date">19 февраля 2026</div></div><div class="review-stars">★★★★★</div></div><div class="review-product">Tom Ford — Oud Wood</div><div class="review-text">Очень близко к оригиналу. Стойкость отличная, особенно на одежде. Буду брать снова.</div></div>
+            <div class="review-card"><div class="review-header"><div><div class="review-author">Нурлан К.</div><div class="review-date">19 февраля 2026</div></div><div class="review-stars">★★★★★</div></div><div class="review-product">Tom Ford — Ombre Leather</div><div class="review-text">Очень близко к оригиналу. Стойкость отличная, особенно на одежде. Буду брать снова.</div></div>
             <div class="review-card"><div class="review-header"><div><div class="review-author">Алия Б.</div><div class="review-date">8 февраля 2026</div></div><div class="review-stars">★★★★★</div></div><div class="review-product">Parfums de Marly — Althaïr</div><div class="review-text">Подарила мужу на день рождения, он в восторге. Качество за эту цену удивляет.</div></div>
             <div class="review-card"><div class="review-header"><div><div class="review-author">Максат Д.</div><div class="review-date">25 января 2026</div></div><div class="review-stars">★★★★★</div></div><div class="review-product">Versace — Eros Flame</div><div class="review-text">Взял 30мл флакон, хватает надолго. Буквально каждый день спрашивают — что это за аромат. Очень доволен.</div></div>
             <div class="review-card"><div class="review-header"><div><div class="review-author">Сания Е.</div><div class="review-date">10 января 2026</div></div><div class="review-stars">★★★★★</div></div><div class="review-product">Roja Parfums — Isola Blu</div><div class="review-text">Нежный, свежий, стойкий. Именно то, что я искала для работы. Спасибо RAYAL за доступные цены!</div></div>
@@ -1848,12 +1838,12 @@
         }
 
         // ── Logo color sync ───────────────────────────────────────────────────
-        function updateLogoColor(hex) {
+        function updateLogoColor() {
             const base = document.getElementById('logo-base-use');
             const glow = document.getElementById('logo-glow-use');
-            if (!base || !glow || !hex || hex.length < 7) return;
-            const stableBase = blendHex('#C8C1AF', hex, 0.22);
-            const stableGlow = blendHex('#9B885C', hex, 0.34);
+            if (!base || !glow) return;
+            const stableBase = '#D2C9B5';
+            const stableGlow = '#A18D5E';
             base.style.fill = stableBase;
             glow.style.fill = stableGlow;
             glow.style.opacity = '0.2';

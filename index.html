@@ -207,6 +207,7 @@
             display: flex; justify-content: center; align-items: center;
             z-index: 3;
             margin: 0 auto;
+            touch-action: pan-y;
         }
 
         .carousel-item {
@@ -217,7 +218,7 @@
             width: 100%; height: 100%;
             pointer-events: none;
         }
-        .carousel-item.active { opacity: 1; transform: scale(1) translateY(0); pointer-events: auto; }
+        .carousel-item.active { opacity: 1; transform: scale(1) translateY(0); pointer-events: none; }
         .carousel-item::before {
             content: '';
             position: absolute;
@@ -263,6 +264,8 @@
             transform: scale(var(--hero-scale, 1));
             filter: drop-shadow(0 20px 40px rgba(0,0,0,0.58)) drop-shadow(0 0 26px var(--hero-image-shadow, rgba(212,175,55,0.2)));
             animation: float 6s ease-in-out infinite;
+            pointer-events: auto;
+            touch-action: manipulation;
         }
         @keyframes float {
             0%, 100% { transform: translateY(0) scale(var(--hero-scale, 1)); }
@@ -283,6 +286,7 @@
             padding: 8px 18px 9px;
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
+            pointer-events: none;
         }
 
         .btn {
@@ -330,23 +334,23 @@
         }
         @media (max-width: 768px) {
             .hero {
-                padding-top: calc(var(--nav-height) + 78px);
-                min-height: max(660px, 88svh);
-                padding-bottom: 40px;
+                padding-top: calc(var(--nav-height) + 62px);
+                min-height: 100svh;
+                padding-bottom: 22px;
             }
             .hero-inner {
-                grid-template-rows: auto auto minmax(220px, 1fr);
-                gap: 14px;
+                grid-template-rows: auto auto minmax(170px, 1fr);
+                gap: 10px;
             }
-            .hero-logo-svg { width: min(360px, 86vw); }
+            .hero-logo-svg { width: min(320px, 82vw); }
             .hero-carousel {
-                min-height: clamp(210px, 30vh, 300px);
-                max-height: 320px;
+                min-height: clamp(170px, 23vh, 220px);
+                max-height: 240px;
             }
-            .carousel-item img { max-height: clamp(170px, 24vh, 250px); }
-            .carousel-title { margin-top: 10px; font-size: clamp(1rem, 4.4vw, 1.25rem); }
+            .carousel-item img { max-height: clamp(140px, 20vh, 190px); }
+            .carousel-title { margin-top: 6px; font-size: clamp(0.92rem, 4vw, 1.08rem); padding: 6px 12px 7px; }
             .scroll-indicator { display: none; }
-            .hero-scroll-hint { display: flex; }
+            .hero-scroll-hint { display: none; }
         }
         @media (max-height: 760px) and (min-width: 769px) {
             .hero {
@@ -800,10 +804,12 @@
         .proof-stars { color: #D4AF37; font-size: 0.9rem; letter-spacing: 2px; }
         .proof-text { font-size: 0.78rem; color: rgba(255,255,255,0.55); letter-spacing: 0.04em; }
         @media (max-width: 768px) {
-            .hero-kicker { font-size: 0.61rem; letter-spacing: 0.15em; margin-bottom: 8px; }
-            .hero-headline { font-size: clamp(1.45rem, 7.8vw, 2.2rem); }
-            .hero-sub { font-size: 0.83rem; margin-bottom: 16px; }
-            .hero-btns .btn { min-width: 168px; font-size: 0.68rem; padding: 10px 16px; }
+            .hero-kicker { font-size: 0.56rem; letter-spacing: 0.14em; margin-bottom: 6px; }
+            .hero-headline { font-size: clamp(1.28rem, 7vw, 1.95rem); line-height: 1.12; margin-bottom: 10px; }
+            .hero-sub { font-size: 0.8rem; margin-bottom: 12px; line-height: 1.45; max-width: 92%; }
+            .hero-btns { gap: 8px; }
+            .hero-btns .btn { min-width: 146px; font-size: 0.63rem; padding: 9px 14px; }
+            .hero-social-proof { display: none; }
         }
         /* ── Scroll reveal ── */
         .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.65s ease, transform 0.65s ease; }
@@ -967,67 +973,6 @@
         .stat-num { font-family: var(--font-serif); font-size: 2rem; color: var(--accent-gold); font-weight: 600; line-height: 1; margin-bottom: 6px; }
         .stat-label { font-size: 0.75rem; color: var(--text-muted); }
 
-        /* ── Onboarding ── */
-        .onboarding-overlay {
-            position: fixed; inset: 0; z-index: 10000;
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-            display: flex; align-items: center; justify-content: center;
-            padding: 20px;
-            opacity: 0; animation: onb-fadein 0.5s ease forwards;
-        }
-        @keyframes onb-fadein { to { opacity: 1; } }
-        .onboarding-card {
-            background: linear-gradient(145deg, #1a1a24, #0d0d12);
-            border: 1px solid var(--border-glass);
-            border-radius: 20px;
-            padding: clamp(28px, 6vw, 48px);
-            max-width: 420px;
-            width: 100%;
-            text-align: center;
-        }
-        .onboarding-logo { width: min(200px, 50vw); margin: 0 auto 20px; filter: invert(1); }
-        .onboarding-title {
-            font-family: var(--font-serif);
-            font-size: clamp(1.2rem, 5vw, 1.6rem);
-            color: var(--text-main);
-            margin-bottom: 12px;
-        }
-        .onboarding-desc {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            line-height: 1.6;
-            margin-bottom: 24px;
-        }
-        .onboarding-features {
-            display: flex; flex-direction: column; gap: 10px;
-            margin-bottom: 28px; text-align: left;
-        }
-        .onboarding-feat {
-            display: flex; align-items: center; gap: 10px;
-            font-size: 0.8rem; color: var(--text-main);
-        }
-        .onboarding-feat-icon {
-            flex-shrink: 0; width: 28px; height: 28px;
-            background: rgba(212,175,55,0.1);
-            border-radius: 8px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 0.9rem;
-        }
-        .onboarding-btn {
-            width: 100%; padding: 14px;
-            background: var(--accent-gold); color: #000;
-            border: none; border-radius: 8px;
-            font-family: var(--font-sans);
-            font-size: 0.9rem; font-weight: 600;
-            text-transform: uppercase; letter-spacing: 0.05em;
-            cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .onboarding-btn:active { transform: scale(0.97); }
-        .onboarding-fadeout { animation: onb-fadeout 0.35s ease forwards; }
-        @keyframes onb-fadeout { to { opacity: 0; pointer-events: none; } }
-
         /* ── CTA ── */
         .cta-section { padding: 64px 20px; text-align: center; position: relative; overflow: hidden; }
         .cta-section::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 400px; height: 400px; background: radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
@@ -1132,7 +1077,7 @@
         <div class="hero-text">
             <p class="hero-kicker">Честная парфюмерия. Без переплат.</p>
             <h1 class="hero-headline">Тот же вайб. Те же эмоции.<br>Без переплаты за бренд.</h1>
-            <p class="hero-sub">Нишевая парфюмерия Extrait de Parfum на разлив от 5 мл. Алматы и Астана.</p>
+            <p class="hero-sub">Нишевая парфюмерия Extrait de Parfum на разлив от 5 мл. Доставка по Казахстану и странам СНГ.</p>
             <div class="hero-btns">
                 <a class="btn btn-gold" id="hero-cta-primary" href="#catalog">Смотреть каталог</a>
                 <a class="btn btn-outline" id="hero-cta-secondary" href="https://wa.me/77776889990" target="_blank">Связаться</a>
@@ -1161,7 +1106,7 @@
         <div class="why-grid">
             <div class="why-card"><div class="why-icon">💎</div><div class="why-title">Роскошь без переплаты</div><div class="why-desc">Люксовые ароматы по честным ценам — без наценки за бренд</div></div>
             <div class="why-card"><div class="why-icon">🧴</div><div class="why-title">Распив — попробуй</div><div class="why-desc">От 10 мл. Не нужно покупать весь флакон сразу</div></div>
-            <div class="why-card"><div class="why-icon">📍</div><div class="why-title">5 магазинов в РК</div><div class="why-desc">Алматы и Актобе — можно прийти и понюхать перед покупкой</div></div>
+            <div class="why-card"><div class="why-icon">📍</div><div class="why-title">5 магазинов в Казахстане</div><div class="why-desc">Можно прийти и понюхать перед покупкой в наших точках</div></div>
             <div class="why-card"><div class="why-icon">✅</div><div class="why-title">Контроль качества</div><div class="why-desc">Каждый аромат проверяется перед отправкой</div></div>
             <div class="why-card"><div class="why-icon">🚚</div><div class="why-title">Доставка по РК и СНГ</div><div class="why-desc">Казпочта, СДЭК, самовывоз из точек</div></div>
         </div>
@@ -1886,8 +1831,14 @@
                 item.style.setProperty('--hero-title-color', blendHex(hc, '#FFFFFF', 0.28));
                 item.style.setProperty('--hero-title-overlay', `rgba(7,8,12,0.62)`);
                 item.style.setProperty('--hero-title-border', hexToRgba(hc, 0.45));
-                item.innerHTML = `<img src="${p.image}" alt="${p.name}" loading="${idx < 2 ? 'eager' : 'lazy'}" style="cursor:pointer;"><div class="carousel-title">${p.name}</div>`;
-                item.addEventListener('click', () => openProductDetail(p.id));
+                item.innerHTML = `<img src="${p.image}" alt="${p.name}" loading="${idx < 2 ? 'eager' : 'lazy'}"><div class="carousel-title">${p.name}</div>`;
+                const heroImage = item.querySelector('img');
+                if (heroImage) {
+                    heroImage.addEventListener('click', (event) => {
+                        event.stopPropagation();
+                        openProductDetail(p.id);
+                    });
+                }
                 container.appendChild(item);
             });
 
@@ -2506,54 +2457,10 @@
             document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
         }
 
-        // Onboarding for first-time visitors
-        function initOnboarding() {
-            if (localStorage.getItem('rayal_onboarded')) return;
-            const overlay = document.createElement('div');
-            overlay.className = 'onboarding-overlay';
-            overlay.innerHTML = `
-                <div class="onboarding-card">
-                    <img src="картинки и лого/лого.png" alt="RAYAL" class="onboarding-logo">
-                    <div class="onboarding-title">Добро пожаловать в RAYAL</div>
-                    <div class="onboarding-desc">Нишевая парфюмерия Extrait de Parfum на разлив — тот же аромат, без переплаты за бренд.</div>
-                    <div class="onboarding-features">
-                        <div class="onboarding-feat">
-                            <span class="onboarding-feat-icon">✨</span>
-                            <span>12+ нишевых ароматов от 5 мл</span>
-                        </div>
-                        <div class="onboarding-feat">
-                            <span class="onboarding-feat-icon">💰</span>
-                            <span>В 3-5 раз дешевле оригинала</span>
-                        </div>
-                        <div class="onboarding-feat">
-                            <span class="onboarding-feat-icon">🚚</span>
-                            <span>Доставка по Алматы и Астане</span>
-                        </div>
-                    </div>
-                    <button class="onboarding-btn" id="onboarding-go">Смотреть коллекцию</button>
-                </div>
-            `;
-            document.body.appendChild(overlay);
-            document.getElementById('onboarding-go').addEventListener('click', () => {
-                localStorage.setItem('rayal_onboarded', '1');
-                overlay.classList.add('onboarding-fadeout');
-                setTimeout(() => overlay.remove(), 400);
-            });
-            // Also close on background click
-            overlay.addEventListener('click', (e) => {
-                if (e.target === overlay) {
-                    localStorage.setItem('rayal_onboarded', '1');
-                    overlay.classList.add('onboarding-fadeout');
-                    setTimeout(() => overlay.remove(), 400);
-                }
-            });
-        }
-
         document.addEventListener('DOMContentLoaded', () => {
             init();
             initQuiz();
             initReveal();
-            initOnboarding();
             document.getElementById('cta-whatsapp').href = `https://wa.me/${PHONE.replace('+', '')}`;
         });
     </script>

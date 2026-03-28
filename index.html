@@ -1626,18 +1626,18 @@
             const container = document.getElementById('hero-carousel');
             const glow = document.getElementById('hero-glow');
             carouselFeatured = [
-                { id: "pdm-althair",         name: "Althaïr",            image: "картинки и лого/Frame 18.png", accent_color: "#8B5A2B", scale: 1.0,  tone: "color" },
-                { id: "roja-isola-blu",      name: "Isola Blu",          image: "картинки и лого/Frame 19.png", accent_color: "#1B6FA5", scale: 0.82, tone: "light" },
-                { id: "creed-absolu-aventus",name: "Absolu Aventus",     image: "картинки и лого/Frame 20.png", accent_color: "#1A2F1A", scale: 1.0,  tone: "dark" },
-                { id: "versace-eros-flame",  name: "Eros Flame",         image: "картинки и лого/Frame 21.png", accent_color: "#8B1A1A", scale: 0.9,  tone: "dark" },
-                { id: "pdm-haltane",         name: "Haltane",            image: "картинки и лого/Frame 22.png", accent_color: "#1B5E3A", scale: 1.0,  tone: "dark" },
-                { id: "lv-lovers",           name: "LV Lovers",          image: "картинки и лого/Frame 23.png", accent_color: "#C9A0DC", scale: 0.85, tone: "light" },
-                { id: "lv-limmensite",       name: "L'Immensité",        image: "картинки и лого/Frame 24.png", accent_color: "#9B7B3A", scale: 0.88, tone: "color" },
-                { id: "lv-imagination",      name: "Imagination",        image: "картинки и лого/Frame 26.png", accent_color: "#2A7B9B", scale: 0.9,  tone: "light" },
-                { id: "lv-ombre-nomade",     name: "Ombre Nomade",       image: "картинки и лого/Frame 25.png", accent_color: "#4A2C0A", scale: 0.95, tone: "dark" },
-                { id: "tf-ombre-leather",    name: "Ombre Leather",      image: "картинки и лого/Frame 27.png", accent_color: "#1C1C1C", scale: 0.9,  tone: "dark" },
-                { id: "pdm-delina",          name: "Delina",             image: "картинки и лого/Frame 28.png", accent_color: "#C9607A", scale: 0.95, tone: "light" },
-                { id: "mfk-baccarat-rouge",  name: "Baccarat Rouge 540", image: "картинки и лого/Frame 29.png", accent_color: "#8B0000", scale: 0.88, tone: "color" }
+                { id: "pdm-althair",         name: "Althaïr",            image: "картинки и лого/Frame 18.png", accent_color: "#8B5A2B", scale: 1.0,  halo: "#C4722A" },
+                { id: "roja-isola-blu",      name: "Isola Blu",          image: "картинки и лого/Frame 19.png", accent_color: "#1B6FA5", scale: 0.82, halo: "#1E88D8" },
+                { id: "creed-absolu-aventus",name: "Absolu Aventus",     image: "картинки и лого/Frame 20.png", accent_color: "#1A2F1A", scale: 1.0,  halo: "#8A9AB0" },
+                { id: "versace-eros-flame",  name: "Eros Flame",         image: "картинки и лого/Frame 21.png", accent_color: "#8B1A1A", scale: 0.9,  halo: "#D03020" },
+                { id: "pdm-haltane",         name: "Haltane",            image: "картинки и лого/Frame 22.png", accent_color: "#1B5E3A", scale: 1.0,  halo: "#1A8A40" },
+                { id: "lv-lovers",           name: "LV Lovers",          image: "картинки и лого/Frame 23.png", accent_color: "#C9A0DC", scale: 0.85, halo: "#D8A0B8" },
+                { id: "lv-limmensite",       name: "L'Immensité",        image: "картинки и лого/Frame 24.png", accent_color: "#9B7B3A", scale: 0.88, halo: "#C8982A" },
+                { id: "lv-imagination",      name: "Imagination",        image: "картинки и лого/Frame 26.png", accent_color: "#2A7B9B", scale: 0.9,  halo: "#60B8D8" },
+                { id: "lv-ombre-nomade",     name: "Ombre Nomade",       image: "картинки и лого/Frame 25.png", accent_color: "#4A2C0A", scale: 0.95, halo: "#C87820" },
+                { id: "tf-ombre-leather",    name: "Ombre Leather",      image: "картинки и лого/Frame 27.png", accent_color: "#1C1C1C", scale: 0.9,  halo: "#8090A8" },
+                { id: "pdm-delina",          name: "Delina",             image: "картинки и лого/Frame 28.png", accent_color: "#C9607A", scale: 0.95, halo: "#E890A8" },
+                { id: "mfk-baccarat-rouge",  name: "Baccarat Rouge 540", image: "картинки и лого/Frame 29.png", accent_color: "#8B0000", scale: 0.88, halo: "#D04020" }
             ];
 
             container.querySelectorAll('.carousel-item').forEach(el => el.remove());
@@ -1646,23 +1646,23 @@
                 const item = document.createElement('div');
                 item.className = `carousel-item${idx === 0 ? ' active' : ''}`;
                 item.id = `hero-item-${idx}`;
-                const visual = getVisualProfile(p.accent_color, p.tone);
+                const hc = p.halo;
                 item.style.setProperty('--hero-scale', `${p.scale || 1}`);
-                item.style.setProperty('--hero-halo-inner', visual.heroHaloInner);
-                item.style.setProperty('--hero-halo-color', visual.heroHaloColor);
-                item.style.setProperty('--hero-image-shadow', visual.heroImageShadow);
-                item.style.setProperty('--hero-title-color', visual.heroTitleColor);
-                item.style.setProperty('--hero-title-overlay', visual.heroTitleOverlay);
-                item.style.setProperty('--hero-title-border', visual.heroTitleBorder);
+                item.style.setProperty('--hero-halo-inner', hexToRgba(hc, 0.40));
+                item.style.setProperty('--hero-halo-color', hexToRgba(hc, 0.22));
+                item.style.setProperty('--hero-image-shadow', hexToRgba(hc, 0.30));
+                item.style.setProperty('--hero-title-color', '#F9F7F2');
+                item.style.setProperty('--hero-title-overlay', 'rgba(7,8,12,0.62)');
+                item.style.setProperty('--hero-title-border', 'rgba(255,255,255,0.20)');
                 item.innerHTML = `<img src="${p.image}" alt="${p.name}" loading="${idx < 2 ? 'eager' : 'lazy'}" style="cursor:pointer;"><div class="carousel-title">${p.name}</div>`;
                 item.addEventListener('click', () => openProductDetail(p.id));
                 container.appendChild(item);
             });
 
             const applyHeroScene = (product) => {
-                const visual = getVisualProfile(product.accent_color, product.tone);
-                glow.style.background = visual.glow;
-                glow.style.opacity = visual.glowOpacity;
+                const hc = product.halo;
+                glow.style.background = `radial-gradient(circle, ${hexToRgba(hc, 0.38)} 0%, rgba(8,9,12,0) 72%)`;
+                glow.style.opacity = '0.42';
                 updateLogoColor(product.accent_color);
                 updatePageBg(product.id, product.accent_color);
             };

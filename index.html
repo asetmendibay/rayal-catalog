@@ -1651,9 +1651,9 @@
                 item.style.setProperty('--hero-halo-inner', hexToRgba(hc, 0.40));
                 item.style.setProperty('--hero-halo-color', hexToRgba(hc, 0.22));
                 item.style.setProperty('--hero-image-shadow', hexToRgba(hc, 0.30));
-                item.style.setProperty('--hero-title-color', '#F9F7F2');
-                item.style.setProperty('--hero-title-overlay', 'rgba(7,8,12,0.62)');
-                item.style.setProperty('--hero-title-border', 'rgba(255,255,255,0.20)');
+                item.style.setProperty('--hero-title-color', blendHex(hc, '#FFFFFF', 0.28));
+                item.style.setProperty('--hero-title-overlay', `rgba(7,8,12,0.62)`);
+                item.style.setProperty('--hero-title-border', hexToRgba(hc, 0.45));
                 item.innerHTML = `<img src="${p.image}" alt="${p.name}" loading="${idx < 2 ? 'eager' : 'lazy'}" style="cursor:pointer;"><div class="carousel-title">${p.name}</div>`;
                 item.addEventListener('click', () => openProductDetail(p.id));
                 container.appendChild(item);

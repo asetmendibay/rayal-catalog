@@ -105,8 +105,19 @@
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
             scrollbar-width: none;
+            transition: opacity 0.28s ease, transform 0.28s ease;
         }
         .mobile-quick-nav::-webkit-scrollbar { display: none; }
+        .mobile-quick-nav.mobile-nav-hidden {
+            opacity: 0;
+            transform: translateY(-10px);
+            pointer-events: none;
+        }
+        .mobile-quick-nav.mobile-nav-visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
         .mobile-quick-nav a {
             flex: 0 0 auto;
             color: var(--text-main);
@@ -334,21 +345,22 @@
         }
         @media (max-width: 768px) {
             .hero {
-                padding-top: calc(var(--nav-height) + 62px);
+                padding-top: calc(var(--nav-height) + env(safe-area-inset-top) + 28px);
                 min-height: 100svh;
-                padding-bottom: 22px;
+                padding-bottom: 28px;
             }
             .hero-inner {
-                grid-template-rows: auto auto minmax(170px, 1fr);
-                gap: 10px;
+                grid-template-rows: auto auto minmax(150px, 1fr);
+                gap: 14px;
             }
-            .hero-logo-svg { width: min(320px, 82vw); }
+            .hero-logo-svg { width: min(312px, 81vw); margin-bottom: 2px; }
             .hero-carousel {
-                min-height: clamp(170px, 23vh, 220px);
-                max-height: 240px;
+                margin-top: 8px;
+                min-height: clamp(150px, 22vh, 200px);
+                max-height: 210px;
             }
-            .carousel-item img { max-height: clamp(140px, 20vh, 190px); }
-            .carousel-title { margin-top: 6px; font-size: clamp(0.92rem, 4vw, 1.08rem); padding: 6px 12px 7px; }
+            .carousel-item img { max-height: clamp(120px, 17vh, 160px); }
+            .carousel-title { display: none; }
             .scroll-indicator { display: none; }
             .hero-scroll-hint { display: none; }
         }
@@ -804,11 +816,12 @@
         .proof-stars { color: #D4AF37; font-size: 0.9rem; letter-spacing: 2px; }
         .proof-text { font-size: 0.78rem; color: rgba(255,255,255,0.55); letter-spacing: 0.04em; }
         @media (max-width: 768px) {
-            .hero-kicker { font-size: 0.56rem; letter-spacing: 0.14em; margin-bottom: 6px; }
-            .hero-headline { font-size: clamp(1.28rem, 7vw, 1.95rem); line-height: 1.12; margin-bottom: 10px; }
-            .hero-sub { font-size: 0.8rem; margin-bottom: 12px; line-height: 1.45; max-width: 92%; }
+            .hero-kicker { font-size: 0.56rem; letter-spacing: 0.14em; margin-bottom: 9px; }
+            .hero-headline { font-size: clamp(1.28rem, 7vw, 1.95rem); line-height: 1.12; margin-bottom: 14px; }
+            .hero-sub { font-size: 0.8rem; margin-bottom: 18px; line-height: 1.45; max-width: 92%; }
             .hero-btns { gap: 8px; }
             .hero-btns .btn { min-width: 146px; font-size: 0.63rem; padding: 9px 14px; }
+            .hero-btns { margin-bottom: 8px; }
             .hero-social-proof { display: none; }
         }
         /* ── Scroll reveal ── */
@@ -1029,7 +1042,7 @@
             <span class="cart-counter" id="cart-counter">0</span>
         </div>
     </nav>
-    <div class="mobile-quick-nav" aria-label="Быстрые разделы">
+    <div class="mobile-quick-nav mobile-nav-hidden" aria-label="Быстрые разделы">
         <a href="#quiz">Подбор</a>
         <a href="#catalog">Каталог</a>
         <a href="#about">О нас</a>
@@ -2059,6 +2072,23 @@
 
             // Navbar scroll + hide scroll hint
             const scrollHint = document.querySelector('.hero-scroll-hint');
+            const mobileQuickNav = document.querySelector('.mobile-quick-nav');
+            const heroSection = document.querySelector('.hero');
+            const syncMobileQuickNav = () => {
+                if (!mobileQuickNav) return;
+                if (window.innerWidth > 768) {
+                    mobileQuickNav.classList.remove('mobile-nav-hidden', 'mobile-nav-visible');
+                    return;
+                }
+                const triggerPoint = heroSection
+                    ? Math.max(180, heroSection.offsetTop + (heroSection.offsetHeight * 0.45))
+                    : 220;
+                const shouldShow = window.scrollY > triggerPoint;
+                mobileQuickNav.classList.toggle('mobile-nav-visible', shouldShow);
+                mobileQuickNav.classList.toggle('mobile-nav-hidden', !shouldShow);
+            };
+            syncMobileQuickNav();
+            window.addEventListener('resize', syncMobileQuickNav);
             window.addEventListener('scroll', () => {
                 document.querySelector('.navbar').style.background =
                     window.scrollY > 50 ? 'rgba(5,5,5,0.98)' : 'rgba(5,5,5,0.85)';
@@ -2066,6 +2096,7 @@
                     scrollHint.style.opacity = '0';
                     scrollHint.style.transition = 'opacity 0.4s';
                 }
+                syncMobileQuickNav();
             });
         }
 

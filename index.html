@@ -346,20 +346,21 @@
         @media (max-width: 768px) {
             .hero {
                 padding-top: calc(var(--nav-height) + env(safe-area-inset-top) + 28px);
-                min-height: 100svh;
-                padding-bottom: 28px;
+                min-height: auto;
+                padding-bottom: 10px;
             }
             .hero-inner {
-                grid-template-rows: auto auto minmax(150px, 1fr);
-                gap: 14px;
+                grid-template-rows: auto auto auto;
+                align-content: start;
+                gap: 18px;
             }
-            .hero-logo-svg { width: min(312px, 81vw); margin-bottom: 2px; }
+            .hero-logo-svg { width: min(312px, 81vw); margin-bottom: 6px; }
             .hero-carousel {
-                margin-top: 8px;
-                min-height: clamp(150px, 22vh, 200px);
-                max-height: 210px;
+                margin-top: 0;
+                min-height: clamp(132px, 18vh, 168px);
+                max-height: 170px;
             }
-            .carousel-item img { max-height: clamp(120px, 17vh, 160px); }
+            .carousel-item img { max-height: clamp(112px, 15vh, 146px); }
             .carousel-title { display: none; }
             .scroll-indicator { display: none; }
             .hero-scroll-hint { display: none; }
@@ -816,12 +817,12 @@
         .proof-stars { color: #D4AF37; font-size: 0.9rem; letter-spacing: 2px; }
         .proof-text { font-size: 0.78rem; color: rgba(255,255,255,0.55); letter-spacing: 0.04em; }
         @media (max-width: 768px) {
-            .hero-kicker { font-size: 0.56rem; letter-spacing: 0.14em; margin-bottom: 9px; }
-            .hero-headline { font-size: clamp(1.28rem, 7vw, 1.95rem); line-height: 1.12; margin-bottom: 14px; }
-            .hero-sub { font-size: 0.8rem; margin-bottom: 18px; line-height: 1.45; max-width: 92%; }
+            .hero-kicker { font-size: 0.56rem; letter-spacing: 0.14em; margin-bottom: 12px; }
+            .hero-headline { font-size: clamp(1.28rem, 7vw, 1.95rem); line-height: 1.17; margin-bottom: 18px; }
+            .hero-sub { font-size: 0.8rem; margin-bottom: 22px; line-height: 1.52; max-width: 92%; }
             .hero-btns { gap: 8px; }
             .hero-btns .btn { min-width: 146px; font-size: 0.63rem; padding: 9px 14px; }
-            .hero-btns { margin-bottom: 8px; }
+            .hero-btns { margin-bottom: 14px; }
             .hero-social-proof { display: none; }
         }
         /* ── Scroll reveal ── */

@@ -301,6 +301,27 @@
         .btn-outline:active { background: rgba(255,255,255,0.1); }
 
         .scroll-indicator { display: none !important; }
+        .hero-scroll-hint {
+            display: none;
+            position: absolute;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: rgba(255,255,255,0.45);
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            animation: scroll-hint-bounce 2.2s ease-in-out infinite;
+            z-index: 10;
+            pointer-events: none;
+        }
+        @keyframes scroll-hint-bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.5; }
+            50% { transform: translateX(-50%) translateY(6px); opacity: 1; }
+        }
         @media (max-width: 1024px) {
             .hero { min-height: max(690px, 100svh); }
             .hero-logo-svg { width: min(440px, 78vw); }
@@ -308,7 +329,8 @@
         @media (max-width: 768px) {
             .hero {
                 padding-top: calc(var(--nav-height) + 78px);
-                min-height: max(760px, 100svh);
+                min-height: max(660px, 88svh);
+                padding-bottom: 40px;
             }
             .hero-inner {
                 grid-template-rows: auto auto minmax(220px, 1fr);
@@ -322,6 +344,7 @@
             .carousel-item img { max-height: clamp(170px, 24vh, 250px); }
             .carousel-title { margin-top: 10px; font-size: clamp(1rem, 4.4vw, 1.25rem); }
             .scroll-indicator { display: none; }
+            .hero-scroll-hint { display: flex; }
         }
         @media (max-height: 760px) and (min-width: 769px) {
             .hero {
@@ -1041,6 +1064,10 @@
         <div class="hero-carousel" id="hero-carousel">
             <div class="hero-glow" id="hero-glow"></div>
         </div>
+        </div>
+        <div class="hero-scroll-hint" aria-hidden="true">
+            <span class="hero-scroll-hint-text">Листай вниз</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
         </div>
     </header>
 
@@ -1982,10 +2009,15 @@
             bindSwipeClose(document.getElementById('product-modal-header'), closeProductDetail);
             bindSwipeClose(document.getElementById('cart-modal-header'), closeCart);
 
-            // Navbar scroll
+            // Navbar scroll + hide scroll hint
+            const scrollHint = document.querySelector('.hero-scroll-hint');
             window.addEventListener('scroll', () => {
                 document.querySelector('.navbar').style.background =
                     window.scrollY > 50 ? 'rgba(5,5,5,0.98)' : 'rgba(5,5,5,0.85)';
+                if (scrollHint && window.scrollY > 100) {
+                    scrollHint.style.opacity = '0';
+                    scrollHint.style.transition = 'opacity 0.4s';
+                }
             });
         }
 

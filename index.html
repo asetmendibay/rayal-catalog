@@ -628,6 +628,17 @@
         .tag { font-size: 0.7rem; padding: 4px 10px; background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: 100px; color: var(--text-main); letter-spacing: 0.05em; }
         .detail-original-price { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 12px; }
         .original-crossed { text-decoration: line-through; color: rgba(255,80,80,0.6); margin-left: 4px; }
+        .savings-badge {
+            display: inline-block;
+            background: rgba(76, 175, 80, 0.15);
+            color: #66BB6A;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 100px;
+            margin-top: 6px;
+            letter-spacing: 0.02em;
+        }
         .detail-full-desc { font-size: 0.95rem; color: #d1d1d6; margin-bottom: 24px; line-height: 1.6; font-weight: 300; }
         .detail-breakdown { background: rgba(0,0,0,0.3); border: 1px solid var(--border-glass); border-radius: 12px; padding: 16px; margin-bottom: 30px; }
         .detail-breakdown-row { margin-bottom: 12px; }
@@ -2070,6 +2081,8 @@
             document.body.style.overflow = '';
             backdrop.classList.remove('active');
             productModal.classList.remove('active');
+            const sb = document.getElementById('savings-badge');
+            if (sb) sb.remove();
             activeProduct = null;
             _lastBgId = null; // force re-apply carousel bg
             const cur = carouselFeatured[activeCarouselId];
@@ -2095,7 +2108,27 @@
 
         function updateDetailPrice() {
             if (!activeProduct) return;
-            document.getElementById('detail-price').textContent = formatMoney(activeProduct.volumes[activeDetailVolume]);
+            const price = activeProduct.volumes[activeDetailVolume];
+            document.getElementById('detail-price').textContent = formatMoney(price);
+            // Savings badge
+            let badgeEl = document.getElementById('savings-badge');
+            if (activeProduct.originalPrice) {
+                const origPer100 = activeProduct.originalPrice;
+                const vol = parseInt(activeDetailVolume);
+                const origForVol = Math.round(origPer100 * vol / 100);
+                const saved = origForVol - price;
+                if (saved > 0) {
+                    if (!badgeEl) {
+                        badgeEl = document.createElement('div');
+                        badgeEl.id = 'savings-badge';
+                        badgeEl.className = 'savings-badge';
+                        const origPriceEl = document.getElementById('detail-original-price');
+                        if (origPriceEl) origPriceEl.after(badgeEl);
+                        else document.getElementById('detail-full-desc').before(badgeEl);
+                    }
+                    badgeEl.textContent = `Экономишь ${formatMoney(saved)}`;
+                } else if (badgeEl) { badgeEl.remove(); }
+            } else if (badgeEl) { badgeEl.remove(); }
         }
 
         // ── Cart ─────────────────────────────────────────────────────────────

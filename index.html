@@ -573,8 +573,22 @@
                 overflow-y: auto;
                 height: 100%;
                 background: transparent;
-                padding: 32px 40px 20px;
+                padding: 28px 36px 0;
                 border-left: 1px solid var(--border-glass);
+                display: flex;
+                flex-direction: column;
+            }
+            .detail-name { font-size: 1.85rem; }
+            .detail-full-desc { font-size: 0.88rem; line-height: 1.55; margin-bottom: 14px; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+            .detail-breakdown { padding: 12px 14px; margin-bottom: 16px; }
+            .detail-breakdown-row { margin-bottom: 8px; }
+            .detail-volume-selector {
+                position: sticky;
+                bottom: 0;
+                flex-shrink: 0;
+                margin-bottom: 0;
+                padding: 16px 0 20px;
+                background: linear-gradient(to bottom, transparent 0%, rgba(10,10,10,0.97) 22%);
             }
             .detail-action { padding-left: 46%; gap: 24px; justify-content: flex-end; }
             #btn-add-detail { padding: 14px 40px; font-size: 1rem; }
@@ -1555,7 +1569,7 @@
         const backdrop = document.getElementById('overlay-backdrop');
 
         // ── Utils ──────────────────────────────────────────────────────────────
-        const formatMoney = (n) => `₸${n.toLocaleString('ru-RU')}`;
+        const formatMoney = (n) => `₸ ${n.toLocaleString('ru-RU')}`;
         const clip = (v, min, max) => Math.min(max, Math.max(min, v));
 
         function hexToRgb(hex) {

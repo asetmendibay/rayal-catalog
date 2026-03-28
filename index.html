@@ -345,22 +345,25 @@
         }
         @media (max-width: 768px) {
             .hero {
-                padding-top: calc(var(--nav-height) + env(safe-area-inset-top) + 28px);
-                min-height: auto;
-                padding-bottom: 10px;
+                padding-top: calc(var(--nav-height) + env(safe-area-inset-top) + 22px);
+                min-height: 100dvh;
+                min-height: 100svh;
+                padding-bottom: calc(env(safe-area-inset-bottom) + 16px);
             }
             .hero-inner {
-                grid-template-rows: auto auto auto;
-                align-content: start;
-                gap: 18px;
+                grid-template-rows: auto auto minmax(172px, 1fr);
+                align-content: stretch;
+                gap: 22px;
             }
-            .hero-logo-svg { width: min(312px, 81vw); margin-bottom: 6px; }
+            .hero-logo-svg { width: min(286px, 76vw); margin-bottom: 0; }
             .hero-carousel {
                 margin-top: 0;
-                min-height: clamp(132px, 18vh, 168px);
-                max-height: 170px;
+                min-height: clamp(164px, 24svh, 220px);
+                max-height: 230px;
+                align-items: flex-end;
             }
-            .carousel-item img { max-height: clamp(112px, 15vh, 146px); }
+            .carousel-item { justify-content: flex-end; }
+            .carousel-item img { max-height: clamp(150px, 22svh, 192px); }
             .carousel-title { display: none; }
             .scroll-indicator { display: none; }
             .hero-scroll-hint { display: none; }
@@ -817,12 +820,12 @@
         .proof-stars { color: #D4AF37; font-size: 0.9rem; letter-spacing: 2px; }
         .proof-text { font-size: 0.78rem; color: rgba(255,255,255,0.55); letter-spacing: 0.04em; }
         @media (max-width: 768px) {
-            .hero-kicker { font-size: 0.56rem; letter-spacing: 0.14em; margin-bottom: 12px; }
-            .hero-headline { font-size: clamp(1.28rem, 7vw, 1.95rem); line-height: 1.17; margin-bottom: 18px; }
-            .hero-sub { font-size: 0.8rem; margin-bottom: 22px; line-height: 1.52; max-width: 92%; }
-            .hero-btns { gap: 8px; }
-            .hero-btns .btn { min-width: 146px; font-size: 0.63rem; padding: 9px 14px; }
-            .hero-btns { margin-bottom: 14px; }
+            .hero-text { width: min(94%, 440px); margin: 0 auto; }
+            .hero-kicker { font-size: 0.56rem; letter-spacing: 0.14em; margin-bottom: 16px; }
+            .hero-headline { font-size: clamp(1.2rem, 7.3vw, 1.86rem); line-height: 1.2; margin-bottom: 20px; }
+            .hero-sub { font-size: 0.82rem; margin-bottom: 24px; line-height: 1.6; max-width: 96%; }
+            .hero-btns { gap: 10px; margin-bottom: 18px; }
+            .hero-btns .btn { min-height: 46px; min-width: 148px; font-size: 0.64rem; padding: 10px 14px; }
             .hero-social-proof { display: none; }
         }
         /* ── Scroll reveal ── */
@@ -852,6 +855,25 @@
         .raspiv-perk { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; }
         .perk-icon { font-size: 1.6rem; }
         .perk-text { font-size: 0.78rem; color: var(--text-muted); line-height: 1.4; }
+        @media (max-width: 768px) {
+            .raspiv-section { padding: 44px 16px 34px; }
+            .raspiv-flow {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 10px;
+                margin: 24px 0 20px;
+            }
+            .flow-step {
+                width: 100%;
+                max-width: none;
+                min-width: 0;
+                padding: 14px 16px;
+            }
+            .flow-step-text { font-size: 1rem; }
+            .flow-arrow { display: none; }
+            .raspiv-perks { margin-top: 20px; gap: 14px 10px; }
+            .perk-text { font-size: 0.84rem; line-height: 1.45; }
+        }
 
         /* ── Quiz ── */
         .quiz-section { padding: 46px 20px 52px; max-width: 800px; margin: 0 auto; text-align: center; }
@@ -1010,7 +1032,15 @@
         }
         .fab-whatsapp:hover { transform: scale(1.08); box-shadow: 0 6px 24px rgba(37,211,102,0.55); }
         .fab-whatsapp:active { transform: scale(0.95); }
-        @media (max-width: 768px) { .fab-whatsapp { bottom: 80px; right: 20px; left: auto; } }
+        @media (max-width: 768px) {
+            .fab-whatsapp {
+                width: 54px;
+                height: 54px;
+                right: 14px;
+                left: auto;
+                bottom: calc(env(safe-area-inset-bottom) + 14px);
+            }
+        }
 
         /* ── Footer ── */
         .footer { padding: 40px 20px; text-align: center; border-top: 1px solid var(--border-glass); display: flex; flex-direction: column; align-items: center; gap: 16px; background: rgba(5,5,5,0.8); }
@@ -1119,7 +1149,7 @@
         </div>
         <div class="why-grid">
             <div class="why-card"><div class="why-icon">💎</div><div class="why-title">Роскошь без переплаты</div><div class="why-desc">Люксовые ароматы по честным ценам — без наценки за бренд</div></div>
-            <div class="why-card"><div class="why-icon">🧴</div><div class="why-title">Распив — попробуй</div><div class="why-desc">От 10 мл. Не нужно покупать весь флакон сразу</div></div>
+            <div class="why-card"><div class="why-icon">🧴</div><div class="why-title">Распив — попробуй</div><div class="why-desc">В мини-формате. Не нужно покупать весь флакон сразу</div></div>
             <div class="why-card"><div class="why-icon">📍</div><div class="why-title">5 магазинов в Казахстане</div><div class="why-desc">Можно прийти и понюхать перед покупкой в наших точках</div></div>
             <div class="why-card"><div class="why-icon">✅</div><div class="why-title">Контроль качества</div><div class="why-desc">Каждый аромат проверяется перед отправкой</div></div>
             <div class="why-card"><div class="why-icon">🚚</div><div class="why-title">Доставка по РК и СНГ</div><div class="why-desc">Казпочта, СДЭК, самовывоз из точек</div></div>
@@ -1134,13 +1164,13 @@
                 <p class="section-subtitle">Формат распива — для тех, кто ценит свой выбор</p>
             </div>
             <div class="raspiv-flow">
-                <div class="flow-step"><div class="flow-step-num">Шаг 1</div><div class="flow-step-text">Берёшь 10 мл</div></div>
+                <div class="flow-step"><div class="flow-step-num">Шаг 1</div><div class="flow-step-text">Берёшь мини-формат</div></div>
                 <div class="flow-arrow">→</div>
                 <div class="flow-step"><div class="flow-step-num">Шаг 2</div><div class="flow-step-text">Носишь неделю</div></div>
                 <div class="flow-arrow">→</div>
                 <div class="flow-step"><div class="flow-step-num">Шаг 3</div><div class="flow-step-text">Понравилось?</div></div>
                 <div class="flow-arrow">→</div>
-                <div class="flow-step" style="border-color:var(--accent-gold);"><div class="flow-step-num" style="color:var(--accent-gold);">Шаг 4</div><div class="flow-step-text">Берёшь 50 мл</div></div>
+                <div class="flow-step" style="border-color:var(--accent-gold);"><div class="flow-step-num" style="color:var(--accent-gold);">Шаг 4</div><div class="flow-step-text">Берёшь полный объём</div></div>
             </div>
             <div class="raspiv-perks">
                 <div class="raspiv-perk"><div class="perk-icon">💸</div><div class="perk-text">Без риска потерять деньги</div></div>
@@ -1644,7 +1674,7 @@
         const faqs = [
             {
                 q: "Что такое распив?",
-                a: "Распив — продажа аромата в небольшом объёме от 10 мл. Позволяет попробовать перед покупкой полного флакона."
+                a: "Распив — продажа аромата в мини-объёме. Позволяет попробовать перед покупкой полного флакона."
             },
             {
                 q: "Это оригинальные ароматы?",

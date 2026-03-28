@@ -967,6 +967,67 @@
         .stat-num { font-family: var(--font-serif); font-size: 2rem; color: var(--accent-gold); font-weight: 600; line-height: 1; margin-bottom: 6px; }
         .stat-label { font-size: 0.75rem; color: var(--text-muted); }
 
+        /* ── Onboarding ── */
+        .onboarding-overlay {
+            position: fixed; inset: 0; z-index: 10000;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            display: flex; align-items: center; justify-content: center;
+            padding: 20px;
+            opacity: 0; animation: onb-fadein 0.5s ease forwards;
+        }
+        @keyframes onb-fadein { to { opacity: 1; } }
+        .onboarding-card {
+            background: linear-gradient(145deg, #1a1a24, #0d0d12);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: clamp(28px, 6vw, 48px);
+            max-width: 420px;
+            width: 100%;
+            text-align: center;
+        }
+        .onboarding-logo { width: min(200px, 50vw); margin: 0 auto 20px; filter: invert(1); }
+        .onboarding-title {
+            font-family: var(--font-serif);
+            font-size: clamp(1.2rem, 5vw, 1.6rem);
+            color: var(--text-main);
+            margin-bottom: 12px;
+        }
+        .onboarding-desc {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+        .onboarding-features {
+            display: flex; flex-direction: column; gap: 10px;
+            margin-bottom: 28px; text-align: left;
+        }
+        .onboarding-feat {
+            display: flex; align-items: center; gap: 10px;
+            font-size: 0.8rem; color: var(--text-main);
+        }
+        .onboarding-feat-icon {
+            flex-shrink: 0; width: 28px; height: 28px;
+            background: rgba(212,175,55,0.1);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.9rem;
+        }
+        .onboarding-btn {
+            width: 100%; padding: 14px;
+            background: var(--accent-gold); color: #000;
+            border: none; border-radius: 8px;
+            font-family: var(--font-sans);
+            font-size: 0.9rem; font-weight: 600;
+            text-transform: uppercase; letter-spacing: 0.05em;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .onboarding-btn:active { transform: scale(0.97); }
+        .onboarding-fadeout { animation: onb-fadeout 0.35s ease forwards; }
+        @keyframes onb-fadeout { to { opacity: 0; pointer-events: none; } }
+
         /* ── CTA ── */
         .cta-section { padding: 64px 20px; text-align: center; position: relative; overflow: hidden; }
         .cta-section::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 400px; height: 400px; background: radial-gradient(circle, rgba(212,175,55,0.08) 0%, transparent 70%); border-radius: 50%; pointer-events: none; }
@@ -2445,10 +2506,54 @@
             document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
         }
 
+        // Onboarding for first-time visitors
+        function initOnboarding() {
+            if (localStorage.getItem('rayal_onboarded')) return;
+            const overlay = document.createElement('div');
+            overlay.className = 'onboarding-overlay';
+            overlay.innerHTML = `
+                <div class="onboarding-card">
+                    <img src="картинки и лого/лого.png" alt="RAYAL" class="onboarding-logo">
+                    <div class="onboarding-title">Добро пожаловать в RAYAL</div>
+                    <div class="onboarding-desc">Нишевая парфюмерия Extrait de Parfum на разлив — тот же аромат, без переплаты за бренд.</div>
+                    <div class="onboarding-features">
+                        <div class="onboarding-feat">
+                            <span class="onboarding-feat-icon">✨</span>
+                            <span>12+ нишевых ароматов от 5 мл</span>
+                        </div>
+                        <div class="onboarding-feat">
+                            <span class="onboarding-feat-icon">💰</span>
+                            <span>В 3-5 раз дешевле оригинала</span>
+                        </div>
+                        <div class="onboarding-feat">
+                            <span class="onboarding-feat-icon">🚚</span>
+                            <span>Доставка по Алматы и Астане</span>
+                        </div>
+                    </div>
+                    <button class="onboarding-btn" id="onboarding-go">Смотреть коллекцию</button>
+                </div>
+            `;
+            document.body.appendChild(overlay);
+            document.getElementById('onboarding-go').addEventListener('click', () => {
+                localStorage.setItem('rayal_onboarded', '1');
+                overlay.classList.add('onboarding-fadeout');
+                setTimeout(() => overlay.remove(), 400);
+            });
+            // Also close on background click
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    localStorage.setItem('rayal_onboarded', '1');
+                    overlay.classList.add('onboarding-fadeout');
+                    setTimeout(() => overlay.remove(), 400);
+                }
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             init();
             initQuiz();
             initReveal();
+            initOnboarding();
             document.getElementById('cta-whatsapp').href = `https://wa.me/${PHONE.replace('+', '')}`;
         });
     </script>

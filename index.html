@@ -450,7 +450,7 @@
         .filter-group { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; scrollbar-width: none; -ms-overflow-style: none; }
         .filter-group::-webkit-scrollbar { display: none; }
         .filter-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; padding-left: 4px; }
-        .filter-btn { white-space: nowrap; padding: 8px 16px; background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: 100px; color: var(--text-muted); font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease; font-family: var(--font-sans); }
+        .filter-btn { white-space: nowrap; padding: 8px 16px; min-height: 40px; background: var(--bg-glass); border: 1px solid var(--border-glass); border-radius: 100px; color: var(--text-muted); font-size: 0.85rem; cursor: pointer; transition: all 0.3s ease; font-family: var(--font-sans); -webkit-tap-highlight-color: transparent; }
         .filter-btn.active { background: var(--accent-gold); color: var(--bg-dark); border-color: var(--accent-gold); }
 
         /* Product Grid */
@@ -1188,6 +1188,18 @@
                 </div>
             </div>
             <div>
+                <div class="filter-label">Настроение</div>
+                <div class="filter-group" id="filter-mood">
+                    <button class="filter-btn active" data-filter="all">Все</button>
+                    <button class="filter-btn" data-filter="Вечерний">Вечерний</button>
+                    <button class="filter-btn" data-filter="Летний">Летний</button>
+                    <button class="filter-btn" data-filter="Деловой">Деловой</button>
+                    <button class="filter-btn" data-filter="Зимний">Зимний</button>
+                    <button class="filter-btn" data-filter="Повседневный">Повседневный</button>
+                    <button class="filter-btn" data-filter="Романтичный">Романтичный</button>
+                </div>
+            </div>
+            <div>
                 <div class="filter-label">Сортировка</div>
                 <div class="filter-group" id="filter-sort">
                     <button class="filter-btn active" data-sort="default">По умолчанию</button>
@@ -1628,6 +1640,7 @@
         let activeDetailVolume = "10";
         let currentFilterBrand = 'all';
         let currentFilterGender = 'all';
+        let currentFilterMood = 'all';
         let currentSort = 'default';
         let searchQuery = '';
         let activeCarouselId = 0;
@@ -1855,12 +1868,13 @@
             let list = products.filter(p => {
                 const brandOk  = currentFilterBrand === 'all' || p.brand === currentFilterBrand;
                 const genderOk = currentFilterGender === 'all' || p.gender === currentFilterGender;
+                const moodOk   = currentFilterMood === 'all' || p.mood === currentFilterMood;
                 const searchOk = !q ||
                     p.name.toLowerCase().includes(q) ||
                     p.brand.toLowerCase().includes(q) ||
                     p.notes.toLowerCase().includes(q) ||
                     (p.mood && p.mood.toLowerCase().includes(q));
-                return brandOk && genderOk && searchOk;
+                return brandOk && genderOk && moodOk && searchOk;
             });
 
             if (quizCatalogSelection && quizCatalogSelection.length) {
@@ -1970,14 +1984,15 @@
                 renderCatalog();
             });
 
-            // Filters — brand & gender
-            ['filter-brand', 'filter-gender'].forEach(groupId => {
+            // Filters — brand, gender, mood
+            ['filter-brand', 'filter-gender', 'filter-mood'].forEach(groupId => {
                 document.querySelectorAll(`#${groupId} .filter-btn`).forEach(btn => {
                     btn.addEventListener('click', e => {
                         document.querySelectorAll(`#${groupId} .filter-btn`).forEach(b => b.classList.remove('active'));
                         e.target.classList.add('active');
                         if (groupId === 'filter-brand') currentFilterBrand = e.target.dataset.filter;
-                        else currentFilterGender = e.target.dataset.filter;
+                        else if (groupId === 'filter-gender') currentFilterGender = e.target.dataset.filter;
+                        else currentFilterMood = e.target.dataset.filter;
                         renderCatalog();
                     });
                 });
